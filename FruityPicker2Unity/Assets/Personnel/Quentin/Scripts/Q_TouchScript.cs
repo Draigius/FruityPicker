@@ -12,21 +12,29 @@ public class Q_TouchScript : MonoBehaviour
         if (Input.touchCount > 0)
         {
             
-            Touch touchTouch = Input.GetTouch(0);
+            Touch tTouch = Input.GetTouch(0);
             //change position écran en position world
+            RaycastHit hit;
 
-            Vector3 touchVectorThree = new Vector3 (touchTouch.position.x, touchTouch.position.y, Camera.main.transform.position.z);
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(tTouch.position), out hit, 1000))
+            {
+                Debug.Log("MoveToClick_Script - Found Point");
+                Vector3 tRayPoint =  hit.point;
 
-            Vector3 vTouchPosition = Camera.main.ScreenToWorldPoint(touchVectorThree);
+                tRayPoint.z = 0;
 
-            //Debug.Log("Camera :"+ Camera.main.ScreenToWorldPoint(touchVectorThree));
-            //Debug.Log("Camera :"+ Camera.main.ScreenToWorldPoint(touchTouch.position));
+                transform.position = tRayPoint;
+            }
 
-            Debug.Log("Trad 3D : "+ vTouchPosition);
-            vTouchPosition.z = 0f;
-            transform.position = vTouchPosition;
+            //Vector3 touchVectorThree = new Vector3 (touchTouch.position.x, touchTouch.position.y, Camera.main.transform.position.z);
+            //Vector3 vTouchPosition = Camera.main.ScreenToWorldPoint(touchVectorThree);
 
+            //Debug.Log("Trad 3D : "+ vTouchPosition);
+            //vTouchPosition.z = 0f;
+            //transform.position = vTouchPosition;
 
+           
+        
         }
     }
 }
