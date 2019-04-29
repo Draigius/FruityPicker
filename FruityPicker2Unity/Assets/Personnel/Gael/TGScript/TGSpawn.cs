@@ -26,6 +26,11 @@ public class TGSpawn : MonoBehaviour
     float [,] fTablePosition = new float[iMaxEmbronchement, 3];
 
     public float fEspacementY;
+    public float fMaxRandomY;
+
+    public float fEspacementX;
+    public float fMaxRandomX;
+
 
 
     void Start()
@@ -89,6 +94,7 @@ public class TGSpawn : MonoBehaviour
                 {
                     
                     iStockEnbronchement = iStockEnbronchement - iEbrouchementLigne;
+                    iTableStockPositionEmbronchement[i] = iEbrouchementLigne;
 
                 }
                 else
@@ -112,8 +118,49 @@ public class TGSpawn : MonoBehaviour
 
         // positionnement 
 
+        iStockEnbronchement = 0;
+
+        for (int i = 0; i < iLigne; i++)
+        {
+
+            for (int j = 0; j < iTableStockPositionEmbronchement[i]; j++)
+            {
+
+                fTablePosition[iStockEnbronchement, 0] = i+j;
+                fTablePosition[iStockEnbronchement, 2] = fEspacementY * i + Random.Range(-fMaxRandomY, fMaxRandomY);
+
+                if (j == 0)
+                {
+
+                    fTablePosition[iStockEnbronchement, 1] = 0 + Random.RandomRange(fMaxRandomX, fMaxRandomX);
+
+                }
+                else if(j==1 || j == 3 || j == 5 || j == 7 || j == 9 || j == 11 || j == 13 ) // droite 
+                {
+
+                    fTablePosition[iStockEnbronchement, 1] = fEspacementX*(j/2+0.5f) + Random.RandomRange(0f, fMaxRandomX);
+
+                }
+                else if (j == 2 || j == 4 || j == 6 || j == 8 || j == 10 || j == 12 || j == 14) // gauche
+                {
+
+                    fTablePosition[iStockEnbronchement, 1] = (fEspacementX * (j / 2) + Random.RandomRange(-fMaxRandomX, fMaxRandomX)) * -1;
+
+                }
 
 
+                iStockEnbronchement = iStockEnbronchement + 1;
+
+            }
+
+            if(iStockEnbronchement == iEmbronchement)
+            {
+
+                i = iLigne;
+
+            }
+
+        }
 
 
 
