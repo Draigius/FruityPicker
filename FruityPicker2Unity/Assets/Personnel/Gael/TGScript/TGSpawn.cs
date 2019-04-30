@@ -6,7 +6,7 @@ public class TGSpawn : MonoBehaviour
 {
 
     //au nombre de ligne de la grappe
-    static public int iLigne;
+    public static int iLigne = 10;
 
 
     //permettre de répartition des embrochements [numéro de ligne, interval]
@@ -14,9 +14,9 @@ public class TGSpawn : MonoBehaviour
 
 
     //iMinEmbronchement >= iLigne
-    public static int iMinEmbronchement;
+    public static int iMinEmbronchement =30;
     //iMaxEmbronchement >= iMinEmbronchement
-    public static int iMaxEmbronchement;
+    public static int iMaxEmbronchement = 50;
 
 
     //tableau de stockage de position de chaque jonction par rapport a chaque ligne [ selection de l'emprochement , parametre désiré]
@@ -31,6 +31,11 @@ public class TGSpawn : MonoBehaviour
     public float fEspacementX;
     public float fMaxRandomX;
 
+
+
+
+
+    public GameObject hCube;
 
 
     void Start()
@@ -73,22 +78,38 @@ public class TGSpawn : MonoBehaviour
 
         }
 
-    
+        
         // point de liaison entre les branches
         int iEmbronchement = (int)Mathf.Floor(Random.Range(iMinEmbronchement, iMaxEmbronchement+1));
-
+        Debug.Log("iEmbronchement :"+ iEmbronchement);
         //////////////////////////////////////////////////////////////////Répartition des embrochements
         //permettra de comté le nombre d’embronchement restant
         int iStockEnbronchement = iEmbronchement;
-        //permettra de stock le nombre d’embronchement qu’il y aura par ligne
-        int[] iTableStockPositionEmbronchement = new int[iLigne - 1]; 
 
+        
+        //permettra de stock le nombre d’embronchement qu’il y aura par ligne
+        int[] iTableStockPositionEmbronchement = new int[iLigne];
+
+        int iDebugConte = 0;
         for (int i = 0; i < iLigne; i++)
         {
-
+            //Debug.Log("boucle de for 1");
             if (iStockEnbronchement > 0)
             {
-                int iEbrouchementLigne = (int)Mathf.Floor((float)iEmbronchement *Random.Range(fTableParametre[i, 0], fTableParametre[i, 1]));
+                float fDebugRandom = (float)iEmbronchement * Random.Range(fTableParametre[i, 0], fTableParametre[i, 1])+ 1;
+                int iEbrouchementLigne = (int)Mathf.Floor(fDebugRandom);
+
+                Debug.Log("fDebugRandom :" + fDebugRandom);
+                Debug.Log("iEbrouchementLigne :" + iEbrouchementLigne);
+
+                if (i == 0 && iEbrouchementLigne==0)
+                {
+
+                    iEbrouchementLigne = 1;
+
+                }
+
+
 
                 if (iEbrouchementLigne <= iStockEnbronchement)
                 {
@@ -101,11 +122,16 @@ public class TGSpawn : MonoBehaviour
                 {
 
                     iEbrouchementLigne = iStockEnbronchement;
-
                     iStockEnbronchement = 0;
+                    iTableStockPositionEmbronchement[i] = iEbrouchementLigne;
 
                 }
-        
+
+
+                iDebugConte = iDebugConte + iEbrouchementLigne;
+                Debug.Log("iDebugConte :" + iDebugConte);
+
+
             }
             else
             {
@@ -114,25 +140,36 @@ public class TGSpawn : MonoBehaviour
         
             }
 
+            if (i==iLigne-1 && iStockEnbronchement>0)
+            {
+                Debug.Log("re boucle");
+                i = 1;
+
+            }
+
         }
 
         // positionnement 
 
         iStockEnbronchement = 0;
 
+        //Debug.Log("1");
+
+
+
         for (int i = 0; i < iLigne; i++)
         {
-
+            //Debug.Log("2");
             for (int j = 0; j < iTableStockPositionEmbronchement[i]; j++)
             {
-
-                fTablePosition[iStockEnbronchement, 0] = i+j;
-                fTablePosition[iStockEnbronchement, 2] = fEspacementY * i + Random.Range(-fMaxRandomY, fMaxRandomY);
+                //Debug.Log("3");
+                fTablePosition[iStockEnbronchement, 0] = iStockEnbronchement;
+                fTablePosition[iStockEnbronchement, 2] = (fEspacementY * i + Random.Range(-fMaxRandomY, fMaxRandomY)) * -1;
 
                 if (j == 0)
                 {
 
-                    fTablePosition[iStockEnbronchement, 1] = 0 + Random.RandomRange(fMaxRandomX, fMaxRandomX);
+                    fTablePosition[iStockEnbronchement, 1] = 0 + Random.RandomRange(-fMaxRandomX/2, fMaxRandomX/2);
 
                 }
                 else if(j==1 || j == 3 || j == 5 || j == 7 || j == 9 || j == 11 || j == 13 ) // droite 
@@ -162,11 +199,54 @@ public class TGSpawn : MonoBehaviour
 
         }
 
+        for (int i = 0; i < iEmbronchement; i++)
+        {
+
+            Vector3 v3Position = new Vector3(fTablePosition[i, 1], fTablePosition[i, 2], 0f);
+            GameObject hPoint = Instantiate(hCube, v3Position, Quaternion.identity);
+            hPoint.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        }
+
+
+        funcDebug(iEmbronchement, iTableStockPositionEmbronchement);
+
+    }
+
+    string TABLO;
+
+    void funcDebug(int num1,int[] tableauStock)
+    {
+        
+        for (int i = 0; i < iLigne; i++)
+        {
+
+            TABLO = TABLO + tableauStock[i];
+            TABLO = TABLO + "\n";
+
+        }
+
+        TABLO = TABLO + "\n";
+
+
+        for (int j = 0; j < num1; j++)
+        {
+
+            for (int i = 0; i < 3; i++)
+            {
+
+                TABLO = TABLO + fTablePosition[j, i];
+                TABLO = TABLO + "  |  ";
+
+            }
+
+            TABLO = TABLO + "\n";
+        }
 
 
 
 
 
+        Debug.Log(TABLO);
     }
 
     // Update is called once per frame
