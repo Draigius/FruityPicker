@@ -12,5 +12,6 @@ public class Q_SwipeLogger : MonoBehaviour
     private void SwipeDetector_OnSwipe (SwipeData swipeDataInput)
     {
         Debug.Log("Swipe in Direction : " + swipeDataInput.Direction);
+
     }
 }
