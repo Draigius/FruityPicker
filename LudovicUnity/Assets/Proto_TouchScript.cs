@@ -5,6 +5,8 @@ using UnityEngine;
 public class Proto_TouchScript : MonoBehaviour
 {
 
+    GameObject hTouchedObject;
+    HingeJoint JointTouched;
     // Update is called once per frame
     void Update()
     {
@@ -17,14 +19,22 @@ public class Proto_TouchScript : MonoBehaviour
 
             funcTouchReturnObject (tTouch.position);
         }
+
+        // Clic souris
         else if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Input Click");
             funcTouchReturnObject (Input.mousePosition);
         }
-           
+
+        // Clic souris relaché
+        if (Input.GetMouseButton(0))
+        {
+            funcMoveObject(Input.mousePosition);
+        }
     }
 
+    // Sélectionne l'objet
     void funcTouchReturnObject( Vector2 V2ScreenPos )
     {
         RaycastHit hit;
@@ -32,9 +42,20 @@ public class Proto_TouchScript : MonoBehaviour
         if (Physics.Raycast(Camera.main.ScreenPointToRay(V2ScreenPos), out hit, 100))
         {
 
-            GameObject hTouchedObject = hit.transform.gameObject;
-        
+            hTouchedObject = hit.transform.gameObject;
+            JointTouched = hTouchedObject.GetComponent<HingeJoint>();
+
             Debug.Log(hit.transform.gameObject);
+        }
     }
-}
+
+    // Deplacer l'objet sélectionné
+
+    void funcMoveObject (Vector2 MousePos)
+    {
+
+        hTouchedObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(MousePos.x, MousePos.y, 9));
+
+       // Destroy ( JointTouched);
+    }
 }
