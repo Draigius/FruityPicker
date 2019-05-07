@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Q_SwipeScript : MonoBehaviour
+public class Proto_SwipeScript : MonoBehaviour
 {   
     //Positions de touche initiale et position de touche dynamique sur l'écran
     private Vector2 v2PositionTouchDown, v2PositionTouchUp;
@@ -15,35 +15,66 @@ public class Q_SwipeScript : MonoBehaviour
     [SerializeField]
     private float fMinDistanceForSwipe = 100f;
 
-    //Appelle event OnSwipe (dans Line Renderer)
+    //Appelle event OnSwipe (par exemple dans Line Renderer)
     public static event System.Action<SwipeData> OnSwipe = delegate { };
 
     // Update is called once per frame
     private void Update()
-    { 
+    {
+        //
         #region Mobile Inputs
 
-        //Prend en compte Multi-touches
-        foreach (Touch tTouch in Input.touches)
+        if (Input.touchCount > 0)
         {
-            //début de la touche
-            if (tTouch.phase == TouchPhase.Began)
+            //Prend en compte Multi-touches
+            foreach (Touch tTouch in Input.touches)
             {
-                v2PositionTouchUp = tTouch.position;
-                v2PositionTouchDown = tTouch.position;
+                //début de la touche
+                if (tTouch.phase == TouchPhase.Began)
+                {
+                    v2PositionTouchUp = tTouch.position;
+                    v2PositionTouchDown = tTouch.position;
+                }
+
+                //Mouvement touche
+                if (!bDetectSwipeOnlyAfterRelease && tTouch.phase == TouchPhase.Moved)
+                {
+                    v2PositionTouchDown = tTouch.position;
+                    funcDetectSwipe();
+                }
+
+                //fin de la touche
+                if (tTouch.phase == TouchPhase.Ended)
+                {
+                    v2PositionTouchDown = tTouch.position;
+                    funcDetectSwipe();
+                }
+            }
+        }
+        #endregion
+        //
+        #region Mouse Inputs
+        else {
+        
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Input Mouse Down");
+                v2PositionTouchUp = Input.mousePosition;
+                v2PositionTouchDown = Input.mousePosition;
             }
 
             //Mouvement touche
-            if (!bDetectSwipeOnlyAfterRelease && tTouch.phase == TouchPhase.Moved)
+            if (!bDetectSwipeOnlyAfterRelease && funcMovedMouseCheck())
             {
-                v2PositionTouchDown = tTouch.position;
+                v2PositionTouchDown = Input.mousePosition;
                 funcDetectSwipe();
             }
 
             //fin de la touche
-            if (tTouch.phase == TouchPhase.Ended)
+            if (Input.GetMouseButtonUp(0))
             {
-                v2PositionTouchDown = tTouch.position;
+                Debug.Log("Input Mouse Up");
+                v2PositionTouchDown = Input.mousePosition;
                 funcDetectSwipe();
             }
         }
@@ -114,6 +145,25 @@ public class Q_SwipeScript : MonoBehaviour
     private float funcFloatHorizontalMoveDist()
     {
         return Mathf.Abs(v2PositionTouchDown.x - v2PositionTouchUp.x);
+    }
+
+
+    //Vérification dynamique de mouvement de souris
+    private bool funcMovedMouseCheck ()
+    {
+        bool bMouseMoved;
+        Vector2 v2PositionTouchNow = Input.mousePosition;
+
+        if (v2PositionTouchDown != v2PositionTouchNow)
+        {
+            bMouseMoved = true;
+        }
+        else
+        {
+            bMouseMoved = false;
+        }
+
+        return bMouseMoved;
     }
 
     #endregion
