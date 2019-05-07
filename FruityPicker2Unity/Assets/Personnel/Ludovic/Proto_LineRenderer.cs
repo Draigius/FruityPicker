@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Q_LineRenderer : MonoBehaviour
+public class Proto_LineRenderer : MonoBehaviour
 {
     private LineRenderer lineRendererComp;
 
@@ -12,7 +12,7 @@ public class Q_LineRenderer : MonoBehaviour
     {
         lineRendererComp = GetComponent<LineRenderer>();
 
-        Q_SwipeScript.OnSwipe += SwipeDetector_OnSwipe;
+        Proto_SwipeScript.OnSwipe += SwipeDetector_OnSwipe;
     }
 
     private void SwipeDetector_OnSwipe(SwipeData swipeDataInput)

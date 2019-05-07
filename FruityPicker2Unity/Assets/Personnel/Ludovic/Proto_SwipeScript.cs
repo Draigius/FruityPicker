@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Q_SwipeScript : MonoBehaviour
+public class Proto_SwipeScript : MonoBehaviour
 {   
     //Positions de touche initiale et position de touche dynamique sur l'écran
     private Vector2 v2PositionTouchDown, v2PositionTouchUp;
@@ -20,30 +20,52 @@ public class Q_SwipeScript : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
-    { 
+    {
+        //
         #region Mobile Inputs
 
-        //Prend en compte Multi-touches
-        foreach (Touch tTouch in Input.touches)
+        if (Input.touchCount > 0)
         {
-            //début de la touche
-            if (tTouch.phase == TouchPhase.Began)
+            //Prend en compte Multi-touches
+            foreach (Touch tTouch in Input.touches)
             {
-                v2PositionTouchUp = tTouch.position;
-                v2PositionTouchDown = tTouch.position;
-            }
+                //début de la touche
+                if (tTouch.phase == TouchPhase.Began)
+                {
+                    v2PositionTouchUp = tTouch.position;
+                    v2PositionTouchDown = tTouch.position;
+                }
 
-            //Mouvement touche
-            if (!bDetectSwipeOnlyAfterRelease && tTouch.phase == TouchPhase.Moved)
+                //Mouvement touche
+                if (!bDetectSwipeOnlyAfterRelease && tTouch.phase == TouchPhase.Moved)
+                {
+                    v2PositionTouchDown = tTouch.position;
+                    funcDetectSwipe();
+                }
+
+                //fin de la touche
+                if (tTouch.phase == TouchPhase.Ended)
+                {
+                    v2PositionTouchDown = tTouch.position;
+                    funcDetectSwipe();
+                }
+            }
+        }
+        #endregion
+        //
+        #region Mouse Inputs
+        else if (Input.GetMouseButton(0)){
+
+            if (Input.GetMouseButtonDown(0))
             {
-                v2PositionTouchDown = tTouch.position;
-                funcDetectSwipe();
+                v2PositionTouchUp = Input.mousePosition;
+                v2PositionTouchDown = Input.mousePosition;
             }
 
             //fin de la touche
-            if (tTouch.phase == TouchPhase.Ended)
+            if (Input.GetMouseButtonUp(0))
             {
-                v2PositionTouchDown = tTouch.position;
+                v2PositionTouchDown = Input.mousePosition;
                 funcDetectSwipe();
             }
         }

@@ -16,11 +16,11 @@ public class LL_Main_test : MonoBehaviour
 
     private GameObject ActualRaisin;
     private GameObject ActualBranche;
-    
+
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -32,14 +32,19 @@ public class LL_Main_test : MonoBehaviour
             ActualBranche = Instantiate(branche, new Vector3(0, 0, 0), Quaternion.identity);
             // Récupére le component Rigidbody de la branche ainsi généré
             RigidbodyBranche = ActualBranche.GetComponent<Rigidbody>();
-   
+
             // Génére un raisin à partir du modele de la prefab
-            ActualRaisin = Instantiate(raisin, new Vector3( 0, -1, 0), Quaternion.identity);
+            ActualRaisin = Instantiate(raisin, new Vector3(0, -1, 0), Quaternion.identity);
             // Récupére le component HingeJoint du raisin ainsi généré
             JointRaisin = ActualRaisin.GetComponent<HingeJoint>();
 
             // On attache le Rigidbody de la branche au HingeJoint du raisin
             JointRaisin.connectedBody = RigidbodyBranche;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+           
         }
     }
 }
