@@ -12,7 +12,7 @@ public class Proto_LineRenderer : MonoBehaviour
     {
         lineRendererComp = GetComponent<LineRenderer>();
 
-        Proto_SwipeScript.OnSwipe += SwipeDetector_OnSwipe;
+        Proto_InputManager.OnSwipe += SwipeDetector_OnSwipe;
     }
 
     private void SwipeDetector_OnSwipe(SwipeData swipeDataInput)
