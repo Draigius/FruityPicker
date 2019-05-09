@@ -35,6 +35,6 @@ public class Proto_TouchScript : MonoBehaviour
             GameObject hTouchedObject = hit.transform.gameObject;
         
             Debug.Log(hit.transform.gameObject);
+        }
     }
-}
 }
