@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Proto_SwipeScript : MonoBehaviour
+public class Proto_InputManager : MonoBehaviour
 {   
     //Positions de touche initiale et position de touche dynamique sur l'écran
     private Vector2 v2PositionTouchDown, v2PositionTouchUp;
@@ -84,6 +84,9 @@ public class Proto_SwipeScript : MonoBehaviour
     //Fonction détection de Swipe
     private void funcDetectSwipe()
     {
+        //Lance Ray Cast 
+        GameObject hFirstItemTouched = funcTouchReturnObject(v2PositionTouchDown);
+
         //Vérifie la distance du swipe actuel
         if (funcBoolSwipeDistanceCheck())
         {   
@@ -104,6 +107,28 @@ public class Proto_SwipeScript : MonoBehaviour
 
             //v2PositionTouchUp = v2PositionTouchDown;
         }
+    }
+
+    GameObject funcTouchReturnObject(Vector2 V2ScreenPos)
+    {
+        GameObject hTouchedObject;
+        RaycastHit hit;
+
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(V2ScreenPos), out hit, 100))
+        {
+
+            hTouchedObject = hit.transform.gameObject;
+
+            Debug.Log(hit.transform.gameObject);
+        }
+        else
+        {
+
+            hTouchedObject = null;
+        }
+
+        return hTouchedObject;
     }
 
     //Envoi du OnSwipe aux autres scripts
@@ -172,6 +197,8 @@ public class Proto_SwipeScript : MonoBehaviour
 //Struct avec les infos du Swipe
 public struct SwipeData
 {
+    public GameObject hFirstTouchedObject;
+    public GameObject hCurrentTouchedObject;
     public Vector2 v2StartPosition;
     public Vector2 v2EndPosition;
     public eSwipeDirection Direction;
