@@ -5,7 +5,8 @@ using UnityEngine;
 public class Proto_InputManager : MonoBehaviour
 {   
     //Positions de touche initiale et position de touche dynamique sur l'écran
-    private Vector2 v2PositionTouchDown, v2PositionTouchUp;
+    private Vector2 v2PositionTouchDown, v2PositionTouchUp, v2PositionFirstTouch;
+    private Vector3 v3WorldPointStart, v3WorldPointEnd;
 
     private GameObject hFirstItemTouched, hDynamicItemTouched;
 
@@ -28,7 +29,6 @@ public class Proto_InputManager : MonoBehaviour
 
         if (Input.touchCount > 0)
         {
-            bool bTouchIsFirst;
 
             //Prend en compte Multi-touches
             foreach (Touch tTouch in Input.touches)
@@ -38,22 +38,21 @@ public class Proto_InputManager : MonoBehaviour
                 {
                     v2PositionTouchUp = tTouch.position;
                     v2PositionTouchDown = tTouch.position;
+                    v2PositionFirstTouch = tTouch.position;
                 }
 
                 //Mouvement touche
                 if (!bDetectSwipeOnlyAfterRelease && tTouch.phase == TouchPhase.Moved)
                 {
                     v2PositionTouchDown = tTouch.position;
-                    bTouchIsFirst=false;
-                    funcDetectSwipe(bTouchIsFirst);
+                    funcDetectSwipe();
                 }
 
                 //fin de la touche
                 if (tTouch.phase == TouchPhase.Ended)
                 {
                     v2PositionTouchDown = tTouch.position;
-                    bTouchIsFirst = true;
-                    funcDetectSwipe(bTouchIsFirst);
+                    funcDetectSwipe();
                 }
             }
         }
@@ -61,9 +60,6 @@ public class Proto_InputManager : MonoBehaviour
         //
         #region Mouse Inputs
         else {
-
-            bool bTouchIsFirst;
-
             if (Input.GetMouseButtonDown(0))
             {
                 v2PositionTouchUp = Input.mousePosition;
@@ -74,34 +70,26 @@ public class Proto_InputManager : MonoBehaviour
             if (!bDetectSwipeOnlyAfterRelease && funcMovedMouseCheck())
             {
                 v2PositionTouchDown = Input.mousePosition;
-                bTouchIsFirst = false;
-                funcDetectSwipe(bTouchIsFirst);
+                funcDetectSwipe();
             }
 
             //fin de la touche
             if (Input.GetMouseButtonUp(0))
             {
                 v2PositionTouchDown = Input.mousePosition;
-                bTouchIsFirst = true;
-                funcDetectSwipe(bTouchIsFirst);
+                funcDetectSwipe();
             }
         }
         #endregion
     }
 
     //Fonction détection de Swipe
-    private void funcDetectSwipe(bool bTouchIsFirst)
+    private void funcDetectSwipe()
     {
-        //Lance Ray Cast
-        if (bTouchIsFirst)
-        {
-            hFirstItemTouched = funcTouchReturnObject(v2PositionTouchDown);
-        }
-        else
-        {
-            hDynamicItemTouched = funcTouchReturnObject(v2PositionTouchDown);
-        }
-       
+        //Lance Ray Cast 
+        hFirstItemTouched = funcTouchReturnObject(v2PositionFirstTouch);
+        hDynamicItemTouched = funcTouchReturnObject(v2PositionTouchDown);
+    
 
         //Vérifie la distance du swipe actuel
         if (funcBoolSwipeDistanceCheck())
@@ -115,7 +103,7 @@ public class Proto_InputManager : MonoBehaviour
                 funcSendSwipe(dirSwipe, hFirstItemTouched, hDynamicItemTouched);
             }
             else
-            //Check Vertical
+            //Check Horizontal
             {
                 var dirSwipe = v2PositionTouchDown.x - v2PositionTouchUp.x > 0 ? eSwipeDirection.Right : eSwipeDirection.Left;
                 funcSendSwipe(dirSwipe, hFirstItemTouched, hDynamicItemTouched);
@@ -133,14 +121,10 @@ public class Proto_InputManager : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.ScreenPointToRay(V2ScreenPos), out hit, 100))
         {
-
             hTouchedObject = hit.transform.gameObject;
-
-            Debug.Log(hit.transform.gameObject);
         }
         else
         {
-
             hTouchedObject = null;
         }
 
@@ -160,7 +144,9 @@ public class Proto_InputManager : MonoBehaviour
             hFirstTouchedObject = hFirstItemTouched,
             hCurrentTouchedObject = hDynamicItemTouched,
 
-            fDistance3DSwipe = funcDistance3DSwipe()
+            fDistance3DSwipe = funcDistance3DSwipe(),
+            v3RealPositionStart = v3WorldPointStart,
+            v3RealPositionEnd = v3WorldPointEnd
         };
         OnSwipe(swipeData);
 
@@ -214,8 +200,8 @@ public class Proto_InputManager : MonoBehaviour
 
     private float funcDistance3DSwipe()
     {
-        Vector3 v3WorldPointStart = Camera.main.ScreenToWorldPoint(new Vector3(v2PositionTouchDown.x, v2PositionTouchDown.y, Camera.main.transform.position.z));
-        Vector3 v3WorldPointEnd = Camera.main.ScreenToWorldPoint(new Vector3(v2PositionTouchUp.x, v2PositionTouchUp.y, Camera.main.transform.position.z));
+        v3WorldPointStart = Camera.main.ScreenToWorldPoint(new Vector3(v2PositionTouchDown.x, v2PositionTouchDown.y, Camera.main.transform.position.z));
+        v3WorldPointEnd = Camera.main.ScreenToWorldPoint(new Vector3(v2PositionTouchUp.x, v2PositionTouchUp.y, Camera.main.transform.position.z));
 
         float fDistance3DSwipe = Vector3.Distance(v3WorldPointStart, v3WorldPointEnd);
 
@@ -234,6 +220,8 @@ public struct SwipeData
     public eSwipeDirection Direction;
 
     public float fDistance3DSwipe;
+    public Vector3 v3RealPositionStart;
+    public Vector3 v3RealPositionEnd;
 }
 
 //Enum avec les 4 directions possibles du Swipe
