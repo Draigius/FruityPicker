@@ -69,10 +69,13 @@ public class Proto_TouchScript : MonoBehaviour
                 RigidbodyTouched.drag = oldDrag;
 
             }
+
             else
             {
-
+                
                 RigidbodyTouched.drag = 0;
+                hTouchedObject = null ;
+                RigidbodyTouched = null ;
             }
             
         }
@@ -85,6 +88,8 @@ public class Proto_TouchScript : MonoBehaviour
             Debug.Log("Position A : " + ActualPosition );
             Debug.Log("Position B : " + UpdatePosition);
             Debug.Log("Force : " + BreakLimit);
+
+            
         }
     }
 
