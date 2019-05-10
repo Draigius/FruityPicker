@@ -84,7 +84,7 @@ public class Proto_TouchScript : MonoBehaviour
         {
             Debug.Log("Position A : " + ActualPosition );
             Debug.Log("Position B : " + UpdatePosition);
-            Debug.Log("Force : " + ForcePosition);
+            Debug.Log("Force : " + BreakLimit);
         }
     }
 
@@ -126,7 +126,7 @@ public class Proto_TouchScript : MonoBehaviour
         ForcePosition = UpdatePosition - ActualPosition;
 
 
-        BreakLimit = Vector2.Distance(ActualPosition, ForcePosition);
+        BreakLimit = ForcePosition.magnitude;
 
         //Debug.Log(RigidbodyTouched.velocity.magnitude);
 
@@ -143,7 +143,7 @@ public class Proto_TouchScript : MonoBehaviour
         
         RigidbodyTouched.AddForce(ForcePosition*3.5f, ForceMode.Impulse);
         ActualPosition = RigidbodyTouched.position;
-        ActualPosition = RigidbodyTouched.position;
+  
 
         
 
