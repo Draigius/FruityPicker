@@ -22,9 +22,11 @@ public class Jonction : MonoBehaviour
     //= new int []
     [Header("zone typage")]
     [Tooltip("donne la positivité de la jonction celon le signe du int \n (0 et positif )")]
+    [Range(-1,0)]
     public int iEtat;
 
     [Tooltip(" 0:normal \n 1:générateur architecture \n 2:générateur zone \n ")]
+    [Range(0, 2)]
     public int iType;
 
 
@@ -46,6 +48,7 @@ public class Jonction : MonoBehaviour
         {
 
             hZone =  Instantiate(hZoneExport, transform.position, Quaternion.identity);
+            hZone.GetComponent<Zone>().iEtat = iEtat;
 
             hZone.transform.Rotate(new Vector3(-90, 0, 0));
 
@@ -136,6 +139,14 @@ public class Jonction : MonoBehaviour
             }
 
         }
+
+    }
+
+
+    public void funcModifEtat(int iModifier)
+    {
+
+        iEtat = iEtat + iModifier;
 
     }
 }

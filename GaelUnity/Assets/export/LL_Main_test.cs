@@ -26,7 +26,7 @@ public class LL_Main_test : MonoBehaviour
     void Update()
     {
         // Spawn branche (et raisin)
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             // Génére une branche à partir du modele de la prefab
             ActualBranche = Instantiate(branche, new Vector3(0, 0, 0), Quaternion.identity);
@@ -40,7 +40,7 @@ public class LL_Main_test : MonoBehaviour
 
             // On attache le Rigidbody de la branche au HingeJoint du raisin
             JointRaisin.connectedBody = RigidbodyBranche;
-        }
+        }*/
 
         if (Input.GetMouseButtonDown(0))
         {
