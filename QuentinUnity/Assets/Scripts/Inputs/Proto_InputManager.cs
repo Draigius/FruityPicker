@@ -50,7 +50,7 @@ public class Proto_InputManager : MonoBehaviour
                 {
                     v2PositionTouchDown = tTouch.position;
 
-                    bIsTouching = true;
+                    //bIsTouching = false;
 
                     funcDetectSwipe();
                 }
@@ -132,12 +132,20 @@ public class Proto_InputManager : MonoBehaviour
         {
             hTouchedObject = hit.transform.gameObject;
 
-            Debug.Log(hTouchedObject.layer.ToString());
+            //Debug.Log(hTouchedObject.layer.ToString());
 
+            //Collider bob = hTouchedObject.GetComponent<SphereCollider>();
+            //string billy = bob.gameObject.layer.ToString();
+            //Debug.Log(billy);
+            
+            
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //A OPTIMISER
             if (hTouchedObject.layer.ToString() != "9")
             {
                 hTouchedObject = null;
             }
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
         else
         {

@@ -16,8 +16,12 @@ public class Proto_TouchScript : MonoBehaviour
     private Vector3 v3ForcePosition;
 
     private Vector2 v2MousePosition;
-    private bool bTouchDown = false;
-    private bool bTouchUp = false;
+    private bool bTouchInputDown = false;
+
+    [Header("Proprietés physiques")]
+    [SerializeField]
+    [Range(1f, 100f)]
+    private float fForceApplied = 20f;
 
     private float fMaxDragSpeed = 15;
 
@@ -33,21 +37,19 @@ public class Proto_TouchScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Clic souris
-        if (bTouchDown)
+        // Touch Input
+        if (bTouchInputDown)
         {
-            Debug.Log("Input Click");
-
             bIsDragging = true;
             rbRigidbodyTouched.useGravity = false;
             fOldDrag = rbRigidbodyTouched.drag;
             rbRigidbodyTouched.drag = 10;
+            
+            rbRigidbodyTouched.gameObject.GetComponent<MeshRenderer>().material.color = new Color(0.3f, 0.4f, 0.6f);
         }
-
-        // Clic souris relaché
-        if (!bTouchDown)
+        else
         {
-            if (rbRigidbodyTouched)
+            if (rbRigidbodyTouched != null)
             {
                 rbRigidbodyTouched.useGravity = true;
 
@@ -80,8 +82,12 @@ public class Proto_TouchScript : MonoBehaviour
             v3ActualPosition = rbRigidbodyTouched.position;
             v2MousePosition = swipeDataInput.v2EndPosition;
 
-            bTouchDown = swipeDataInput.bTouchDown;
+            bTouchInputDown = swipeDataInput.bTouchDown;
+        } else if (!ReferenceEquals(swipeDataInput.hFirstTouchedObject, swipeDataInput.hFirstTouchedObject))
+        {
+            bTouchInputDown = swipeDataInput.bTouchDown;
         }
+        Debug.Log(bTouchInputDown);
     }
 
     //////////////////////////////////////////////// DEPLACEMENT DE L'OBJET \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -90,8 +96,7 @@ public class Proto_TouchScript : MonoBehaviour
     {
         if (!bIsDragging) return;
 
-        Vector2 MousePos = Input.mousePosition;
-        v3UpdatePosition = Camera.main.ScreenToWorldPoint(new Vector3(MousePos.x, MousePos.y, 9));
+        v3UpdatePosition = Camera.main.ScreenToWorldPoint(new Vector3(v2MousePosition.x, v2MousePosition.y, 9));
         v3ForcePosition = v3UpdatePosition - v3ActualPosition;
 
 
@@ -107,7 +112,7 @@ public class Proto_TouchScript : MonoBehaviour
         }
         
         
-        rbRigidbodyTouched.AddForce(v3ForcePosition*3.5f, ForceMode.Impulse);
+        rbRigidbodyTouched.AddForce(v3ForcePosition*fForceApplied, ForceMode.Force);
         v3ActualPosition = rbRigidbodyTouched.position;
   
     }
