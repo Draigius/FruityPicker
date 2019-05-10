@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Proto_InputManager : MonoBehaviour
+public class Proto_SwipeScript : MonoBehaviour
 {   
     //Positions de touche initiale et position de touche dynamique sur l'écran
-    private Vector2 v2PositionTouchDown, v2PositionTouchUp, v2PositionFirstTouch;
-    private Vector3 v3WorldPointStart, v3WorldPointEnd;
-
-    private GameObject hFirstItemTouched, hDynamicItemTouched;
+    private Vector2 v2PositionTouchDown, v2PositionTouchUp;
 
     // Détection Swipe après avoir touché
     [SerializeField]
@@ -18,7 +15,7 @@ public class Proto_InputManager : MonoBehaviour
     [SerializeField]
     private float fMinDistanceForSwipe = 100f;
 
-    //Appelle event OnSwipe (par exemple dans Line Renderer)
+    //Appelle event OnSwipe (dans Line Renderer)
     public static event System.Action<SwipeData> OnSwipe = delegate { };
 
     // Update is called once per frame
@@ -29,7 +26,6 @@ public class Proto_InputManager : MonoBehaviour
 
         if (Input.touchCount > 0)
         {
-
             //Prend en compte Multi-touches
             foreach (Touch tTouch in Input.touches)
             {
@@ -38,7 +34,6 @@ public class Proto_InputManager : MonoBehaviour
                 {
                     v2PositionTouchUp = tTouch.position;
                     v2PositionTouchDown = tTouch.position;
-                    v2PositionFirstTouch = tTouch.position;
                 }
 
                 //Mouvement touche
@@ -59,18 +54,12 @@ public class Proto_InputManager : MonoBehaviour
         #endregion
         //
         #region Mouse Inputs
-        else {
+        else if (Input.GetMouseButton(0)){
+
             if (Input.GetMouseButtonDown(0))
             {
                 v2PositionTouchUp = Input.mousePosition;
                 v2PositionTouchDown = Input.mousePosition;
-            }
-
-            //Mouvement touche
-            if (!bDetectSwipeOnlyAfterRelease && funcMovedMouseCheck())
-            {
-                v2PositionTouchDown = Input.mousePosition;
-                funcDetectSwipe();
             }
 
             //fin de la touche
@@ -86,11 +75,6 @@ public class Proto_InputManager : MonoBehaviour
     //Fonction détection de Swipe
     private void funcDetectSwipe()
     {
-        //Lance Ray Cast 
-        hFirstItemTouched = funcTouchReturnObject(v2PositionFirstTouch);
-        hDynamicItemTouched = funcTouchReturnObject(v2PositionTouchDown);
-    
-
         //Vérifie la distance du swipe actuel
         if (funcBoolSwipeDistanceCheck())
         {   
@@ -100,53 +84,28 @@ public class Proto_InputManager : MonoBehaviour
             if (funcBoolIsVerticalSwipe())
             {
                 var dirSwipe = v2PositionTouchDown.y - v2PositionTouchUp.y > 0 ? eSwipeDirection.Up : eSwipeDirection.Down;
-                funcSendSwipe(dirSwipe, hFirstItemTouched, hDynamicItemTouched);
+                funcSendSwipe(dirSwipe);
             }
             else
-            //Check Horizontal
+            //Check Vertical
             {
                 var dirSwipe = v2PositionTouchDown.x - v2PositionTouchUp.x > 0 ? eSwipeDirection.Right : eSwipeDirection.Left;
-                funcSendSwipe(dirSwipe, hFirstItemTouched, hDynamicItemTouched);
+                funcSendSwipe(dirSwipe);
             }
 
             //v2PositionTouchUp = v2PositionTouchDown;
         }
     }
 
-    GameObject funcTouchReturnObject(Vector2 V2ScreenPos)
-    {
-        GameObject hTouchedObject;
-        RaycastHit hit;
-
-
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(V2ScreenPos), out hit, 100))
-        {
-            hTouchedObject = hit.transform.gameObject;
-        }
-        else
-        {
-            hTouchedObject = null;
-        }
-
-        return hTouchedObject;
-    }
-
     //Envoi du OnSwipe aux autres scripts
-    private void funcSendSwipe (eSwipeDirection dirSwipe, GameObject hFirstItemTouched, GameObject hDynamicItemTouched)
+    private void funcSendSwipe (eSwipeDirection dirSwipe)
     {
         //Nouvelles Données Swipe Data
         SwipeData swipeData = new SwipeData()
         {
             Direction = dirSwipe,
             v2StartPosition = v2PositionTouchDown,
-            v2EndPosition = v2PositionTouchUp,
-
-            hFirstTouchedObject = hFirstItemTouched,
-            hCurrentTouchedObject = hDynamicItemTouched,
-
-            fDistance3DSwipe = funcDistance3DSwipe(),
-            v3RealPositionStart = v3WorldPointStart,
-            v3RealPositionEnd = v3WorldPointEnd
+            v2EndPosition = v2PositionTouchUp
         };
         OnSwipe(swipeData);
 
@@ -179,49 +138,15 @@ public class Proto_InputManager : MonoBehaviour
         return Mathf.Abs(v2PositionTouchDown.x - v2PositionTouchUp.x);
     }
 
-
-    //Vérification dynamique de mouvement de souris
-    private bool funcMovedMouseCheck ()
-    {
-        bool bMouseMoved;
-        Vector2 v2PositionTouchNow = Input.mousePosition;
-
-        if (v2PositionTouchDown != v2PositionTouchNow)
-        {
-            bMouseMoved = true;
-        }
-        else
-        {
-            bMouseMoved = false;
-        }
-
-        return bMouseMoved;
-    }
-
-    private float funcDistance3DSwipe()
-    {
-        v3WorldPointStart = Camera.main.ScreenToWorldPoint(new Vector3(v2PositionTouchDown.x, v2PositionTouchDown.y, Camera.main.transform.position.z));
-        v3WorldPointEnd = Camera.main.ScreenToWorldPoint(new Vector3(v2PositionTouchUp.x, v2PositionTouchUp.y, Camera.main.transform.position.z));
-
-        float fDistance3DSwipe = Vector3.Distance(v3WorldPointStart, v3WorldPointEnd);
-
-        return fDistance3DSwipe;
-    }
     #endregion
 }
 
 //Struct avec les infos du Swipe
 public struct SwipeData
 {
-    public GameObject hFirstTouchedObject;
-    public GameObject hCurrentTouchedObject;
     public Vector2 v2StartPosition;
     public Vector2 v2EndPosition;
     public eSwipeDirection Direction;
-
-    public float fDistance3DSwipe;
-    public Vector3 v3RealPositionStart;
-    public Vector3 v3RealPositionEnd;
 }
 
 //Enum avec les 4 directions possibles du Swipe

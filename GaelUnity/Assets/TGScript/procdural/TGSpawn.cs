@@ -169,19 +169,19 @@ public class TGSpawn : MonoBehaviour
                 if (j == 0)
                 {
 
-                    fTablePosition[iStockEnbronchement, 1] = 0 + Random.RandomRange(-fMaxRandomX/2, fMaxRandomX/2);
+                    //fTablePosition[iStockEnbronchement, 1] = 0 + Random.RandomRange(-fMaxRandomX/2, fMaxRandomX/2);
 
                 }
                 else if(j==1 || j == 3 || j == 5 || j == 7 || j == 9 || j == 11 || j == 13 ) // droite 
                 {
 
-                    fTablePosition[iStockEnbronchement, 1] = fEspacementX*(j/2+0.5f) + Random.RandomRange(0f, fMaxRandomX);
+                    //fTablePosition[iStockEnbronchement, 1] = fEspacementX*(j/2+0.5f) + Random.RandomRange(0f, fMaxRandomX);
 
                 }
                 else if (j == 2 || j == 4 || j == 6 || j == 8 || j == 10 || j == 12 || j == 14) // gauche
                 {
 
-                    fTablePosition[iStockEnbronchement, 1] = (fEspacementX * (j / 2) + Random.RandomRange(-fMaxRandomX, fMaxRandomX)) * -1;
+                    //fTablePosition[iStockEnbronchement, 1] = (fEspacementX * (j / 2) + Random.RandomRange(-fMaxRandomX, fMaxRandomX)) * -1;
 
                 }
 
