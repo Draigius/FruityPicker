@@ -24,7 +24,7 @@ public class Jonction : MonoBehaviour
     [Tooltip("donne la positivité de la jonction celon le signe du int \n (0 et positif )")]
     public int iEtat;
 
-    [Tooltip(" 0:normal \n 1:générateur zone \n 2:générateur architecture \n ")]
+    [Tooltip(" 0:normal \n 1:générateur architecture \n 2:générateur zone \n ")]
     public int iType;
 
 
@@ -35,30 +35,44 @@ public class Jonction : MonoBehaviour
     public Material[] mTableMaterialNegative = new Material[0];
 
     // Start is called before the first frame update
+
+    [Header("ressource")]
+    public GameObject hZoneExport;
+    private GameObject hZone;
+
     void Start()
     {
-        
+        if(iType == 2)
+        {
+
+            hZone =  Instantiate(hZoneExport, transform.position, Quaternion.identity);
+
+            hZone.transform.Rotate(new Vector3(-90, 0, 0));
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        fMaterial();
-
-
-
-        if (Input.GetKeyDown(KeyCode.A) && bObjectDebeuger==true)
+        if (iType == 2)
         {
 
-            if (iType == 1)
-            {
+            hZone.transform.position = transform.position;
+        }
 
-                fPropagationArchitecture();
 
-            }
+        funcMaterial();
+
+
+        if(bObjectDebeuger == true)
+        {
+
+            funcDebug();
 
         }
+        
 
         
 
@@ -68,7 +82,7 @@ public class Jonction : MonoBehaviour
 
 
 
-    public void fMaterial()
+    public void funcMaterial()
     {
         //Debug.Log(nNum);
         rend = GetComponent<Renderer>();
@@ -90,11 +104,38 @@ public class Jonction : MonoBehaviour
 
     }
 
-    void fPropagationArchitecture()
+    void funcPropagationArchitecture()
     {
 
 
 
     }
 
+    void funcGenératorZone()
+    {
+        
+
+
+    }
+
+
+
+
+    void funcDebug()
+    {
+
+        if (Input.GetKeyDown(KeyCode.A) && bObjectDebeuger == true)
+        {
+
+            if (iType == 1)
+            {
+
+                //funcPropagationArchitecture();
+                funcGenératorZone();
+
+            }
+
+        }
+
+    }
 }
