@@ -7,10 +7,13 @@ public class FruitBehavior : MonoBehaviour
     private GameObject hFruit;
     private Rigidbody rbFruit;
 
+    private bool bMovingToPoint;
+    private Vector3 v3TargetPos;
+
     [Header ("Proprietés physiques")]
     [SerializeField]
-    [Range(0.1f,100f)]
-    private float fForceApplique = 50f;
+    [Range(1f,20000f)]
+    private float fForceApplique = 20000f;
 
     [SerializeField]
     [Range(1, 5)]
@@ -39,7 +42,15 @@ public class FruitBehavior : MonoBehaviour
     private void SwipeDetector_OnSwipe(SwipeData swipeDataInput)
     {
         if (swipeDataInput.hFirstTouchedObject == hFruit){
-            rbFruit.AddForce((hFruit.transform.position - swipeDataInput.v3RealPositionEnd).normalized * fForceApplique, ForceMode.Impulse);
+            //rbFruit.AddForce((hFruit.transform.position - swipeDataInput.v3RealPositionEnd).normalized * fForceApplique, ForceMode.Force);
+
+            //Moving to point
+            bMovingToPoint = true;
+            v3TargetPos = swipeDataInput.v3RealPositionEnd;
+        }
+        else
+        {
+            bMovingToPoint = false;
         }
         //rbFruit.AddForce(swipeDataInput.v3RealPositionEnd.normalized * fForceApplique,ForceMode.Force);
     }
@@ -49,4 +60,13 @@ public class FruitBehavior : MonoBehaviour
     {
         
     }
+
+    void FixedUpdate()
+    {
+        if (bMovingToPoint)
+        {
+            rbFruit.AddForce((hFruit.transform.position + v3TargetPos).normalized * fForceApplique * Time.deltaTime, ForceMode.Force);
+        }
+    }
+        
 }

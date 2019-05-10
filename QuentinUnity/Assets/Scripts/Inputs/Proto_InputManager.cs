@@ -10,6 +10,8 @@ public class Proto_InputManager : MonoBehaviour
 
     private GameObject hFirstItemTouched, hDynamicItemTouched;
 
+    private bool bIsTouching;
+
     // Détection Swipe après avoir touché
     [SerializeField]
     public bool bDetectSwipeOnlyAfterRelease = true;
@@ -39,12 +41,17 @@ public class Proto_InputManager : MonoBehaviour
                     v2PositionTouchUp = tTouch.position;
                     v2PositionTouchDown = tTouch.position;
                     v2PositionFirstTouch = tTouch.position;
+
+                    bIsTouching = true;
                 }
 
                 //Mouvement touche
                 if (!bDetectSwipeOnlyAfterRelease && tTouch.phase == TouchPhase.Moved)
                 {
                     v2PositionTouchDown = tTouch.position;
+
+                    bIsTouching = true;
+
                     funcDetectSwipe();
                 }
 
@@ -52,13 +59,15 @@ public class Proto_InputManager : MonoBehaviour
                 if (tTouch.phase == TouchPhase.Ended)
                 {
                     v2PositionTouchDown = tTouch.position;
+
+                    bIsTouching = false;
                     funcDetectSwipe();
                 }
             }
         }
         #endregion
         //
-        #region Mouse Inputs
+        /*#region Mouse Inputs
         else {
             if (Input.GetMouseButtonDown(0))
             {
@@ -80,7 +89,7 @@ public class Proto_InputManager : MonoBehaviour
                 funcDetectSwipe();
             }
         }
-        #endregion
+        #endregion*/
     }
 
     //Fonction détection de Swipe
@@ -122,6 +131,13 @@ public class Proto_InputManager : MonoBehaviour
         if (Physics.Raycast(Camera.main.ScreenPointToRay(V2ScreenPos), out hit, 100))
         {
             hTouchedObject = hit.transform.gameObject;
+
+            Debug.Log(hTouchedObject.layer.ToString());
+
+            if (hTouchedObject.layer.ToString() != "9")
+            {
+                hTouchedObject = null;
+            }
         }
         else
         {
@@ -146,7 +162,9 @@ public class Proto_InputManager : MonoBehaviour
 
             fDistance3DSwipe = funcDistance3DSwipe(),
             v3RealPositionStart = v3WorldPointStart,
-            v3RealPositionEnd = v3WorldPointEnd
+            v3RealPositionEnd = v3WorldPointEnd,
+
+            bTouchDown = bIsTouching
         };
         OnSwipe(swipeData);
 
@@ -222,6 +240,8 @@ public struct SwipeData
     public float fDistance3DSwipe;
     public Vector3 v3RealPositionStart;
     public Vector3 v3RealPositionEnd;
+
+    public bool bTouchDown;
 }
 
 //Enum avec les 4 directions possibles du Swipe
