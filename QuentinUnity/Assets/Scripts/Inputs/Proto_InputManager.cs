@@ -50,7 +50,7 @@ public class Proto_InputManager : MonoBehaviour
                 {
                     v2PositionTouchDown = tTouch.position;
 
-                    //bIsTouching = false;
+                    bIsTouching = true;
 
                     funcDetectSwipe();
                 }
@@ -60,11 +60,19 @@ public class Proto_InputManager : MonoBehaviour
                 {
                     v2PositionTouchDown = tTouch.position;
 
-                    bIsTouching = false;
+                    bIsTouching = true;
                     funcDetectSwipe();
                 }
             }
         }
+        else
+        {
+            bIsTouching = false;
+            funcDetectSwipe();
+        }
+
+        //Debug.Log(bIsTouching);
+
         #endregion
         //
         /*#region Mouse Inputs

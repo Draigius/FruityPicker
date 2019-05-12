@@ -9,6 +9,12 @@ public class Proto_SwipeLogger : MonoBehaviour
     public bool bShowFirstHitObject;
     public bool bShowCurrentTouchedObject;
     public bool bShowDistanceUnits;
+    public bool bShowTouch;
+
+    private void Update()
+    {
+        
+    }
 
     private void Awake()
     {
@@ -17,6 +23,7 @@ public class Proto_SwipeLogger : MonoBehaviour
 
     private void SwipeDetector_OnSwipe (SwipeData swipeDataInput)
     {
+
         if (bShowDirection)
         {
             Debug.Log("Swipe in Direction : " + swipeDataInput.Direction);
@@ -36,9 +43,5 @@ public class Proto_SwipeLogger : MonoBehaviour
         {
             Debug.Log("Distance BetweenObjects  : " + swipeDataInput.fDistance3DSwipe);
         }
-
-      
-        
-
     }
 }

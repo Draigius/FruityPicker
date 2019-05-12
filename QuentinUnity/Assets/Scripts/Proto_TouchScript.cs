@@ -67,6 +67,8 @@ public class Proto_TouchScript : MonoBehaviour
             }
             //RigidbodyTouched.isKinematic = true;
         }
+
+        Debug.Log("Touching Object : " +  bTouchInputDown);
     }
 
     //////////////////////////////////////////////// SELECTION DE L'OBJET \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
@@ -83,11 +85,10 @@ public class Proto_TouchScript : MonoBehaviour
             v2MousePosition = swipeDataInput.v2EndPosition;
 
             bTouchInputDown = swipeDataInput.bTouchDown;
-        } else if (!ReferenceEquals(swipeDataInput.hFirstTouchedObject, swipeDataInput.hFirstTouchedObject))
+        } else if (!ReferenceEquals(swipeDataInput.hFirstTouchedObject, swipeDataInput.hCurrentTouchedObject))
         {
             bTouchInputDown = swipeDataInput.bTouchDown;
         }
-        Debug.Log(bTouchInputDown);
     }
 
     //////////////////////////////////////////////// DEPLACEMENT DE L'OBJET \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
