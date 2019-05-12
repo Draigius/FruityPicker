@@ -36,7 +36,11 @@ public class Jonction : MonoBehaviour
     public Material[] mTableMaterialPositive = new Material[0];
     public Material[] mTableMaterialNegative = new Material[0];
 
-    // Start is called before the first frame update
+    [Header("Parametre Zone")]
+    [Range(0.5f, 6)]
+    public float fScaleZone;
+
+
 
     [Header("ressource")]
     public GameObject hZoneExport;
@@ -48,8 +52,22 @@ public class Jonction : MonoBehaviour
         {
 
             hZone =  Instantiate(hZoneExport, transform.position, Quaternion.identity);
-            hZone.GetComponent<Zone>().iEtat = iEtat;
+            if(iEtat == -1)
+            {
 
+                hZone.GetComponent<Zone>().bEtatPositif = false;
+
+            }
+            else
+            {
+
+                hZone.GetComponent<Zone>().bEtatPositif = true;
+
+            }
+
+            hZone.GetComponent<Zone>().iIdGenerateurOrigine = iIdActuel;
+
+            hZone.transform.localScale = new Vector3(fScaleZone, 1, fScaleZone);
             hZone.transform.Rotate(new Vector3(-90, 0, 0));
 
         }
@@ -143,10 +161,25 @@ public class Jonction : MonoBehaviour
     }
 
 
-    public void funcModifEtat(int iModifier)
+    public void funcModifEtat(bool bModifier, int iIdGenerateur)
     {
+        if(iIdGenerateur != iIdActuel)
+        {
 
-        iEtat = iEtat + iModifier;
+            if (bModifier == true)
+            {
+
+                iEtat = iEtat + 1;
+
+            }
+            else
+            {
+
+                iEtat = iEtat - 1;
+
+            }
+
+        }
 
     }
 }
