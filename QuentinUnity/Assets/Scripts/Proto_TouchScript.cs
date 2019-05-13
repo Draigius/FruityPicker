@@ -5,6 +5,9 @@ using UnityEngine;
 public class Proto_TouchScript : MonoBehaviour
 {
 
+
+
+
     private GameObject hTouchedObject;
     private HingeJoint jJointTouched;
     private Rigidbody rbRigidbodyTouched;
@@ -96,6 +99,7 @@ public class Proto_TouchScript : MonoBehaviour
     private void FixedUpdate()
     {
         if (!bIsDragging) return;
+
 
         v3UpdatePosition = Camera.main.ScreenToWorldPoint(new Vector3(v2MousePosition.x, v2MousePosition.y, 9));
         v3ForcePosition = v3UpdatePosition - hTouchedObject.transform.position;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Camera_Main : MonoBehaviour
@@ -18,6 +19,12 @@ public class Camera_Main : MonoBehaviour
     // Variables rotation en X
     public int iDeltaAngleX;
     public float fAngleSpeedX;
+
+
+    // Variables affichage FPS
+    public Text HUD_FPS_Text;
+    private float CounterTimer = 0;
+    private int CounterFPS = 0;
 
     #endregion
 
@@ -59,6 +66,18 @@ public class Camera_Main : MonoBehaviour
 
         // Application de TempRotation sur le transform du Dummy
         dummyCam.transform.eulerAngles = TempRotation;
+
+
+        // Affichage FPS 
+        CounterTimer += Time.deltaTime;
+        CounterFPS += 1;
+
+        if (CounterTimer >= 1)
+        {
+            CounterTimer = 0;
+            HUD_FPS_Text.text = "FPS : " + CounterFPS;
+            CounterFPS = 0;
+        }
 
 
     }
