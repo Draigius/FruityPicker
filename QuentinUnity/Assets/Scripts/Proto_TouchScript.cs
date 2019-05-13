@@ -10,6 +10,8 @@ public class Proto_TouchScript : MonoBehaviour
     private Rigidbody rbRigidbodyTouched;
 
     private float fBreakLimit;
+    private float fBreakThreshold = 2f;
+
     private Vector3 v3ActualPosition;
     private Vector3 v3UpdatePosition;
 
@@ -21,7 +23,7 @@ public class Proto_TouchScript : MonoBehaviour
     [Header("Proprietés physiques")]
     [SerializeField]
     [Range(1f, 100f)]
-    private float fForceApplied = 20f;
+    private float fForceApplied = 5f;
 
     private float fMaxDragSpeed = 15;
 
@@ -87,7 +89,6 @@ public class Proto_TouchScript : MonoBehaviour
         {
             bTouchInputDown = swipeDataInput.bTouchDown;
         }
-        Debug.Log(bTouchInputDown);
     }
 
     //////////////////////////////////////////////// DEPLACEMENT DE L'OBJET \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -97,12 +98,14 @@ public class Proto_TouchScript : MonoBehaviour
         if (!bIsDragging) return;
 
         v3UpdatePosition = Camera.main.ScreenToWorldPoint(new Vector3(v2MousePosition.x, v2MousePosition.y, 9));
-        v3ForcePosition = v3UpdatePosition - v3ActualPosition;
-
+        v3ForcePosition = v3UpdatePosition - hTouchedObject.transform.position;
 
         fBreakLimit = v3ForcePosition.magnitude;
 
-        if (fBreakLimit >= 2.5 && rbRigidbodyTouched.GetComponent<HingeJoint>() != null) { jJointTouched.breakForce = 0; }
+        Debug.Log("fBreakLimit :" + fBreakLimit);
+        Debug.Log("fBreakThreshold :" + fBreakThreshold);
+
+        if (fBreakLimit >= fBreakThreshold && rbRigidbodyTouched.GetComponent<HingeJoint>() != null) { jJointTouched.breakForce = 0; }
 
         //check vitesse max
 
@@ -110,9 +113,10 @@ public class Proto_TouchScript : MonoBehaviour
         {
             rbRigidbodyTouched.velocity = Vector3.ClampMagnitude(rbRigidbodyTouched.velocity, fMaxDragSpeed);
         }
-        
-        
-        rbRigidbodyTouched.AddForce(v3ForcePosition*fForceApplied, ForceMode.Force);
+
+        //PUTTING FORCE
+        //Debug.Log("AddingImpulse");
+        rbRigidbodyTouched.AddForce(v3ForcePosition*fForceApplied, ForceMode.Impulse);
         v3ActualPosition = rbRigidbodyTouched.position;
   
     }

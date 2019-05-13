@@ -42,6 +42,8 @@ public class Proto_InputManager : MonoBehaviour
                     v2PositionTouchDown = tTouch.position;
                     v2PositionFirstTouch = tTouch.position;
 
+                    hFirstItemTouched = funcTouchReturnObject(v2PositionFirstTouch);
+
                     bIsTouching = true;
                 }
 
@@ -96,7 +98,7 @@ public class Proto_InputManager : MonoBehaviour
     private void funcDetectSwipe()
     {
         //Lance Ray Cast 
-        hFirstItemTouched = funcTouchReturnObject(v2PositionFirstTouch);
+        
         hDynamicItemTouched = funcTouchReturnObject(v2PositionTouchDown);
     
 
@@ -162,8 +164,8 @@ public class Proto_InputManager : MonoBehaviour
         SwipeData swipeData = new SwipeData()
         {
             Direction = dirSwipe,
-            v2StartPosition = v2PositionTouchDown,
-            v2EndPosition = v2PositionTouchUp,
+            v2StartPosition = v2PositionFirstTouch,
+            v2EndPosition = v2PositionTouchDown,
 
             hFirstTouchedObject = hFirstItemTouched,
             hCurrentTouchedObject = hDynamicItemTouched,
