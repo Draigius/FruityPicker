@@ -49,8 +49,15 @@ public class Jonction : MonoBehaviour
     [Header("a ne pas changer")]
     public bool bAttacher = true;
 
+
+
+    private int iEtatStockage;
+
     void Start()
     {
+
+        iEtatStockage = iEtat;
+
 
 
         hMainCam = Camera.main;
@@ -117,6 +124,16 @@ public class Jonction : MonoBehaviour
             funcDebug();
 
         }
+
+
+
+        if(iEtatStockage != iEtat)
+        {
+
+
+
+            iEtatStockage = iEtat;
+        }
         
 
         
@@ -137,6 +154,7 @@ public class Jonction : MonoBehaviour
         if (iEtat >= 0)
         {
 
+            Debug.Log("iType :" + iType);
             rend.sharedMaterial = mTableMaterialPositive[iType];
 
         }
@@ -311,6 +329,9 @@ public class Jonction : MonoBehaviour
         }
 
     }
+
+
+
 
 
 
