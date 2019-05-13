@@ -1,14 +1,16 @@
 fileFormatVersion: 2
-guid: bf925c21ccb07204ca9b0bc918cdc9ac
+guid: 9c95e54fde2cc9e4d80bb575167f31b5
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
+    100002: citron_Citron
     400000: //RootNode
-    2100000: No Name
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Plane001
+    400002: citron_Citron
+    2100000: citron_CitronMat
+    2300000: citron_Citron
+    3300000: citron_Citron
+    4300000: citron_Citron
   externalObjects: {}
   materials:
     importMaterials: 1

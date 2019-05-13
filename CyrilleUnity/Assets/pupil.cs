@@ -2,49 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class pupil : MonoBehaviour
+public class Pupil : MonoBehaviour
 {
 
-    private float timer;
-    private float delay = 0.06f;
+    private float fTimer;
+    private float fDelay = 0.06f;
+    public GameObject hFaceManager;
+    private float fSmallSize;
+    private float fBaseSize;
+    private float fBigSize;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        fSmallSize = hFaceManager.GetComponent<FaceManager>().fSmallSize;
+        fBigSize = hFaceManager.GetComponent<FaceManager>().fBigSize;
+        fBaseSize = hFaceManager.GetComponent<FaceManager>().fBaseSize;
+
+        transform.localScale = new Vector3(fBaseSize, fBaseSize, fBaseSize);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        timer += Time.deltaTime;
+        fTimer += Time.deltaTime;
 
 
-        if (Input.GetMouseButton(0) == true)
+        
+
+    }
+
+
+    public void UpdateExcited()
+    {
+        if (fTimer > fDelay)
         {
-            if (timer>delay)
-            {
-                float rand = Random.Range(-0.02f, 0.02f);
-                transform.localScale = new Vector3(1.1f + rand, 1.1f + rand, 1.1f + rand);
-                timer = 0;
-
-            }
-                      
-        }
-
-        if (Input.GetMouseButton(1) == true)
-        {
-            float rand = Random.Range(-0.006f, 0.006f);
-            transform.localScale = new Vector3(0.9f + rand, 0.9f + rand, 0.9f + rand);
+            float _rand = Random.Range(-0.02f, 0.02f);
+            transform.localScale = new Vector3(fBigSize + _rand, fBigSize + _rand, fBigSize + _rand);
+            fTimer = 0;
 
         }
 
-        if (Input.GetMouseButtonUp(0) == true | Input.GetMouseButtonUp(1) == true)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
+    }
 
-        }
+    public void UpdateScared()
+    {
+        float _rand = Random.Range(-0.006f, 0.006f);
+        transform.localScale = new Vector3(fSmallSize + _rand, fSmallSize + _rand, fSmallSize + _rand);
+
+    }
+
+    public void ResetScale()
+    {
+        transform.localScale = new Vector3(fBaseSize, fBaseSize, fBaseSize);
 
     }
 }
