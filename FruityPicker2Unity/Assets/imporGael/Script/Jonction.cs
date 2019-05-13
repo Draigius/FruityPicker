@@ -49,6 +49,12 @@ public class Jonction : MonoBehaviour
 
     [Header("a ne pas changer")]
     public bool bAttacher = true;
+
+    [Tooltip("prefab de fruit ")]
+    public GameObject[] hTableMesh;
+
+    [Header("ne pas remplire")]
+
     public GameObject hMesh;
 
 
@@ -60,7 +66,14 @@ public class Jonction : MonoBehaviour
 
         iEtatStockage = iEtat;
 
+        if(iType == 0)
+        {
 
+            hMesh = Instantiate(hTableMesh[0], transform.position, Quaternion.identity);
+
+            //hMesh.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
+
+        }
 
         hMainCam = Camera.main;
 
@@ -69,6 +82,23 @@ public class Jonction : MonoBehaviour
         {
 
             funcPropagationArchitecture(iType, gameObject, iEtat,1);
+
+            if (iType == 1)
+            {
+
+                hMesh = Instantiate(hTableMesh[1], transform.position, Quaternion.identity);
+                //hMesh.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+            }
+            else
+            {
+
+                hMesh = Instantiate(hTableMesh[2], transform.position, Quaternion.identity);
+                //hMesh.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+            }
+
+               
 
         }
 
@@ -106,9 +136,27 @@ public class Jonction : MonoBehaviour
 
     }
 
+
+    private void FixedUpdate()
+    {
+
+        if (iType == 0 || iType == 1 || iType == 2)
+        {
+
+            hMesh.transform.position = transform.position;
+            //hMesh.transform.Rotate(0, 0, transform.rotation.z);
+
+        }
+
+    }
+
+
     // Update is called once per frame
     void Update()
     {
+
+        
+
         // si c'est un type générateur de zone
         if (iType == 3)
         {
@@ -183,28 +231,28 @@ public class Jonction : MonoBehaviour
         if (iSensPropagation == 1)
         {
 
-            for (int i = 0; i < hMainCam.GetComponent<MainGame>().mTableJunction.Length; i++)
+            for (int i = 0; i < hMainCam.GetComponent<MainGame>().hTableJunction.Length; i++)
             {
 
-                int iIdVerif = hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iIdActuel;
+                int iIdVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdActuel;
 
                 if (iIdVerif == hLanceurFonction.GetComponent<Jonction>().iIdParent)
                 {
                     if (iEtatPropagation >= 0)
                     {
-                        hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iEtat + (1* iActivation);
+                        hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat + (1* iActivation);
                     }
                     else
                     {
 
-                        hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iEtat - (1 * iActivation);
+                        hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat - (1 * iActivation);
 
                     }
 
-                    if(hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iIdParent != 0)
+                    if(hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdParent != 0)
                     {
 
-                        funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().mTableJunction[i], iEtatPropagation, 1);
+                        funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().hTableJunction[i], iEtatPropagation, 1);
 
                     }
 
@@ -218,9 +266,9 @@ public class Jonction : MonoBehaviour
         if (iSensPropagation == 2)
         {
 
-            for (int i = 0; i < hMainCam.GetComponent<MainGame>().mTableJunction.Length; i++)
+            for (int i = 0; i < hMainCam.GetComponent<MainGame>().hTableJunction.Length; i++)
             {
-                int iIdVerif = hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iIdActuel;
+                int iIdVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdActuel;
 
                 int iLongeurTable = hLanceurFonction.GetComponent<Jonction>().iIdEnfant.Length;
 
@@ -235,20 +283,20 @@ public class Jonction : MonoBehaviour
                         if (iEtatPropagation >= 0)
                         {
 
-                            hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iEtat + (1 * iActivation);
+                            hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat + (1 * iActivation);
 
                         }
                         else
                         {
 
-                            //Debug.Log("Etat :" + hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iEtat);
-                            //Debug.Log("object :" + hMainCam.GetComponent<MainGame>().mTableJunction[i]);
+                            //Debug.Log("Etat :" + hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat);
+                            //Debug.Log("object :" + hMainCam.GetComponent<MainGame>().hTableJunction[i]);
                             //Debug.Log("i :" + i);
-                            hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iEtat - (1 * iActivation);
+                            hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat - (1 * iActivation);
 
                         }
 
-                        if (hMainCam.GetComponent<MainGame>().mTableJunction[i].GetComponent<Jonction>().iIdEnfant.Length != 0)
+                        if (hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdEnfant.Length != 0)
                         {
 
                             iConteur = iConteur + 1;
@@ -257,7 +305,7 @@ public class Jonction : MonoBehaviour
                             {
 
                                 //Debug.Log("Mdr :" + iConteur);
-                                funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().mTableJunction[i], iEtatPropagation, 1);
+                                funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().hTableJunction[i], iEtatPropagation, 1);
 
                             }
                             

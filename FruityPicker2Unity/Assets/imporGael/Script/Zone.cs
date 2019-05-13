@@ -15,6 +15,8 @@ public class Zone : MonoBehaviour
 
     public int iIdGenerateurOrigine;
 
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,35 +47,44 @@ public class Zone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
+        Camera cCampPrincipale = Camera.main;
         //Debug.Log("object toucher : "+other);
-        string sLayerObject = other.gameObject.layer.ToString();
 
-        if (sLayerObject == "13")
+        GameObject hObjectToucher = other.gameObject;
+
+        for(int i=0 ; i < cCampPrincipale.GetComponent<MainGame>().hTableJunction.Length; i++)
         {
 
-            GameObject hObjectToucher = other.gameObject;
-            hObjectToucher.GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine);
+            if(hObjectToucher == cCampPrincipale.GetComponent<MainGame>().hTableJunction[i])
+            {
+                Debug.Log("change etat");
+                hObjectToucher.GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine);
+
+            }
 
         }
-
 
     }
 
     private void OnTriggerExit(Collider other)
     {
 
+        Camera cCampPrincipale = Camera.main;
         //Debug.Log("object toucher : "+other);
-        string sLayerObject = other.gameObject.layer.ToString();
 
-        if (sLayerObject == "13")
+        GameObject hObjectToucher = other.gameObject;
+
+        for (int i = 0; i < cCampPrincipale.GetComponent<MainGame>().hTableJunction.Length; i++)
         {
 
-            GameObject hObjectToucher = other.gameObject;
-            hObjectToucher.GetComponent<Jonction>().funcModifEtat(!bEtatPositif, iIdGenerateurOrigine);
+            if (hObjectToucher == cCampPrincipale.GetComponent<MainGame>().hTableJunction[i])
+            {
+
+                hObjectToucher.GetComponent<Jonction>().funcModifEtat(!bEtatPositif, iIdGenerateurOrigine);
+
+            }
 
         }
-
 
     }
     
