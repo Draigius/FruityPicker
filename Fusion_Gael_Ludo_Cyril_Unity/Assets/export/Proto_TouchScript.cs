@@ -15,7 +15,7 @@ public class Proto_TouchScript : MonoBehaviour
     private float fBreakLimit;
 
     // Distance entre la souris et le fruit sélectionné pour laquelle le joint se romp
-    public float fBreakLimitMax =  2;
+    public float fBreakLimitMax = 2;
 
     // Position de l'objet
     private Vector3 v3TouchedObjectPosition;
@@ -32,11 +32,11 @@ public class Proto_TouchScript : MonoBehaviour
 
 
     ///////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-   
+
     //                                               UPDATE
 
     ///////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
+
 
     void Update()
     {
@@ -45,7 +45,7 @@ public class Proto_TouchScript : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Input Click");
-            funcTouchReturnObject (Input.mousePosition);
+            funcTouchReturnObject(Input.mousePosition);
 
             isDragging = true;
             rbTouched.useGravity = false;
@@ -54,7 +54,7 @@ public class Proto_TouchScript : MonoBehaviour
         }
 
         // Clic souris maintenu
-        if (Input.GetMouseButton(0) && jTouched== null)
+        if (Input.GetMouseButton(0) && jTouched == null)
         {
             funcGAEL();
         }
@@ -64,7 +64,7 @@ public class Proto_TouchScript : MonoBehaviour
         {
             rbTouched.useGravity = true;
             //RigidbodyTouched.isKinematic = true;
-            
+
             isDragging = false;
 
             //Si le lien n'est pas cassé
@@ -86,15 +86,15 @@ public class Proto_TouchScript : MonoBehaviour
         // Debug
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Position A : " + v3TouchedObjectPosition );
+            Debug.Log("Position A : " + v3TouchedObjectPosition);
             Debug.Log("Position B : " + v3MousePosition);
-            Debug.Log("Force : " + fBreakLimit);     
+            Debug.Log("Force : " + fBreakLimit);
         }
     }
 
     //////////////////////////////////////////////// SELECTION DE L'OBJET \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
-    void funcTouchReturnObject( Vector2 V2ScreenPos )
+
+    void funcTouchReturnObject(Vector2 V2ScreenPos)
     {
         RaycastHit hit;
 
@@ -134,15 +134,15 @@ public class Proto_TouchScript : MonoBehaviour
         if (rbTouched.velocity.magnitude > fMaxDragSpeed)
         {
             rbTouched.velocity = Vector3.ClampMagnitude(rbTouched.velocity, fMaxDragSpeed);
-            
+
         }
         // Active la force qui doit déplaçer l'objet sélectionné
-        rbTouched.AddForce(v3ForcePosition*3.5f, ForceMode.Impulse);
+        rbTouched.AddForce(v3ForcePosition * 3.5f, ForceMode.Impulse);
     }
 
 
 
-    void funcGAEL ()
+    void funcGAEL()
     {
 
     }
