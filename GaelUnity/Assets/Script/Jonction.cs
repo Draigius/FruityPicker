@@ -30,7 +30,6 @@ public class Jonction : MonoBehaviour
 
 
     // rendering de material
-    Renderer rend;
     [Header("tableau de Material")]
     public Material[] mTableMaterialPositive = new Material[0];
     public Material[] mTableMaterialNegative = new Material[0];
@@ -48,6 +47,7 @@ public class Jonction : MonoBehaviour
 
     [Header("a ne pas changer")]
     public bool bAttacher = true;
+    public GameObject hMesh;
 
 
 
@@ -146,21 +146,17 @@ public class Jonction : MonoBehaviour
     // change le matériaux  
     public void funcMaterial()
     {
-        //truc de rendu unity que je comprend pas mais faut que sa soit la !
-        rend = GetComponent<Renderer>();
-        rend.enabled = true;
         
         //choix de la couleur selon le etat puis fois du motif selon le type
         if (iEtat >= 0)
         {
-
-            rend.sharedMaterial = mTableMaterialPositive[iType];
+            funcChangemantMatérial(mTableMaterialPositive[iType]);
 
         }
         else
         {
 
-            rend.sharedMaterial = mTableMaterialNegative[iType];
+            funcChangemantMatérial(mTableMaterialNegative[iType]);
 
         }
 
