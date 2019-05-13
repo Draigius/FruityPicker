@@ -125,12 +125,12 @@ public class Jonction : MonoBehaviour
 
         }
 
+        Debug.Log(Mathf.Sign(10));
 
-
-        if(iEtatStockage != iEtat)
+        if (Mathf.Sign(iEtatStockage) != Mathf.Sign(iEtat))
         {
 
-
+            funcPropagationArchitecture(iType, gameObject, iEtat, 1);
 
             iEtatStockage = iEtat;
         }
@@ -154,7 +154,6 @@ public class Jonction : MonoBehaviour
         if (iEtat >= 0)
         {
 
-            Debug.Log("iType :" + iType);
             rend.sharedMaterial = mTableMaterialPositive[iType];
 
         }
@@ -224,11 +223,6 @@ public class Jonction : MonoBehaviour
 
                 for (int j = 0; j < iLongeurTable; j++)
                 {
-                    
-                    
-
-                    Debug.Log("j :" + j);
-                    Debug.Log("longeur tableaux :" + iLongeurTable);
 
                     int iIdLanceurFonction = hLanceurFonction.GetComponent<Jonction>().iIdEnfant[j];
 
@@ -256,7 +250,6 @@ public class Jonction : MonoBehaviour
 
                             iConteur = iConteur + 1;
 
-
                             if (iConteur < 1000)
                             {
 
@@ -265,7 +258,6 @@ public class Jonction : MonoBehaviour
 
                             }
                             
-
                         }
 
                         if(j == iLongeurTable - 1)
@@ -282,7 +274,6 @@ public class Jonction : MonoBehaviour
             }
 
         }
-
 
     }
     
