@@ -49,8 +49,15 @@ public class Jonction : MonoBehaviour
     [Header("a ne pas changer")]
     public bool bAttacher = true;
 
+
+
+    private int iEtatStockage;
+
     void Start()
     {
+
+        iEtatStockage = iEtat;
+
 
 
         hMainCam = Camera.main;
@@ -116,6 +123,16 @@ public class Jonction : MonoBehaviour
 
             funcDebug();
 
+        }
+
+        Debug.Log(Mathf.Sign(10));
+
+        if (Mathf.Sign(iEtatStockage) != Mathf.Sign(iEtat))
+        {
+
+            funcPropagationArchitecture(iType, gameObject, iEtat, 1);
+
+            iEtatStockage = iEtat;
         }
         
 
@@ -206,11 +223,6 @@ public class Jonction : MonoBehaviour
 
                 for (int j = 0; j < iLongeurTable; j++)
                 {
-                    
-                    
-
-                    Debug.Log("j :" + j);
-                    Debug.Log("longeur tableaux :" + iLongeurTable);
 
                     int iIdLanceurFonction = hLanceurFonction.GetComponent<Jonction>().iIdEnfant[j];
 
@@ -238,7 +250,6 @@ public class Jonction : MonoBehaviour
 
                             iConteur = iConteur + 1;
 
-
                             if (iConteur < 1000)
                             {
 
@@ -247,7 +258,6 @@ public class Jonction : MonoBehaviour
 
                             }
                             
-
                         }
 
                         if(j == iLongeurTable - 1)
@@ -264,7 +274,6 @@ public class Jonction : MonoBehaviour
             }
 
         }
-
 
     }
     
@@ -311,6 +320,9 @@ public class Jonction : MonoBehaviour
         }
 
     }
+
+
+
 
 
 

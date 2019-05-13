@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class target : MonoBehaviour
+public class Target : MonoBehaviour
 {
     Vector3 Pos;
-    float timer;
-    float delay = 2;
+    float fTimer;
+    float fDelay = 2;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Pos = new Vector3(Random.Range(-500f, 500f), Random.Range(-400f, 500f), Random.Range(-500f, -200f));
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+        fTimer += Time.deltaTime;
 
-        if (timer>delay)
+        if (fTimer>fDelay)
         {
             transform.position = new Vector3(Random.Range(-500f, 500f), Random.Range(-400f, 500f), Random.Range(-500f, -200f));
             Pos = new Vector3(Random.Range(-500f, 500f), Random.Range(-400f, 500f), Random.Range(-500f, -200f));
-            delay = 2f + Random.Range(-1.6f, 3f);
-            timer = 0;
+            fDelay = 2f + Random.Range(-1.6f, 3f);
+            fTimer = 0;
 
         }
         else

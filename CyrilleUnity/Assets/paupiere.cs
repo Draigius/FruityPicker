@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class paupiere : MonoBehaviour
+public class Paupiere : MonoBehaviour
 {
-    private float timerClign;
-    private float timerTremble;
-    private Vector3 stock;
+    private float fTimerClign;
+    private float fTimerTremble;
+    private Vector3 v3Stock;
 
-    public float delayClign = 1f;
-    public float delayTremble = 0.1f;
+    public float fDelayClign = 1f;
+    public float fDelayTremble = 0.1f;
 
 
 
@@ -26,18 +26,18 @@ public class paupiere : MonoBehaviour
     {
 
 
-        timerClign += Time.deltaTime;
-        timerTremble += Time.deltaTime;
+        fTimerClign += Time.deltaTime;
+        fTimerTremble += Time.deltaTime;
 
-
-        if (timerTremble > delayTremble)
+        
+        if (fTimerTremble > fDelayTremble)
         {
-            float rand = Random.Range(-5f * timerClign / 2, 5f * timerClign / 2);
+            float _rand = Random.Range(-5f * fTimerClign / 2, 5f * fTimerClign / 2);
 
 
-            transform.Rotate(new Vector3(rand, 0, 0), Space.World);
+            transform.Rotate(new Vector3(_rand, 0, 0), Space.Self);
 
-            timerTremble = 0;
+            fTimerTremble = 0;
         }
         
         
@@ -50,7 +50,7 @@ public class paupiere : MonoBehaviour
 
 
 
-        if (timerClign > delayClign)
+        if (fTimerClign > fDelayClign)
         {
             Clign();
             //transform.eulerAngles = new Vector3(-100, 0, 0);
@@ -63,15 +63,20 @@ public class paupiere : MonoBehaviour
         // (new Vector3(0, 0, 0), Space.World);
 
         //transform.eulerAngles = new Vector3(-90, 0, 0);
+
+    
+
+        
+        //transform.localEulerAngles = new Vector3(Random.Range(-25f, 0), 0, 0);
     }
 
 
-    void Clign()
+    public void Clign()
     {
 
 
-        stock = transform.eulerAngles;
-        transform.eulerAngles = new Vector3(0, 0, 0);
+        v3Stock = transform.localEulerAngles;
+        transform.localEulerAngles = new Vector3(0, 0, 0);
         //transform.eulerAngles = new Vector3(-90, 0, 0);
         Invoke("ResetPos", 0.1f);
 
@@ -84,9 +89,9 @@ public class paupiere : MonoBehaviour
     {
         
 
-        transform.eulerAngles = new Vector3(-100 + Random.Range(-25f, 0),0, 0);
+        transform.localEulerAngles = new Vector3(-100 + Random.Range(-25f, 0),0, 0);
 
-        delayClign = Random.Range(0.5f, 5f);
-        timerClign = 0;
+        fDelayClign = Random.Range(0.5f, 5f);
+        fTimerClign = 0;
     }
 }
