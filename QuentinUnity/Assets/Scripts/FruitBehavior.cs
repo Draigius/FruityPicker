@@ -34,8 +34,6 @@ public class FruitBehavior : MonoBehaviour
 
     private void Awake()
     {
-        
-
         Proto_InputManager.OnSwipe += SwipeDetector_OnSwipe;
     }
 

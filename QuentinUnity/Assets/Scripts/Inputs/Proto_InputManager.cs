@@ -26,10 +26,9 @@ public class Proto_InputManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //
         #region Mobile Inputs
 
-        if (Input.touchCount > 0)
+        if (Input.touchCount == 1)
         {
 
             //Prend en compte Multi-touches
@@ -68,9 +67,8 @@ public class Proto_InputManager : MonoBehaviour
             }
         }
         #endregion
-        //
-        /*#region Mouse Inputs
-        else {
+        #region Mouse Inputs
+        /*else {
             if (Input.GetMouseButtonDown(0))
             {
                 v2PositionTouchUp = Input.mousePosition;
@@ -90,15 +88,14 @@ public class Proto_InputManager : MonoBehaviour
                 v2PositionTouchDown = Input.mousePosition;
                 funcDetectSwipe();
             }
-        }
-        #endregion*/
+        }*/
+        #endregion
     }
 
     //Fonction détection de Swipe
     private void funcDetectSwipe()
     {
-        //Lance Ray Cast 
-        
+        //Lance Ray Cast
         hDynamicItemTouched = funcTouchReturnObject(v2PositionTouchDown);
     
 
@@ -124,23 +121,20 @@ public class Proto_InputManager : MonoBehaviour
         }
     }
 
+
+    //Ray cast pour retourner objet
     GameObject funcTouchReturnObject(Vector2 V2ScreenPos)
     {
         GameObject hTouchedObject;
         RaycastHit hit;
-
-
+        
         if (Physics.Raycast(Camera.main.ScreenPointToRay(V2ScreenPos), out hit, 100))
         {
+            // return objet touché
             hTouchedObject = hit.transform.gameObject;
-
-            //Debug.Log(hTouchedObject.layer.ToString());
-
-            //Collider bob = hTouchedObject.GetComponent<SphereCollider>();
-            //string billy = bob.gameObject.layer.ToString();
-            //Debug.Log(billy);
             
-            
+            // SAUF si il est pas de type fruit (layer 9)
+
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //A OPTIMISER
             if (hTouchedObject.layer.ToString() != "9")
@@ -176,10 +170,12 @@ public class Proto_InputManager : MonoBehaviour
 
             bTouchDown = bIsTouching
         };
+        //Appel Event autres scripts
         OnSwipe(swipeData);
 
     }
 
+    //Fonctions de vérifications, normalement il n'y a rien à bouger
     #region Check Functions
     //Check si Swipe est Vertical ou non
     private bool funcBoolIsVerticalSwipe()
