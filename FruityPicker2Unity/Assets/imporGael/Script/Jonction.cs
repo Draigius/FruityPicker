@@ -55,7 +55,7 @@ public class Jonction : MonoBehaviour
 
     [Header("ne pas remplire")]
 
-    public GameObject hMesh;
+    //public GameObject hMesh;
 
 
 
@@ -69,7 +69,7 @@ public class Jonction : MonoBehaviour
         if(iType == 0)
         {
 
-            hMesh = Instantiate(hTableMesh[0], transform.position, Quaternion.identity);
+            //hMesh = Instantiate(hTableMesh[0], transform.position, Quaternion.identity);
 
             //hMesh.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
 
@@ -86,14 +86,14 @@ public class Jonction : MonoBehaviour
             if (iType == 1)
             {
 
-                hMesh = Instantiate(hTableMesh[1], transform.position, Quaternion.identity);
+                //hMesh = Instantiate(hTableMesh[1], transform.position, Quaternion.identity);
                 //hMesh.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
             }
             else
             {
 
-                hMesh = Instantiate(hTableMesh[2], transform.position, Quaternion.identity);
+                //hMesh = Instantiate(hTableMesh[2], transform.position, Quaternion.identity);
                 //hMesh.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
             }
@@ -143,7 +143,7 @@ public class Jonction : MonoBehaviour
         if (iType == 0 || iType == 1 || iType == 2)
         {
 
-            hMesh.transform.position = transform.position;
+            //hMesh.transform.position = transform.position;
             //hMesh.transform.Rotate(0, 0, transform.rotation.z);
 
         }
