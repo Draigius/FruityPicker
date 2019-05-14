@@ -39,7 +39,7 @@ public class FaceManager : MonoBehaviour
         {
             hOeilG.GetComponent<Pupil>().UpdateExcited();
             hOeilD.GetComponent<Pupil>().UpdateExcited();
-            Debug.Log("updateExcited");
+            //Debug.Log("updateExcited");
 
             hBouche.GetComponent<MeshFilter>().mesh = mBoucheOh;
 

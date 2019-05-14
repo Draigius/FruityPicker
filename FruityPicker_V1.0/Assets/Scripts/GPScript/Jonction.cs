@@ -145,10 +145,23 @@ public class Jonction : MonoBehaviour
         {
 
             hMesh.transform.position = transform.position;
-            hMesh.transform.Rotate(0,0, transform.rotation.z);
+
+            if (bAttacher)
+            {
+
+                Rigidbody rbObjetAttache = gameObject.GetComponent<HingeJoint>().connectedBody;
+                hMesh.transform.rotation = rbObjetAttache.transform.rotation;
+                hMesh.transform.Rotate(new Vector3(0,0,90), Space.Self);
+                hMesh.transform.Rotate(new Vector3(-90,0,0), Space.Self);
+            }
 
         }
 
+    }
+
+    void OnJointBreak(float breakForce)
+    {
+        bAttacher = false;
     }
 
 
