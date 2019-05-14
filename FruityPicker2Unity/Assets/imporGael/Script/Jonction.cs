@@ -31,6 +31,7 @@ public class Jonction : MonoBehaviour
 
     // rendering de material
     [Header("tableau de Material")]
+    public bool bRendering = true;
     public Material[] mTableMaterialPositive = new Material[0];
     public Material[] mTableMaterialNegative = new Material[0];
 
@@ -55,7 +56,7 @@ public class Jonction : MonoBehaviour
 
     [Header("ne pas remplire")]
 
-    //public GameObject hMesh;
+    public GameObject hMesh;
 
 
 
@@ -69,9 +70,9 @@ public class Jonction : MonoBehaviour
         if(iType == 0)
         {
 
-            //hMesh = Instantiate(hTableMesh[0], transform.position, Quaternion.identity);
+            hMesh = Instantiate(hTableMesh[0], transform.position, Quaternion.identity);
 
-            //hMesh.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
+            hMesh.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
 
         }
 
@@ -86,15 +87,15 @@ public class Jonction : MonoBehaviour
             if (iType == 1)
             {
 
-                //hMesh = Instantiate(hTableMesh[1], transform.position, Quaternion.identity);
-                //hMesh.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                hMesh = Instantiate(hTableMesh[1], transform.position, Quaternion.identity);
+                hMesh.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
             }
             else
             {
 
-                //hMesh = Instantiate(hTableMesh[2], transform.position, Quaternion.identity);
-                //hMesh.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                hMesh = Instantiate(hTableMesh[2], transform.position, Quaternion.identity);
+                hMesh.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
             }
 
@@ -143,8 +144,8 @@ public class Jonction : MonoBehaviour
         if (iType == 0 || iType == 1 || iType == 2)
         {
 
-            //hMesh.transform.position = transform.position;
-            //hMesh.transform.Rotate(0, 0, transform.rotation.z);
+            hMesh.transform.position = transform.position;
+            hMesh.transform.Rotate(0,0, transform.rotation.z);
 
         }
 
@@ -162,10 +163,16 @@ public class Jonction : MonoBehaviour
         {
             // la zone suit le générateur
             hZone.transform.position = transform.position;
+            
         }
 
         // change le matériaux en temps réelle 
-        funcMaterial();
+        if(bRendering == true)
+        {
+
+            funcMaterial();
+
+        }
 
         //variable de debeug pour plus tard
         if(bObjectDebeuger == true)
@@ -175,7 +182,7 @@ public class Jonction : MonoBehaviour
 
         }
 
-        Debug.Log(Mathf.Sign(10));
+        //Debug.Log(Mathf.Sign(10));
 
         if (Mathf.Sign(iEtatStockage) != Mathf.Sign(iEtat))
         {
@@ -342,6 +349,26 @@ public class Jonction : MonoBehaviour
             {
                 
 
+
+            }
+
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if(bRendering == true)
+            {
+                
+                rend.enabled = false;
+                bRendering = false;
+
+            }
+            else
+            {
+
+                rend.enabled = true;
+                bRendering = true;
 
             }
 
