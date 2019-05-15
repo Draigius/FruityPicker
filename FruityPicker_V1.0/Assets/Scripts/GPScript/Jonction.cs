@@ -50,6 +50,7 @@ public class Jonction : MonoBehaviour
 
     [Header("a ne pas changer")]
     public bool bAttacher = true;
+    public bool bActive = true;
 
     [Tooltip("prefab de fruit ")]
     public GameObject[] hTableMesh;
@@ -163,13 +164,11 @@ public class Jonction : MonoBehaviour
     {
         bAttacher = false;
     }
-
-
+    
     // Update is called once per frame
     void Update()
     {
-
-        
+                
 
         // si c'est un type générateur de zone
         if (iType == 3)
@@ -199,10 +198,23 @@ public class Jonction : MonoBehaviour
 
         if (Mathf.Sign(iEtatStockage) != Mathf.Sign(iEtat))
         {
+            if (iType == 1 || iType == 2)
+            {
 
-            funcPropagationArchitecture(iType, gameObject, iEtat, 1);
+                funcPropagationArchitecture(iType, gameObject, iEtat, 1);
 
-            iEtatStockage = iEtat;
+                iEtatStockage = iEtat;
+
+            }
+
+            if (iType == 3)
+            {
+
+                hZone.GetComponent<Zone>().funcUplaodEtat();
+
+            }
+
+            
         }
         
 
@@ -415,7 +427,7 @@ public class Jonction : MonoBehaviour
     }
 
 
-
+    
 
 
 

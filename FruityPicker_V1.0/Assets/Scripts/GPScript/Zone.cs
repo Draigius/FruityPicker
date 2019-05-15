@@ -15,28 +15,38 @@ public class Zone : MonoBehaviour
 
     public int iIdGenerateurOrigine;
 
-    
 
+    private bool bEtatSauv;
 
     // Start is called before the first frame update
     void Start()
     {
+        bEtatSauv = bEtatPositif;
+
         rend = GetComponent<Renderer>();
         rend.enabled = true;
 
         if(bEtatPositif == false)
         {
 
-            rend.sharedMaterial = mTableMaterial[0];
+            funcRendu(0);
 
         }
         else
         {
 
-            rend.sharedMaterial = mTableMaterial[1];
+            funcRendu(1);
 
         }
         
+    }
+
+
+    void funcRendu(int i)
+    {
+
+        rend.sharedMaterial = mTableMaterial[i];
+
     }
 
     // Update is called once per frame
@@ -47,27 +57,93 @@ public class Zone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Camera cCampPrincipale = Camera.main;
-        //Debug.Log("object toucher : "+other);
+        funcUplaodZone(other, bEtatPositif);
 
-        GameObject hObjectToucher = other.gameObject;
 
-        for(int i=0 ; i < cCampPrincipale.GetComponent<MainGame>().hTableJunction.Length; i++)
+        //Camera cCampPrincipale = Camera.main;
+        ////Debug.Log("object toucher : "+other);
+
+        //GameObject hObjectToucher = other.gameObject;
+
+        //for(int i=0 ; i < cCampPrincipale.GetComponent<MainGame>().hTableJunction.Length; i++)
+        //{
+
+        //    if(hObjectToucher == cCampPrincipale.GetComponent<MainGame>().hTableJunction[i])
+        //    {
+        //        Debug.Log("change etat");
+        //        hObjectToucher.GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine);
+
+        //    }
+
+        //}
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+
+        if (bEtatPositif != bEtatSauv)
         {
 
-            if(hObjectToucher == cCampPrincipale.GetComponent<MainGame>().hTableJunction[i])
-            {
-                Debug.Log("change etat");
-                hObjectToucher.GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine);
-
-            }
+            funcUplaodZone(other, bEtatPositif);
 
         }
 
     }
 
+
+
     private void OnTriggerExit(Collider other)
     {
+
+
+        //funcUplaodZone(other, !bEtatPositif);
+
+        //Camera cCampPrincipale = Camera.main;
+        ////Debug.Log("object toucher : "+other);
+
+        //GameObject hObjectToucher = other.gameObject;
+
+        //for (int i = 0; i < cCampPrincipale.GetComponent<MainGame>().hTableJunction.Length; i++)
+        //{
+
+        //    if (hObjectToucher == cCampPrincipale.GetComponent<MainGame>().hTableJunction[i])
+        //    {
+
+        //        hObjectToucher.GetComponent<Jonction>().funcModifEtat(!bEtatPositif, iIdGenerateurOrigine);
+
+        //    }
+
+        //}
+
+    }
+
+
+    public void funcUplaodEtat()
+    {
+
+        bEtatPositif = !bEtatPositif;
+
+
+        if (bEtatPositif == false)
+        {
+
+            funcRendu(0);
+
+        }
+        else
+        {
+
+            funcRendu(1);
+
+        }
+
+    }
+
+
+    public void funcUplaodZone(Collider other , bool bEtatInverce)
+    {
+
 
         Camera cCampPrincipale = Camera.main;
         //Debug.Log("object toucher : "+other);
@@ -80,12 +156,12 @@ public class Zone : MonoBehaviour
             if (hObjectToucher == cCampPrincipale.GetComponent<MainGame>().hTableJunction[i])
             {
 
-                hObjectToucher.GetComponent<Jonction>().funcModifEtat(!bEtatPositif, iIdGenerateurOrigine);
+                hObjectToucher.GetComponent<Jonction>().funcModifEtat(bEtatInverce, iIdGenerateurOrigine);
 
             }
 
         }
 
     }
-    
+
 }
