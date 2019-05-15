@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Jonction : MonoBehaviour
 {
-    public LL_Main_test Main;
+  
 
     [Header("debog")]
     public bool bObjectDebeuger = false;
@@ -373,12 +373,6 @@ public class Jonction : MonoBehaviour
     }
 
 
-    public void GiveFinalValue()
-    {
-
-        Main.Score ++ ;
-        Debug.Log(Main.Score);
-    }
 
 
 
