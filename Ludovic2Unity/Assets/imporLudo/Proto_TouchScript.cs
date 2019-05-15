@@ -56,7 +56,7 @@ public class Proto_TouchScript : MonoBehaviour
         // Clic souris maintenu
         if (Input.GetMouseButton(0) && jTouched== null)
         {
-            funcGAEL();
+           
         }
 
         // Clic souris relaché
@@ -140,10 +140,4 @@ public class Proto_TouchScript : MonoBehaviour
         rbTouched.AddForce(v3ForcePosition*3.5f, ForceMode.Impulse);
     }
 
-
-
-    void funcGAEL ()
-    {
-
-    }
 }
