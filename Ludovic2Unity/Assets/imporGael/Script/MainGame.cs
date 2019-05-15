@@ -48,7 +48,7 @@ public class MainGame : MonoBehaviour
 
     void Start()
     {
-        //inFruit =
+        
     }
 
     void Update()
