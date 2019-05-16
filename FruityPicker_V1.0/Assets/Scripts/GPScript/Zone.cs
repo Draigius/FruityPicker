@@ -18,6 +18,9 @@ public class Zone : MonoBehaviour
 
     private bool bEtatSauv;
 
+    public GameObject[] hTableObjectStock= new GameObject[20];
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,33 +55,55 @@ public class Zone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (bEtatSauv != bEtatPositif)
+        {
 
-        Debug.Log("update");
+            for (int i = 0; i < hTableObjectStock.Length; i++)
+            {
+                if (hTableObjectStock[i] != null)
+                {
+
+                                        //faire le changement
+
+                }
 
 
+            }
 
+            bEtatSauv = bEtatPositif;
+
+        }
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
 
-        funcUplaodZone(other, bEtatPositif,1);
-
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-
-        Debug.Log("OnTriggerStay");
-
-        if (bEtatPositif != bEtatSauv)
+        if (other.gameObject.GetComponent<Jonction>())
         {
 
-            //Debug.Log("OnTriggerStay");
-            //Debug.Log("bEtatPositif :" + bEtatPositif);
-            funcUplaodZone(other, bEtatPositif,2);
-            bEtatSauv = bEtatPositif;
+            if (other.gameObject.GetComponent<Jonction>().iIdActuel != iIdGenerateurOrigine)
+            {
+
+                funcUplaodZone(other, bEtatPositif, 1);
+
+                for(int i = 0; i<hTableObjectStock.Length; i++)
+                {
+                    if(hTableObjectStock[i] == null)
+                    {
+
+                        hTableObjectStock[i] = other.gameObject;
+
+                        i = hTableObjectStock.Length;
+
+                    }
+
+
+                }
+
+                
+
+            }
 
         }
 
@@ -86,12 +111,34 @@ public class Zone : MonoBehaviour
 
     }
 
-
-
+    
     private void OnTriggerExit(Collider other)
     {
+        
+        if (other.gameObject.GetComponent<Jonction>())
+        {
 
-        funcUplaodZone(other, !bEtatPositif,1);
+            if (other.gameObject.GetComponent<Jonction>().iIdActuel != iIdGenerateurOrigine)
+            {
+
+                funcUplaodZone(other, !bEtatPositif, 1);
+
+                for (int i = 0; i < hTableObjectStock.Length; i++)
+                {
+                    if (hTableObjectStock[i] == other.gameObject)
+                    {
+
+                        hTableObjectStock[i] = null;
+
+                        i = hTableObjectStock.Length;
+
+                    }
+
+                }
+
+            }
+
+        }
 
     }
 
