@@ -52,42 +52,37 @@ public class Zone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        Debug.Log("update");
+
+
+
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        funcUplaodZone(other, bEtatPositif);
 
-
-        //Camera cCampPrincipale = Camera.main;
-        ////Debug.Log("object toucher : "+other);
-
-        //GameObject hObjectToucher = other.gameObject;
-
-        //for(int i=0 ; i < cCampPrincipale.GetComponent<MainGame>().hTableJunction.Length; i++)
-        //{
-
-        //    if(hObjectToucher == cCampPrincipale.GetComponent<MainGame>().hTableJunction[i])
-        //    {
-        //        Debug.Log("change etat");
-        //        hObjectToucher.GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine);
-
-        //    }
-
-        //}
+        funcUplaodZone(other, bEtatPositif,1);
 
     }
 
     private void OnTriggerStay(Collider other)
     {
 
+        Debug.Log("OnTriggerStay");
+
         if (bEtatPositif != bEtatSauv)
         {
 
-            funcUplaodZone(other, bEtatPositif);
+            //Debug.Log("OnTriggerStay");
+            //Debug.Log("bEtatPositif :" + bEtatPositif);
+            funcUplaodZone(other, bEtatPositif,2);
+            bEtatSauv = bEtatPositif;
 
         }
+
+        
 
     }
 
@@ -96,25 +91,7 @@ public class Zone : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
 
-
-        //funcUplaodZone(other, !bEtatPositif);
-
-        //Camera cCampPrincipale = Camera.main;
-        ////Debug.Log("object toucher : "+other);
-
-        //GameObject hObjectToucher = other.gameObject;
-
-        //for (int i = 0; i < cCampPrincipale.GetComponent<MainGame>().hTableJunction.Length; i++)
-        //{
-
-        //    if (hObjectToucher == cCampPrincipale.GetComponent<MainGame>().hTableJunction[i])
-        //    {
-
-        //        hObjectToucher.GetComponent<Jonction>().funcModifEtat(!bEtatPositif, iIdGenerateurOrigine);
-
-        //    }
-
-        //}
+        funcUplaodZone(other, !bEtatPositif,1);
 
     }
 
@@ -141,7 +118,7 @@ public class Zone : MonoBehaviour
     }
 
 
-    public void funcUplaodZone(Collider other , bool bEtatInverce)
+    public void funcUplaodZone(Collider other , bool bEtatInverce , int iNumbrItération)
     {
 
 
@@ -156,7 +133,7 @@ public class Zone : MonoBehaviour
             if (hObjectToucher == cCampPrincipale.GetComponent<MainGame>().hTableJunction[i])
             {
 
-                hObjectToucher.GetComponent<Jonction>().funcModifEtat(bEtatInverce, iIdGenerateurOrigine);
+                hObjectToucher.GetComponent<Jonction>().funcModifEtat(bEtatInverce, iIdGenerateurOrigine, iNumbrItération);
 
             }
 

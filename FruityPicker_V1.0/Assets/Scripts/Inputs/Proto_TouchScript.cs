@@ -119,7 +119,7 @@ public class Proto_TouchScript : MonoBehaviour
 
                     //ActualPosition = Camera.main.ScreenToWorldPoint(new Vector3(V2ScreenPos.x, V2ScreenPos.y, 9));
                     v3TouchedObjectPosition = rbTouched.position;
-                    Debug.Log(hit.transform.gameObject);
+                    //Debug.Log(hit.transform.gameObject);
 
                     return bFoundObject = true;
                 }

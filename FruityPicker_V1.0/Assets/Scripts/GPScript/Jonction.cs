@@ -23,6 +23,7 @@ public class Jonction : MonoBehaviour
     [Tooltip("donne la positivité de la jonction celon le signe du int \n (0 et positif )")]
     [Range(-1,0)]
     public int iEtat;
+    private int iEtatIniciale;
 
     [Tooltip(" 0:normal \n 1:générateur architecture vers le haut \n 2:générateur architecture vers le bas \n 3:générateur zone \n ")]
     [Range(0, 3)]
@@ -51,6 +52,7 @@ public class Jonction : MonoBehaviour
     [Header("a ne pas changer")]
     public bool bAttacher = true;
     public bool bActive = true;
+    private bool bEnclanchement = false;
 
     [Tooltip("prefab de fruit ")]
     public GameObject[] hTableMesh;
@@ -60,12 +62,12 @@ public class Jonction : MonoBehaviour
     public GameObject hMesh;
 
 
-
+    //permet de voir si il y a un chamgement d'état 
     private int iEtatStockage;
 
     void Start()
     {
-
+        iEtatIniciale = iEtat;
         iEtatStockage = iEtat;
 
         if(iType == 0)
@@ -147,7 +149,7 @@ public class Jonction : MonoBehaviour
 
             hMesh.transform.position = transform.position;
 
-            if (bAttacher)
+            if (bAttacher == true)
             {
 
                 Rigidbody rbObjetAttache = gameObject.GetComponent<HingeJoint>().connectedBody;
@@ -163,12 +165,56 @@ public class Jonction : MonoBehaviour
     void OnJointBreak(float breakForce)
     {
         bAttacher = false;
+
+        if (iType == 1)
+        {
+            Debug.Log("break");
+            funcPropagationArchitecture(iType, gameObject, iEtat, -1);
+
+        }
+
+
+
+        // reset 
+
+        iEtat = iEtatIniciale;
+        bEnclanchement = true;
+
     }
-    
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (bEnclanchement == true)
+        {
+
+            if (other.gameObject.GetComponent<Zone>())
+            {
+
+                if (other.gameObject.GetComponent<Zone>().bEtatPositif == true)
+                {
+
+                    iEtat = iEtat + 1;
+
+                }
+                else
+                {
+
+                    iEtat = iEtat - 1;
+
+                }
+                
+            }
+
+        }
+
+    }
+
     // Update is called once per frame
     void Update()
     {
-                
+        bEnclanchement = false;
+
 
         // si c'est un type générateur de zone
         if (iType == 3)
@@ -211,6 +257,8 @@ public class Jonction : MonoBehaviour
             {
 
                 hZone.GetComponent<Zone>().funcUplaodEtat();
+
+                iEtatStockage = iEtat;
 
             }
 
@@ -267,8 +315,9 @@ public class Jonction : MonoBehaviour
             {
 
                 int iIdVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdActuel;
+                int iTypeVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iType;
 
-                if (iIdVerif == hLanceurFonction.GetComponent<Jonction>().iIdParent)
+                if (iIdVerif == hLanceurFonction.GetComponent<Jonction>().iIdParent && iTypeVerif !=1 && iTypeVerif != 2)
                 {
                     if (iEtatPropagation >= 0)
                     {
@@ -284,7 +333,7 @@ public class Jonction : MonoBehaviour
                     if(hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdParent != 0)
                     {
 
-                        funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().hTableJunction[i], iEtatPropagation, 1);
+                        funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().hTableJunction[i], iEtatPropagation, iActivation);
 
                     }
 
@@ -301,6 +350,7 @@ public class Jonction : MonoBehaviour
             for (int i = 0; i < hMainCam.GetComponent<MainGame>().hTableJunction.Length; i++)
             {
                 int iIdVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdActuel;
+                int iTypeVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iType;
 
                 int iLongeurTable = hLanceurFonction.GetComponent<Jonction>().iIdEnfant.Length;
 
@@ -309,7 +359,7 @@ public class Jonction : MonoBehaviour
 
                     int iIdLanceurFonction = hLanceurFonction.GetComponent<Jonction>().iIdEnfant[j];
 
-                    if (iIdVerif == iIdLanceurFonction)
+                    if (iIdVerif == iIdLanceurFonction && iTypeVerif!=1 && iTypeVerif != 2)
                     {
 
                         if (iEtatPropagation >= 0)
@@ -337,7 +387,7 @@ public class Jonction : MonoBehaviour
                             {
 
                                 //Debug.Log("Mdr :" + iConteur);
-                                funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().hTableJunction[i], iEtatPropagation, 1);
+                                funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().hTableJunction[i], iEtatPropagation, iActivation);
 
                             }
                             
@@ -404,7 +454,7 @@ public class Jonction : MonoBehaviour
     }
 
     //fonction appeler par le script des zones de générateur
-    public void funcModifEtat(bool bModifier, int iIdGenerateur)
+    public void funcModifEtat(bool bModifier, int iIdGenerateur,int iNumbreIteration)
     {
         if(iIdGenerateur != iIdActuel)
         {
@@ -412,13 +462,13 @@ public class Jonction : MonoBehaviour
             if (bModifier == true)
             {
 
-                iEtat = iEtat + 1;
+                iEtat = iEtat + iNumbreIteration;
 
             }
             else
             {
 
-                iEtat = iEtat - 1;
+                iEtat = iEtat - iNumbreIteration;
 
             }
 
