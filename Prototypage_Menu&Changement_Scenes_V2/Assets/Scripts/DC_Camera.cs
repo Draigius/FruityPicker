@@ -131,6 +131,7 @@ public class DC_Camera : MonoBehaviour
     }
 
 
+    // CHANGEMENT DE GRAVITE EN FONCTION DU GYROSCOPE : NON FONCTIONNEL / A FAIRE
 
     //void FixedUpdate()
     //{

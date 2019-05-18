@@ -30,15 +30,18 @@ public class Proto_TouchScript : MonoBehaviour
 
     float oldDrag;
 
-    private string nameScene="";
+    #region MODIFICATION CECILE
+    // Rajout seulement
 
+    private string nameScene="";
+    #endregion
 
     ///////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-   
+
     //                                               UPDATE
 
     ///////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    
+
 
     void Update()
     {
@@ -91,9 +94,12 @@ public class Proto_TouchScript : MonoBehaviour
                 rbTouched = null;
 
 
-                //IL FAUT UNE FONCTION RETOUR SLOW
-                //this.GetComponent<DC_Camera>().OnDetach()
+                #region MODIFICATION CECILE
+                // Rajout seulement
 
+                //IL FAUT UNE FONCTION RETOUR SLOW POUR QUAND ON RELACHE LE FRUIT SANS LE DETACHER
+                this.GetComponent<DC_Camera>().OnDetach();
+                #endregion 
 
             }
 
@@ -143,6 +149,11 @@ public class Proto_TouchScript : MonoBehaviour
         // Distance à laquelle la souris se trouve de l'objet sélectionné
         fBreakLimit = v3ForcePosition.magnitude;
 
+
+
+        #region MODIFICATION CECILE
+        // Modification + rajout
+
         // Si la souris est plus loin que la limite fixé, le joint est rompu et on reset la cam
         if (fBreakLimit >= fBreakLimitMax && rbTouched.GetComponent<HingeJoint>() != null)
         {
@@ -153,6 +164,10 @@ public class Proto_TouchScript : MonoBehaviour
             //if (rbTouched.GetComponent<HingeJoint>().tag == "Citron") Application.LoadLevel("Options"); ;
 
         }
+        #endregion 
+
+
+
 
         // Si la velocité de l'objet est trop élevé, on la refixe
         if (rbTouched.velocity.magnitude > fMaxDragSpeed)
