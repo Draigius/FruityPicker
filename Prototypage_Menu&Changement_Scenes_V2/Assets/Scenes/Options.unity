@@ -182,7 +182,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Blablabla Cr\xE9dits"
+  m_Text: 'Blablabla Options
+
+'
 --- !u!222 &237184384
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -203,7 +205,7 @@ GameObject:
   - component: {fileID: 278242460}
   - component: {fileID: 278242459}
   m_Layer: 0
-  m_Name: "Cr\xE9dits_Txt"
+  m_Name: Options_Txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,7 +263,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Cr\xE9dits"
+  m_Text: 'Options
+
+'
 --- !u!222 &278242460
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -687,7 +691,7 @@ GameObject:
   - component: {fileID: 1287521930}
   - component: {fileID: 1287521929}
   m_Layer: 0
-  m_Name: Credits_Img
+  m_Name: Options_Img
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

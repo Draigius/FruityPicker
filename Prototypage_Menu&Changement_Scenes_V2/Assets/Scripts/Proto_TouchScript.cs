@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Proto_TouchScript : MonoBehaviour
 {
@@ -148,9 +149,12 @@ public class Proto_TouchScript : MonoBehaviour
         {
             jTouched.breakForce = 0;
             this.GetComponent<DC_Camera>().OnDetach();
-            if (rbTouched.GetComponent<HingeJoint>().tag == "Kiwi") nameScene = "Levels"; Invoke("changeScene", 1.0f); ;
-            if (rbTouched.GetComponent<HingeJoint>().tag == "Poire") nameScene = "Credits"; Invoke("changeScene", 1.0f); ;
-            //if (rbTouched.GetComponent<HingeJoint>().tag == "Citron") Application.LoadLevel("Options"); ;
+            if (SceneManager.GetActiveScene().name == "Menu_Fruits")
+            {
+                if (rbTouched.GetComponent<HingeJoint>().tag == "Kiwi") nameScene = "Levels"; Invoke("changeScene", 1.0f);
+                if (rbTouched.GetComponent<HingeJoint>().tag == "Poire") nameScene = "Credits"; Invoke("changeScene", 1.0f);
+                if (rbTouched.GetComponent<HingeJoint>().tag == "Citron") nameScene = "Options"; Invoke("changeScene", 1.0f);
+            }
 
         }
 
