@@ -52,7 +52,8 @@ public class Jonction : MonoBehaviour
     [Header("a ne pas changer")]
     public bool bAttacher = true;
     public bool bActive = true;
-    private bool bEnclanchement = false;
+    private int iEnclanchement = -1;
+    //private bool bEnclanchement = true;
 
     [Tooltip("prefab de fruit ")]
     public GameObject[] hTableMesh;
@@ -168,43 +169,60 @@ public class Jonction : MonoBehaviour
 
         if (iType == 1)
         {
-            Debug.Log("break");
+            
             funcPropagationArchitecture(iType, gameObject, iEtat, -1);
 
         }
 
+        if (iType == 3)
+        {
+            hZone.GetComponent<Zone>().funcUpdateForType();
+            Debug.Log("break");
+            hZone.GetComponent<Zone>().bGénérateurAttacher = false;
 
+            iEnclanchement = 0;
+
+        }
+        
 
         // reset 
 
         iEtat = iEtatIniciale;
-        bEnclanchement = true;
+        
 
     }
 
 
     private void OnTriggerStay(Collider other)
     {
-        if (bEnclanchement == true)
+        if (iEnclanchement >=0)
         {
+
+            Debug.Log("iEnclanchement :" + iEnclanchement);
 
             if (other.gameObject.GetComponent<Zone>())
             {
-
-                if (other.gameObject.GetComponent<Zone>().bEtatPositif == true)
+                Debug.Log(" contacte avec une zone");
+                if (other.gameObject.GetComponent<Zone>().iIdGenerateurOrigine != iIdActuel)
                 {
+                    Debug.Log(" contacte avec une zone qui n'ai pas la mien");
+                    if (other.gameObject.GetComponent<Zone>().bEtatPositif == true)
+                    {
 
-                    iEtat = iEtat + 1;
+                        iEtat = iEtat + 1;
 
-                }
-                else
-                {
+                    }
+                    else
+                    {
 
-                    iEtat = iEtat - 1;
+                        iEtat = iEtat - 1;
+
+                    }
 
                 }
                 
             }
+            iEnclanchement = iEnclanchement + 1; 
 
         }
 
@@ -213,8 +231,14 @@ public class Jonction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bEnclanchement = false;
+        if (iEnclanchement > 0)
+        {
 
+            iEnclanchement = -1;
+
+        }
+
+        //bEnclanchement = true;
 
         // si c'est un type générateur de zone
         if (iType == 3)
@@ -246,8 +270,10 @@ public class Jonction : MonoBehaviour
         {
             if (iType == 1 || iType == 2)
             {
-
-                funcPropagationArchitecture(iType, gameObject, iEtat, 1);
+                //Debug.Log("iType :" + iType);
+                //Debug.Log("gameObject :" + gameObject);
+                //Debug.Log("iEtat :" + iEtat);
+                funcPropagationArchitecture(iType, gameObject, iEtat, 2);
 
                 iEtatStockage = iEtat;
 
@@ -349,20 +375,20 @@ public class Jonction : MonoBehaviour
 
             for (int i = 0; i < hMainCam.GetComponent<MainGame>().hTableJunction.Length; i++)
             {
-                int iIdVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdActuel;
-                int iTypeVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iType;
+                int iIdVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdActuel;///id de l'object a verifier
+                int iTypeVerif = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iType;/// type de l'object a verifier
 
-                int iLongeurTable = hLanceurFonction.GetComponent<Jonction>().iIdEnfant.Length;
+                int iLongeurTable = hLanceurFonction.GetComponent<Jonction>().iIdEnfant.Length; // nombre de d'enfant du lanceur de la fonction
 
                 for (int j = 0; j < iLongeurTable; j++)
                 {
+                    //debug
+                    int iIdEnfantLanceurFonction = hLanceurFonction.GetComponent<Jonction>().iIdEnfant[j]; // id enfant du lanceur de la fonction
 
-                    int iIdLanceurFonction = hLanceurFonction.GetComponent<Jonction>().iIdEnfant[j];
-
-                    if (iIdVerif == iIdLanceurFonction && iTypeVerif!=1 && iTypeVerif != 2)
+                    if (iIdVerif == iIdEnfantLanceurFonction && iTypeVerif!=1 && iTypeVerif != 2) // verife si l'ID de l'object verifier et le meme que l'id d'un des enfant du lancer de fonction // et que ce soit pas type architecture
                     {
 
-                        if (iEtatPropagation >= 0)
+                        if (iEtatPropagation >= 0) // verifie si c'est une propagation de type positif ou négatif
                         {
 
                             hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat + (1 * iActivation);
@@ -370,35 +396,24 @@ public class Jonction : MonoBehaviour
                         }
                         else
                         {
-
-                            //Debug.Log("Etat :" + hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat);
-                            //Debug.Log("object :" + hMainCam.GetComponent<MainGame>().hTableJunction[i]);
-                            //Debug.Log("i :" + i);
+                            
                             hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat = hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iEtat - (1 * iActivation);
 
                         }
 
-                        if (hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdEnfant.Length != 0)
+                        if (hMainCam.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().iIdEnfant.Length != 0) // si l'object modifier a des enfant on continue la propagation
                         {
 
-                            iConteur = iConteur + 1;
-
-                            if (iConteur < 1000)
-                            {
-
-                                //Debug.Log("Mdr :" + iConteur);
-                                funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().hTableJunction[i], iEtatPropagation, iActivation);
-
-                            }
-                            
-                        }
-
-                        if(j == iLongeurTable - 1)
-                        {
-
-                            i = 1000;
+                            funcPropagationArchitecture(iSensPropagation, hMainCam.GetComponent<MainGame>().hTableJunction[i], iEtatPropagation, iActivation);
 
                         }
+
+                        //if (j == iLongeurTable - 1)
+                        //{
+
+                        //    i = 1000;
+
+                        //}
 
                     }
 

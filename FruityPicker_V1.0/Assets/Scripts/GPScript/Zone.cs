@@ -15,6 +15,7 @@ public class Zone : MonoBehaviour
 
     public int iIdGenerateurOrigine;
 
+    public bool bGénérateurAttacher = true;
 
     private bool bEtatSauv;
 
@@ -60,10 +61,32 @@ public class Zone : MonoBehaviour
 
             for (int i = 0; i < hTableObjectStock.Length; i++)
             {
-                if (hTableObjectStock[i] != null)
+                if (hTableObjectStock[i] != null )
                 {
 
-                                        //faire le changement
+                    if (hTableObjectStock[i].GetComponent<Jonction>().iType != 0)
+                    {
+                        if(bGénérateurAttacher == false)
+                        {
+
+                            hTableObjectStock[i].GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine, 2);
+
+                        }else if(hTableObjectStock[i].GetComponent<Jonction>().iType == 3)
+                        {
+
+                            hTableObjectStock[i].GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine, 2);
+
+                        }
+                        
+
+                    }
+                    else
+                    {
+
+                        hTableObjectStock[i].GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine, 2);
+
+                    }
+                    //faire le changement
 
                 }
 
@@ -84,12 +107,9 @@ public class Zone : MonoBehaviour
 
             if (other.gameObject.GetComponent<Jonction>().iIdActuel != iIdGenerateurOrigine)
             {
-
-                funcUplaodZone(other, bEtatPositif, 1);
-
-                for(int i = 0; i<hTableObjectStock.Length; i++)
+                for (int i = 0; i < hTableObjectStock.Length; i++)//stock les objects dans un tableau
                 {
-                    if(hTableObjectStock[i] == null)
+                    if (hTableObjectStock[i] == null)
                     {
 
                         hTableObjectStock[i] = other.gameObject;
@@ -98,17 +118,21 @@ public class Zone : MonoBehaviour
 
                     }
 
-
                 }
 
-                
+                if (bGénérateurAttacher == false ||  other.gameObject.GetComponent<Jonction>().iType == 0 || other.gameObject.GetComponent<Jonction>().iType == 3)
+                {
+
+                    //Debug.Log("entre");
+
+                    funcUplaodZone(other, bEtatPositif, 1);//lance la modif
+                    
+                }
 
             }
 
         }
-
         
-
     }
 
     
@@ -121,8 +145,6 @@ public class Zone : MonoBehaviour
             if (other.gameObject.GetComponent<Jonction>().iIdActuel != iIdGenerateurOrigine)
             {
 
-                funcUplaodZone(other, !bEtatPositif, 1);
-
                 for (int i = 0; i < hTableObjectStock.Length; i++)
                 {
                     if (hTableObjectStock[i] == other.gameObject)
@@ -134,6 +156,16 @@ public class Zone : MonoBehaviour
 
                     }
 
+                }
+
+                if (bGénérateurAttacher == false || other.gameObject.GetComponent<Jonction>().iType == 0 || other.gameObject.GetComponent<Jonction>().iType == 3)
+                {
+
+                    //Debug.Log("exit");
+
+                    funcUplaodZone(other, !bEtatPositif, 1);
+                    
+                    
                 }
 
             }
@@ -181,6 +213,31 @@ public class Zone : MonoBehaviour
             {
 
                 hObjectToucher.GetComponent<Jonction>().funcModifEtat(bEtatInverce, iIdGenerateurOrigine, iNumbrItération);
+
+            }
+
+        }
+
+    }
+
+    public void funcUpdateForType()
+    {
+
+        for (int i = 0; i < hTableObjectStock.Length; i++)
+        {
+
+             ;
+
+            if (hTableObjectStock[i] != null)
+            {
+
+                if (hTableObjectStock[i].GetComponent<Jonction>().iType == 1 || hTableObjectStock[i].GetComponent<Jonction>().iType == 2)
+                {
+
+                    Debug.Log("rentre funcUpdateForType");
+                    hTableObjectStock[i].GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine,1);
+
+                }
 
             }
 
