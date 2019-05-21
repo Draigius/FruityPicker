@@ -111,6 +111,14 @@ public class Proto_TouchScript : MonoBehaviour
             hTouchedObject = hit.transform.gameObject;
             Camera hMainCam = Camera.main;
 
+            if (SceneManager.GetActiveScene().name == "Menu_Fruits")
+            {
+                if (hTouchedObject.GetComponent<HingeJoint>().tag == "Kiwi") nameScene = "Levels"; Invoke("changeScene", 1.0f); hTouchedObject.GetComponent<HingeJoint>().breakForce = 0;
+                if (hTouchedObject.GetComponent<HingeJoint>().tag == "Poire") nameScene = "Credits"; Invoke("changeScene", 1.0f); hTouchedObject.GetComponent<HingeJoint>().breakForce = 0;
+                if (hTouchedObject.GetComponent<HingeJoint>().tag == "Citron") nameScene = "Options"; Invoke("changeScene", 1.0f); hTouchedObject.GetComponent<HingeJoint>().breakForce = 0;
+            }
+
+
             //Comparer à tablea de jonctions
             for (int i = 0; i < hMainCam.GetComponent<MainGame>().hTableJunction.Length; i++)
             {
@@ -158,12 +166,6 @@ public class Proto_TouchScript : MonoBehaviour
         if (fBreakLimit >= fBreakLimitMax && rbTouched.GetComponent<HingeJoint>() != null) {
             jTouched.breakForce = 0;
             this.GetComponent<DC_Camera>().OnDetach();
-            if (SceneManager.GetActiveScene().name == "Menu_Fruits")
-            {
-                if (rbTouched.GetComponent<HingeJoint>().tag == "Kiwi") nameScene = "Levels"; Invoke("changeScene", 1.0f);
-                if (rbTouched.GetComponent<HingeJoint>().tag == "Poire") nameScene = "Credits"; Invoke("changeScene", 1.0f);
-                if (rbTouched.GetComponent<HingeJoint>().tag == "Citron") nameScene = "Options"; Invoke("changeScene", 1.0f);
-            }
         }
 
         // Si la velocité de l'objet est trop élevé, on la refixe
