@@ -52,14 +52,11 @@ public class TransitionScript : MonoBehaviour
         }
         else if (bEnd && v3PositionActuelle == v3PositionStart)
         {
-            bStart = false;
-        }
+            bEnd = false;
+            // Appel Fonction pour changer de scene
 
-        ///////////////// Debug
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            bEnd = true;
         }
+        
     }
 
     //Func Activation End

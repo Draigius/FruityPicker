@@ -31,13 +31,15 @@ public class SecateurScript : MonoBehaviour
         if (!bSecateurIsActive && v3PositionActuelle != v3PositionStart)
         //Move vers position initiale
         {
-            transform.position = Vector3.MoveTowards(transform.position, v3PositionStart, fStep);
+            //transform.position = Vector3.MoveTowards(transform.position, v3PositionStart, fStep);
+            transform.position = v3PositionStart;
+            gameObject.GetComponent<TrailRenderer>().enabled = false;
         }
         else if (bSecateurIsActive)
         //Move vers position souris
         {
 
-            
+            gameObject.GetComponent<TrailRenderer>().enabled = true;
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -87,12 +89,7 @@ public class SecateurScript : MonoBehaviour
         v3PositionTarget = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
         fDistanceCorrection = v3PositionTarget.x * -1 - v3PositionActuelle.x;
 
-        //v3PositionTarget = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x*-1, Input.mousePosition.y, Camera.main.transform.position.z));
-        //fDistanceCorrection = Mathf.Abs(v3PositionActuelle.x - v3PositionTarget.x);
 
-        //CALCUL DITSANCE POINT PIVOT ET INPUT
-
-        //Debug.Log("Secateur Actif");
     }
 
     public void funcDesactiveSecateur()
