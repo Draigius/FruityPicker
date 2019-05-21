@@ -324,8 +324,6 @@ public class Jonction : MonoBehaviour
 
     }
 
-    // limiteur de stack over flow
-    private int iConteur = 0;
 
     // fonction de propagation 
     // 1 : permet de dire si sa monte ou decent 

@@ -32,9 +32,9 @@ public class DC_Camera : MonoBehaviour
 
 
     // Variables affichage FPS
-    public Text HUD_FPS_Text;
-    private float CounterTimer = 0;
-    private int CounterFPS = 0;
+    //public Text HUD_FPS_Text;
+    //private float CounterTimer = 0;
+    //private int CounterFPS = 0;
 
 
     //// Gravité gyroscope
