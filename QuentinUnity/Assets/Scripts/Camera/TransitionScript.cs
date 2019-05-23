@@ -21,7 +21,7 @@ public class TransitionScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.transform.position = new Vector3 (Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + fOffsetTransitionZ);
+        gameObject.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + fOffsetTransitionZ);
 
         v3PositionStart = gameObject.transform.position;
         v3PositionTarget = new Vector3(v3PositionStart.x, v3PositionStart.y + fOffsetTransitionY, v3PositionStart.z);
@@ -42,6 +42,7 @@ public class TransitionScript : MonoBehaviour
         }
         else if (bStart && v3PositionActuelle == v3PositionTarget)
         {
+            //Debug.Log("truite");
             bStart = false;
         }
 
@@ -52,16 +53,20 @@ public class TransitionScript : MonoBehaviour
         }
         else if (bEnd && v3PositionActuelle == v3PositionStart)
         {
+            //Debug.Log("fumé");
             bEnd = false;
-            // Appel Fonction pour changer de scene
-
         }
-        
+
     }
 
     //Func Activation End
-    void funcActivateEnd()
+    public void funcActivateEnd()
     {
         bEnd = true;
+    }
+
+    public void funcActivateStart()
+    {
+        bStart = true;
     }
 }
