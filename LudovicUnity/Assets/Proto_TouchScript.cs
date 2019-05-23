@@ -4,92 +4,91 @@ using UnityEngine;
 
 public class Proto_TouchScript : MonoBehaviour
 {
-
+    // Fruit séléctionné
     GameObject hTouchedObject;
-    HingeJoint JointTouched;
-    Rigidbody RigidbodyTouched;
+    // Joint du fruit sélectionné
+    HingeJoint jTouched;
+    // Rigidbody du fruit sélectionné
+    Rigidbody rbTouched;
 
-    private float BreakLimit;
-    private Vector3 ActualPosition;
-    private Vector3 UpdatePosition;
+    // Distance actuelle entre la souris et le fruit sélectionné 
+    private float fBreakLimit;
 
-    private Vector3 ForcePosition;
+    // Distance entre la souris et le fruit sélectionné pour laquelle le joint se romp
+    public float fBreakLimitMax =  2;
 
-    private float maxDragSpeed = 15;
+    // Position de l'objet
+    private Vector3 v3TouchedObjectPosition;
+    // Position de la souris ( et destination de l'objet sélectionné)
+    private Vector3 v3MousePosition;
+    // Force donné à l'objet pour qu'il atteigne la position de la souris
+    private Vector3 v3ForcePosition;
+
+    private float fMaxDragSpeed = 15;
 
     bool isDragging = false;
 
     float oldDrag;
 
-    // Update is called once per frame
+
+    ///////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+   
+    //                                               UPDATE
+
+    ///////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    
+
     void Update()
     {
-        // Récupère le touch input si il est hold plus de 0 frames
-        if (Input.touchCount > 0)
-        {
-
-            Debug.Log("Input Touch");
-            Touch tTouch = Input.GetTouch(0);
-
-            funcTouchReturnObject (tTouch.position);
-        }
-
 
         // Clic souris
-        else if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Input Click");
             funcTouchReturnObject (Input.mousePosition);
 
             isDragging = true;
-            RigidbodyTouched.useGravity = false;
-            oldDrag = RigidbodyTouched.drag;
-            RigidbodyTouched.drag = 10;
+            rbTouched.useGravity = false;
+            oldDrag = rbTouched.drag;
+            rbTouched.drag = 10;
         }
 
         // Clic souris maintenu
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && jTouched== null)
         {
-           // funcMoveObject(Input.mousePosition);
-
-           
+            funcGAEL();
         }
 
         // Clic souris relaché
         if (Input.GetMouseButtonUp(0))
         {
-            RigidbodyTouched.useGravity = true;
+            rbTouched.useGravity = true;
             //RigidbodyTouched.isKinematic = true;
             
             isDragging = false;
 
-            //à condition que le lien ne soit pas cassé
-            if (RigidbodyTouched.GetComponent<HingeJoint>() != null)
+            //Si le lien n'est pas cassé
+            if (rbTouched.GetComponent<HingeJoint>() != null)
             {
-                RigidbodyTouched.drag = oldDrag;
-
+                rbTouched.drag = oldDrag;
             }
 
             else
             {
-                
-                RigidbodyTouched.drag = 0;
-                hTouchedObject = null ;
-                RigidbodyTouched = null ;
+                rbTouched.drag = 0;
             }
-            
+
+            hTouchedObject = null;
+            rbTouched = null;
+
         }
-
-
 
         // Debug
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Position A : " + ActualPosition );
-            Debug.Log("Position B : " + UpdatePosition);
-            Debug.Log("Force : " + BreakLimit);
-
-            
+            Debug.Log("Position A : " + v3TouchedObjectPosition );
+            Debug.Log("Position B : " + v3MousePosition);
+            Debug.Log("Force : " + fBreakLimit);     
         }
     }
 
@@ -103,60 +102,48 @@ public class Proto_TouchScript : MonoBehaviour
         {
 
             hTouchedObject = hit.transform.gameObject;
-            JointTouched = hTouchedObject.GetComponent<HingeJoint>();
-            RigidbodyTouched = hTouchedObject.GetComponent<Rigidbody>();
+            jTouched = hTouchedObject.GetComponent<HingeJoint>();
+            rbTouched = hTouchedObject.GetComponent<Rigidbody>();
 
             //ActualPosition = Camera.main.ScreenToWorldPoint(new Vector3(V2ScreenPos.x, V2ScreenPos.y, 9));
-            ActualPosition = RigidbodyTouched.position;
+            v3TouchedObjectPosition = rbTouched.position;
             Debug.Log(hit.transform.gameObject);
         }
     }
 
     //////////////////////////////////////////////// DEPLACEMENT DE L'OBJET \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-    void funcMoveObject (Vector2 MousePos)
-    {
-        
-    
-        // hTouchedObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(MousePos.x, MousePos.y, 9));
-        // Destroy ( JointTouched);*/
-    }
-
     private void FixedUpdate()
     {
         if (!isDragging) return;
 
-        Vector2 MousePos = Input.mousePosition;
-        UpdatePosition = Camera.main.ScreenToWorldPoint(new Vector3(MousePos.x, MousePos.y, 9));
-        ForcePosition = UpdatePosition - ActualPosition;
+        // Actualise la position de l'objet.
+        v3TouchedObjectPosition = rbTouched.position;
+        // Tchek de la position de la souris
+        v3MousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 9));
+        // Force qu'il faut donner pour déplacer l'objet séléctionné vers la position de la souris
+        v3ForcePosition = v3MousePosition - v3TouchedObjectPosition;
 
+        // Distance à laquelle la souris se trouve de l'objet sélectionné
+        fBreakLimit = v3ForcePosition.magnitude;
 
-        BreakLimit = ForcePosition.magnitude;
+        // Si la souris est plus loin que la limite fixé, le joint est rompu
+        if (fBreakLimit >= fBreakLimitMax && rbTouched.GetComponent<HingeJoint>() != null) { jTouched.breakForce = 0; }
 
-        //Debug.Log(RigidbodyTouched.velocity.magnitude);
-
-        if (BreakLimit >= 2.5 && RigidbodyTouched.GetComponent<HingeJoint>() != null) { JointTouched.breakForce = 0; }
-
-        //check vitesse max
-
-        if (RigidbodyTouched.velocity.magnitude > maxDragSpeed)
+        // Si la velocité de l'objet est trop élevé, on la refixe
+        if (rbTouched.velocity.magnitude > fMaxDragSpeed)
         {
-            RigidbodyTouched.velocity = Vector3.ClampMagnitude(RigidbodyTouched.velocity, maxDragSpeed);
-            //Debug.Log("SLOW");
+            rbTouched.velocity = Vector3.ClampMagnitude(rbTouched.velocity, fMaxDragSpeed);
+            
         }
-        
-        
-        RigidbodyTouched.AddForce(ForcePosition*3.5f, ForceMode.Impulse);
-        ActualPosition = RigidbodyTouched.position;
-  
-
-        
-
-       
+        // Active la force qui doit déplaçer l'objet sélectionné
+        rbTouched.AddForce(v3ForcePosition*3.5f, ForceMode.Impulse);
+    }
 
 
-        
 
+    void funcGAEL ()
+    {
 
     }
 }
