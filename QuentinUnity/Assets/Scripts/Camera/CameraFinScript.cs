@@ -6,22 +6,26 @@ public class CameraFinScript : MonoBehaviour
 {
 
     private GameObject[] hTableFruitSpawn;
-
+    
+    [Header("FRUITS QUI TOMBENT")]
+    [Header("_____________________________________________")]
     [Header("Nombres Fruits")]
     public int iFruitsPositif;
     public int iFruitsNegatif;
 
-    [Header("Data Dummy")]
+    [Header("Tableau Prefabs Fruits")]
+    public GameObject[] hTablePrefabeFruitPourris;
+    public GameObject[] hTablePrefabeFruitSains;
+
+    [Header("Data Dummy Position Fruits")]
     public GameObject hDummyCentreBarrique;
     public GameObject hDummyCibleOrbitale;
 
     public int iAngleSpawn;
     public float fDummySpawnOffsetY;
 
-    [Header ("Tableau Prefabs")]
-    public GameObject[] hTablePrefabeFruitPourris;
-    public GameObject[] hTablePrefabeFruitSains;
-
+    [Header("FOND BARRIQUE ET COUVERCLE")]
+    [Header("_____________________________________________")]
     [Header("Trigger barrique")]
     public GameObject TriggerBarrique;
     private TriggerBarriqueScript ScriptTriggerBarrique;
@@ -29,14 +33,34 @@ public class CameraFinScript : MonoBehaviour
     [Header("Pressoir Couvercle Scene")]
     public GameObject PressoirCouvercle;
 
-    [Header("Debug")]
-    public float fEtape = 0;
-
+    [Header("MOUVEMENT CAMERA")]
+    [Header("_____________________________________________")]
     [Header("Camera Data")]
     public GameObject hCamera1;
     public GameObject hCamera2;
     public float fSpeed;
 
+    [Header("JUS")]
+    [Header("_____________________________________________")]
+    public GameObject hTourneRobinet;
+    private float fVitesseRotate = 180f;
+    private float fSensRotation;
+
+    public GameObject hFluxRobinet;
+    private Vector3 v3FluxOrigine;
+    private float fVitesseScaleFlux = 0.7f;
+
+    public GameObject hJusUn;
+    private float fVitesseScaleJusUn = 0.8f;
+
+    public GameObject hJusDeux;
+    private float fVitesseScaleJusDeux = 0.8f;
+
+    private float fVitesseScaleDecompte = 0.4f;
+
+    [Header("Debug")]
+    [Header("_____________________________________________")]
+    public float fEtape = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -50,12 +74,14 @@ public class CameraFinScript : MonoBehaviour
         //Positionnement Camera
         gameObject.transform.position = hCamera1.transform.position;
 
+        v3FluxOrigine = hFluxRobinet.transform.position;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Etape : " + fEtape);
+        Debug.Log("Etape : " + fEtape);
 
 
         if (fEtape == 0)
@@ -133,10 +159,11 @@ public class CameraFinScript : MonoBehaviour
 
         if (fEtape == 3)//quand le slide et fini
         {
-            //faire le mouvement de caméra
+            //faire le mouvement de caméra + ouvrir roubinet
 
             //setup Vitesse
             fSpeed = 8f;
+            fSensRotation = 1;
 
             //Setup vitesse dt
             float fStep = fSpeed * Time.deltaTime;
@@ -144,47 +171,139 @@ public class CameraFinScript : MonoBehaviour
             //Move Camera
             transform.position = Vector3.MoveTowards(transform.position, hCamera2.transform.position, fStep);
 
+            hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+
+            if (hTourneRobinet.transform.rotation.y < 180 && transform.position == hCamera2.transform.position)
+            {
+                fEtape = 4;
+            }
         }
 
         if (fEtape == 4)//quand la caméra est en position final ou pas loin de sa position final
         {
+            //faire tourner de 3/4 le roubinet tout en faisant grossir le flux : ^)
+            fSensRotation = 1f;
 
-            //faire tourné de 3/4 le roubinet
-
-
+            if (hFluxRobinet.transform.localScale.y<1)
+            {
+                if (hFluxRobinet.transform.localScale.y < 0.5f)
+                {
+                    hFluxRobinet.transform.localScale = new Vector3(hFluxRobinet.transform.localScale.x, hFluxRobinet.transform.localScale.y + fVitesseScaleFlux * Time.deltaTime, hFluxRobinet.transform.localScale.z);
+                    hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+                }
+                else
+                {
+                    hFluxRobinet.transform.localScale = new Vector3(hFluxRobinet.transform.localScale.x, hFluxRobinet.transform.localScale.y + fVitesseScaleFlux * Time.deltaTime, hFluxRobinet.transform.localScale.z);
+                }
+            }
+            else if (hFluxRobinet.transform.localScale.y >= 1)
+            {
+                fEtape = 5;
+            }
         }
         
-        if (fEtape == 5)//quand robinet a presque fini de tournet
+        if (fEtape == 5)//quand robinet a fini de tourner
         {
+            //Monter le juuuus
 
-            //faire couler le fluide
+            //Sens de rotation Roubinet inversé
+            fSensRotation = -1f;
 
+            //ActiverMeshRenderer
+            if (hJusUn.GetComponent<MeshRenderer>().enabled== false || hJusDeux.GetComponent<MeshRenderer>().enabled == false)
+            {
+                hJusUn.GetComponent<MeshRenderer>().enabled = true;
+                hJusDeux.GetComponent<MeshRenderer>().enabled = true;
+            }
 
+            //Faire monter les Deux cylindres de jus
+            if (hJusUn.transform.localScale.y < 0.8f && hJusDeux.transform.localScale.y < 0.8f)
+            {
+                if (hJusUn.transform.localScale.y < 0.5 && hJusDeux.transform.localScale.y < 0.5f)
+                {
+                    hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y + fVitesseScaleJusUn * Time.deltaTime, 1);
+                    hJusDeux.transform.localScale = new Vector3(1, hJusDeux.transform.localScale.y + fVitesseScaleJusDeux * Time.deltaTime, 1);
+                }
+                else
+                {
+                    hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y + fVitesseScaleJusUn * Time.deltaTime, 1);
+                    hJusDeux.transform.localScale = new Vector3(1, hJusDeux.transform.localScale.y + fVitesseScaleJusDeux * Time.deltaTime, 1);
+                    hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+
+                    hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                }
+            }
+            else if (hJusUn.transform.localScale.y >= 0.5 && hJusDeux.transform.localScale.y >= 0.5)
+            {
+                fEtape = 6;
+            }
         }
 
-        if (fEtape == 6)//quand robinet a presque fini de tournet
+        if (fEtape == 6)//quand Jus finit de monter, le flux s'inverse et le roubinet finit de tourner
         {
+            //Inverser le flux
+            if ( v3FluxOrigine == hFluxRobinet.transform.position)
+            {
+                hFluxRobinet.transform.Rotate(new Vector3(180, 0, 0), Space.Self);
+                hFluxRobinet.transform.position = new Vector3(hFluxRobinet.transform.position.x, hJusUn.transform.position.y, hFluxRobinet.transform.position.z);
+            }
 
-            //faire couler le fluide
-            //spawn du cylindre multy fruit bon puis /scale vers le haut
+            //Faire monter les Deux cylindres de jus
+            if (hJusUn.transform.localScale.y < 1f && hJusDeux.transform.localScale.y < 1f)
+            {
+                //Faire baisser le flux
+               
+                if (hJusUn.transform.localScale.y < 0.8f && hJusDeux.transform.localScale.y < 0.8f)
+                {
+                    hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y + fVitesseScaleJusUn * Time.deltaTime, 1);
+                    hJusDeux.transform.localScale = new Vector3(1, hJusDeux.transform.localScale.y + fVitesseScaleJusDeux * Time.deltaTime, 1);
+                    hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+                }
+                else
+                {
+                    hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y + fVitesseScaleJusUn * Time.deltaTime, 1);
+                    hJusDeux.transform.localScale = new Vector3(1, hJusDeux.transform.localScale.y + fVitesseScaleJusDeux * Time.deltaTime, 1);
 
-
+                    if (hFluxRobinet.transform.localScale.y > 0.1f)
+                    {
+                        hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                    }
+                }
+            }
+            else if (hJusUn.transform.localScale.y >= 1 && hJusDeux.transform.localScale.y >= 1)
+            {
+                hJusUn.transform.localScale = new Vector3(1, 1, 1);
+                hJusDeux.transform.localScale = new Vector3(1, 1, 1);
+                fEtape = 7;
+            }
         }
 
-        if (fEtape == 7)//quand le scale bon atteint la taill demander
+        if (fEtape == 7)//quand le scale bon atteint la taille demandée
         {
-
-            //arrété l'écoulement du fluide
             //spawn du cylindre multy fruit mauvéééééé / puis scale vers le bas
 
+            //Calcul Ratio Bons/Mauvais fruits
+            int iTotalFruits = iFruitsPositif + iFruitsNegatif;
+            float fPourcentage = iFruitsNegatif * 100 / iTotalFruits;
+            fPourcentage = (100 - fPourcentage)/100;
+            Debug.Log(fPourcentage);
 
+            if (hJusUn.transform.localScale.y > fPourcentage)
+            {
+                hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y - fVitesseScaleDecompte * Time.deltaTime, 1);
+            }
+            else if (hJusUn.transform.localScale.y <= fPourcentage)
+            {
+                fEtape = 8;
+            }
         }
 
         if (fEtape == 8)//quand le scale mauvais atteint la taill demander
         {
-
             // affichage dinamique des score
             // réaction de l'étiquette
+
+            //lol on l'a pas encore décidé de comment on faisait
 
 
         }

@@ -83,8 +83,6 @@ public class PressoirScript : MonoBehaviour
                 fSensRotation = -1;
                 transform.position = Vector3.MoveTowards(transform.position, v3PositionStart, fStep);
 
-                Debug.Log("Distance Pos Dum/Obj" + Mathf.Abs(transform.position.y - v3PositionStart.y));
-
                 if (Mathf.Abs(transform.position.y - v3PositionStart.y) > 0.1)
                 {
                     transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
