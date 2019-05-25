@@ -29,6 +29,7 @@ public class Proto_TouchScript : MonoBehaviour
     private bool bIsDragging = false;
     private bool bFoundObject = false;
     private bool bSecateurActif = false;
+    private bool bPressoirActif = false;
 
     private float oldDrag;
 
@@ -72,6 +73,14 @@ public class Proto_TouchScript : MonoBehaviour
                 bSecateurActif = false;
             }
 
+            //Désactive Pressoir
+            if (bPressoirActif)
+            {
+                hTouchedObject.GetComponent<PressoirScript>().funcDesactivePressoir();
+                bPressoirActif = false;
+            }
+
+            
             //Si l'objet trouvé est un fruit
             if (bFoundObject)
             {
@@ -89,11 +98,7 @@ public class Proto_TouchScript : MonoBehaviour
                 {
                     rbTouched.drag = 0;
                 }
-
-
-                // Event ScateurScript
-                //bSecateurActif = true;
-
+                
                 bFoundObject = false;
                 hTouchedObject = null;
                 rbTouched = null;
@@ -126,6 +131,14 @@ public class Proto_TouchScript : MonoBehaviour
             {
                 bSecateurActif = true;
                 hTouchedObject.GetComponent<SecateurScript>().funcActiveSecateur();
+                return bFoundObject = false;
+            }
+
+            //Check Si on a selectionné le pressoir
+            if (hTouchedObject.GetComponent<PressoirScript>())
+            {
+                bPressoirActif = true;
+                hTouchedObject.GetComponent<PressoirScript>().funcActivePressoir();
                 return bFoundObject = false;
             }
             

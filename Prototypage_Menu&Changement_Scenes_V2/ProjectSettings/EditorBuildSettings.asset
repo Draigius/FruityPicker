@@ -5,30 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/Scenes/Menu.unity
-    guid: 5a24b3e82e6f8374db5c73631a3c7b81
   - enabled: 1
-    path: Assets/Scenes/Credits.unity
-    guid: bd9042ac7b641a34ea210fa410229e10
+    path: Assets/Scenes/Menu_Fruits.unity
+    guid: eef814a53dd4d8c49b4a90be58fb7017
   - enabled: 1
     path: Assets/Scenes/Levels.unity
     guid: f7c60d4c3014e5b4cb06f809393ff3df
   - enabled: 1
     path: Assets/Scenes/Level1.unity
-    guid: c2e15185e8a7bf44296b76ea2908fc54
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+    guid: 64d34a03267a66b4497443eb9f4c9643
   - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: fdc455de1ee8bdc48999e360dc344b44
@@ -39,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Level4.unity
     guid: 25c327caa55a13b48905d96078935e72
   - enabled: 1
-    path: Assets/Scenes/Menu_Fruits.unity
-    guid: eef814a53dd4d8c49b4a90be58fb7017
+    path: Assets/Scenes/Credits.unity
+    guid: bd9042ac7b641a34ea210fa410229e10
+  - enabled: 1
+    path: Assets/Scenes/Options.unity
+    guid: 119bcad817f27134cbdc9d5705dc65bf
   m_configObjects: {}
