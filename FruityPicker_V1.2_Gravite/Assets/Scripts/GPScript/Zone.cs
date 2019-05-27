@@ -234,7 +234,7 @@ public class Zone : MonoBehaviour
                 if (hTableObjectStock[i].GetComponent<Jonction>().iType == 1 || hTableObjectStock[i].GetComponent<Jonction>().iType == 2)
                 {
 
-                    Debug.Log("rentre funcUpdateForType");
+                    //Debug.Log("rentre funcUpdateForType");
                     hTableObjectStock[i].GetComponent<Jonction>().funcModifEtat(bEtatPositif, iIdGenerateurOrigine,1);
 
                 }

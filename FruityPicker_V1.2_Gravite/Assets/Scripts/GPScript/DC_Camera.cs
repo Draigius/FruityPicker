@@ -38,18 +38,18 @@ public class DC_Camera : MonoBehaviour
 
 
     //// Gravité gyroscope
-    private float fGyroAttitudeX;
+    private float fGyroAccelerationX;
     private float dbX = 0;
     private float fGravityX;
     private float fGravityY;
     public float gravityForce = 9.8f;
     public float fGravitySpeed;
 
-    [Range (0f, 1f)]
+    //[Range (0f, 1f)]
     public float minAngle;
 
 
-    [Range(0f, 1f)]
+    //[Range(0f, 1f)]
     public float maxAngle;
 
     #endregion
@@ -66,7 +66,8 @@ public class DC_Camera : MonoBehaviour
         initialCamPos = vPosCam;
 
         // Changement gravité gyro
-        fGyroAttitudeX = Input.gyro.attitude.x;
+        fGyroAccelerationX = Input.acceleration.x;
+
     }
 
 
@@ -150,34 +151,24 @@ public class DC_Camera : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Vector3 dir = new Vector3(0.0f, 0.0f, Input.acceleration.y);
-        //Vector3 dir = new Vector3(Input.gyro.rotationRate.y, Input.gyro.rotationRate.x, 0.0f);
-        //Physics.gravity = dir * gravityForce;
 
-
-
-        #region CODE GRAVITE ALEX
         dbX = 0;
-        fGyroAttitudeX = Input.gyro.rotationRate.z;
-        fGyroAttitudeX *= -1;
-
-        //Debug.Log("Attitude: " + fGyroAttitudeX);
+        fGyroAccelerationX = Input.acceleration.x;
+        fGyroAccelerationX *= -1;
 
         // Limitation angles
-        if (Mathf.Abs(fGyroAttitudeX) <= minAngle)
+        if (Mathf.Abs(fGyroAccelerationX) <= minAngle)
         {
-            //Debug.Log("Première boucle : " + fGyroAttitudeX);
             dbX = 0;
         }
-        else if (Mathf.Abs(fGyroAttitudeX) >= maxAngle)
+        else if (Mathf.Abs(fGyroAccelerationX) >= maxAngle)
         {
-            //Debug.Log("Deuxième boucle : " + fGyroAttitudeX);
-            dbX = maxAngle * (fGyroAttitudeX < 0 ? -1 : 1);
+            dbX = maxAngle * (fGyroAccelerationX < 0 ? -1 : 1);
         }
         else
         {
-            //Debug.Log("Else : " + fGyroAttitudeX);
-            dbX = fGyroAttitudeX * fGravitySpeed;
+            //Debug.Log("Else : " + fGyroAccelerationX);
+            dbX = fGyroAccelerationX * fGravitySpeed;
         }
 
 
@@ -187,10 +178,7 @@ public class DC_Camera : MonoBehaviour
 
         Physics.gravity = new Vector2(fGravityX, fGravityY);
 
-        #endregion
-
-        //fGyroAttitudeX = Input.gyro.attitude.z;
-        //Physics.gravity = new Vector2(Mathf.Cos(fGyroAttitudeX)*9.81f, Mathf.Sin(fGyroAttitudeX)*9.81f);
+        
     }
 
 
@@ -201,7 +189,6 @@ public class DC_Camera : MonoBehaviour
         v3InitPos = new Vector3(0, 0, 0);
         TempObjectForce = new Vector3(0, 0, 0);
         dummyCam.transform.eulerAngles = initialCamPos;
-        //dummyCam.transform.eulerAngles = Vector3.MoveTowards(transform.eulerAngles, TempObjectForce, 1);
     }
 
 }
