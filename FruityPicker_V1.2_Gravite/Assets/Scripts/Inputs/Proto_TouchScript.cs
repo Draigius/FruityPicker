@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Proto_TouchScript : MonoBehaviour
 {
+
+    #region VARIABLES
     // Fruit séléctionné
     GameObject hTouchedObject;
     // Joint du fruit sélectionné
@@ -32,7 +34,19 @@ public class Proto_TouchScript : MonoBehaviour
 
     private float oldDrag;
 
+    //Changement scene
     private string nameScene = "";
+
+    //Scale fruits sur clic
+    private bool bGrowing = false;
+    private float fScaleBase = 0.3f;
+    private float fCurrentScale;
+    public float fMaxScale;
+    private float fScalingTime = 0.1f;
+    private GameObject GOTouchedObject = null;
+
+    #endregion
+
 
     ///////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -43,7 +57,6 @@ public class Proto_TouchScript : MonoBehaviour
 
     void Update()
     {
-
         // Clic souris
         if (Input.GetMouseButtonDown(0))
         {
@@ -53,6 +66,10 @@ public class Proto_TouchScript : MonoBehaviour
                 rbTouched.useGravity = false;
                 oldDrag = rbTouched.drag;
                 rbTouched.drag = 10;
+
+                if (rbTouched.transform.childCount >0) GOTouchedObject = rbTouched.transform.GetChild(0).gameObject;
+                bGrowing = true;
+
             }
         }
 
@@ -69,6 +86,7 @@ public class Proto_TouchScript : MonoBehaviour
             //RigidbodyTouched.isKinematic = true;
 
             bIsDragging = false;
+
 
             //Si le lien n'est pas cassé
             if (rbTouched.GetComponent<HingeJoint>() != null)
@@ -88,6 +106,7 @@ public class Proto_TouchScript : MonoBehaviour
 
             // Mouvement caméra sur détachement de l'objet
             this.GetComponent<DC_Camera>().OnDetach();
+
         }
 
         // Debug
@@ -97,6 +116,32 @@ public class Proto_TouchScript : MonoBehaviour
             Debug.Log("Position B : " + v3MousePosition);
             Debug.Log("Force : " + fBreakLimit);     
         }
+
+
+        #region SCALE FRUITS
+        // Grossisement fruit
+        if (bGrowing == true)
+        {
+            fCurrentScale += Time.deltaTime * (fMaxScale - fScaleBase) / fScalingTime;
+            if (fCurrentScale > fMaxScale)
+            {
+                fCurrentScale = fMaxScale;
+                bGrowing = false;
+            }
+        }
+
+        // Retrecissement fruit
+        if (bGrowing == false && (fCurrentScale > fScaleBase))
+        {
+            fCurrentScale = fScaleBase;
+            fCurrentScale -= Time.deltaTime * (fMaxScale - fScaleBase) / fScalingTime;
+        }
+
+        if (GOTouchedObject!=null) GOTouchedObject.transform.localScale = new Vector3(fCurrentScale, fCurrentScale, fCurrentScale);
+
+
+
+        #endregion
     }
 
     //////////////////////////////////////////////// SELECTION DE L'OBJET \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
