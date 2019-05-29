@@ -214,8 +214,6 @@ public class MainGame : MonoBehaviour
 
                 hLePanier.transform.position = new Vector3(-20, -4, 0);
 
-                Debug.Log("TA MERE LA PUTE");
-
                 textScore.text = " ";
 
                 iGrappeActuel = iGrappeActuel + 1;
@@ -261,80 +259,75 @@ public class MainGame : MonoBehaviour
             /// variable static 
 
             Application.LoadLevel("SceneScore");
-
+            
         }
-
-
-        for(int i = 0; i< hTableJunction.Length; i++)
+        else
         {
-            if(i != 0)
+            for (int i = 0; i < hTableJunction.Length; i++)
             {
-                
-                Object.Destroy(hTableJunction[i].GetComponent<Jonction>().hMesh);
-                
-
-                if (hTableJunction[i].GetComponent<Jonction>().iType == 3)
+                if (i != 0)
                 {
-                    Debug.Log("hTableJunction[i].GetComponent<Jonction>().hMesh :" + hTableJunction[i].GetComponent<Jonction>().hMesh);
-                    Object.Destroy(hTableJunction[i].GetComponent<Jonction>().hZone);
+
+                    Object.Destroy(hTableJunction[i].GetComponent<Jonction>().hMesh);
+
+
+                    if (hTableJunction[i].GetComponent<Jonction>().iType == 3)
+                    {
+                        Debug.Log("hTableJunction[i].GetComponent<Jonction>().hMesh :" + hTableJunction[i].GetComponent<Jonction>().hMesh);
+                        Object.Destroy(hTableJunction[i].GetComponent<Jonction>().hZone);
+
+                    }
 
                 }
 
+                Object.Destroy(hTableJunction[i]);
+
+            }
+            
+            if (iGrappeActuel == 1)
+            {
+                hTableJunction = hTableJunction1;
+
+            }
+            else if (iGrappeActuel == 2)
+            {
+
+                hTableJunction = hTableJunction2;
+
+            }
+            else if (iGrappeActuel == 3)
+            {
+
+                hTableJunction = hTableJunction3;
+
+            }
+            else if (iGrappeActuel == 4)
+            {
+
+                hTableJunction = hTableJunction4;
+
+            }
+            else if (iGrappeActuel == 5)
+            {
+
+                hTableJunction = hTableJunction5;
+
+            }
+            else if (iGrappeActuel == 6)
+            {
+
+                hTableJunction = hTableJunction6;
+
             }
 
-            Object.Destroy(hTableJunction[i]);
+            hTableJunction[0].transform.position = new Vector3(0, 4.6f, 0);
 
+            for (int i = 1; i < hTableJunction.Length; i++)
+            {
+
+                hTableJunction[i].GetComponent<Jonction>().enabled = true;
+
+            }
         }
-
-
-
-
-
-        if (iGrappeActuel == 1)
-        {
-            hTableJunction = hTableJunction1;
-
-        }
-        else if (iGrappeActuel == 2)
-        {
-
-            hTableJunction = hTableJunction2;
-
-        }
-        else if (iGrappeActuel == 3)
-        {
-
-            hTableJunction = hTableJunction3;
-
-        }
-        else if (iGrappeActuel == 4)
-        {
-
-            hTableJunction = hTableJunction4;
-
-        }
-        else if (iGrappeActuel == 5)
-        {
-
-            hTableJunction = hTableJunction5;
-
-        }
-        else if (iGrappeActuel == 6)
-        {
-
-            hTableJunction = hTableJunction6;
-
-        }
-
-        hTableJunction[0].transform.position = new Vector3(0, 4.6f, 0);
-
-        for(int i = 1; i< hTableJunction.Length; i++)
-        {
-
-            hTableJunction[i].GetComponent<Jonction>().enabled = true;
-
-        }
-
     }
-
 }

@@ -39,7 +39,7 @@ public class PressoirScript : MonoBehaviour
     {
         fSetupState = Camera.main.GetComponent<CameraFinScript>().fEtape;
 
-        Debug.Log("State Setup : " + fSetupState);
+        //Debug.Log("State Setup : " + fSetupState);
         
         //Interdiction move
         if (fSetupState == 0.5f)

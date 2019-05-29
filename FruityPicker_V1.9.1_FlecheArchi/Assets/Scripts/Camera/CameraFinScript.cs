@@ -14,6 +14,11 @@ public class CameraFinScript : MonoBehaviour
     public int iFruitsNegatif;
     public int iFruitsPositifsMaxScorePossible;
 
+    public int iScoreNiveau;
+
+    public float fReussiteMedium;
+    public float fReussitePetite;
+
     [Header("Tableau Prefabs Fruits")]
     public GameObject[] hTablePrefabeFruitPourris;
     public GameObject[] hTablePrefabeFruitSains;
@@ -74,6 +79,12 @@ public class CameraFinScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /// RECUPERER DATA SCORE ///
+
+
+
+        /////////////////////////////
+        
         hTableFruitSpawn = new GameObject [iFruitsNegatif+iFruitsPositif];
 
         //Envoi Data au script de Trigger Barrique
@@ -93,12 +104,12 @@ public class CameraFinScript : MonoBehaviour
         fScaleJusPositif = fScaleJusPositif / 100;
         fScaleJusNegatif = fScaleJusNegatif / 100;
 
-       Debug.Log("fScale Jus = " + fScaleJusPositif);
+        //Debug.Log("fScale Jus = " + fScaleJusPositif);
 
         fPourcentage = iFruitsNegatif * 100 / iFruitsPositif;
         fPourcentage = (100 - fPourcentage) / 100;
 
-        Debug.Log("Pourcentage = " + fPourcentage);
+        //Debug.Log("Pourcentage = " + fPourcentage);
     }
 
     // Update is called once per frame
@@ -121,7 +132,7 @@ public class CameraFinScript : MonoBehaviour
                     //Quel type de fruit spawn
                     hStockObjectTemporaire = Instantiate(hTablePrefabeFruitPourris[0], new Vector3(0,100,0), Quaternion.identity);
                     //Mathf.FloorToInt(Random.RandomRange(0, 3.99f))
-                    Debug.Log("hStockObjectTemporaire :"+ hStockObjectTemporaire);
+                    //Debug.Log("hStockObjectTemporaire :"+ hStockObjectTemporaire);
 
                     hStockObjectTemporaire.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                     //GameObject hFaceManager = GetChildWithName(hStockObjectTemporaire, "kiwi_SurMesh");
@@ -342,7 +353,7 @@ public class CameraFinScript : MonoBehaviour
             }
         }
 
-        Debug.Log("fEtape" + fEtape);
+        //Debug.Log("fEtape" + fEtape);
 
         if (fEtape == 9)//quand le scale mauvais atteint la taill demander
         {

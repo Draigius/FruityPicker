@@ -8,6 +8,8 @@ public class TransitionScript : MonoBehaviour
     private Vector3 v3PositionTarget;
     private Vector3 v3PositionStart;
 
+    private int iScaleTorchon = 2;
+
     private bool bStart = false;
     private bool bEnd = false;
 
@@ -21,7 +23,11 @@ public class TransitionScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fOffsetTransitionY = fOffsetTransitionY * iScaleTorchon;
+        fOffsetTransitionZ = fOffsetTransitionZ * iScaleTorchon;
         gameObject.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + fOffsetTransitionZ);
+
+        gameObject.transform.localScale = new Vector3 (iScaleTorchon, iScaleTorchon, iScaleTorchon);
 
         v3PositionStart = gameObject.transform.position;
         v3PositionTarget = new Vector3(v3PositionStart.x, v3PositionStart.y + fOffsetTransitionY, v3PositionStart.z);
@@ -42,7 +48,6 @@ public class TransitionScript : MonoBehaviour
         }
         else if (bStart && v3PositionActuelle == v3PositionTarget)
         {
-            //Debug.Log("truite");
             bStart = false;
         }
 
@@ -53,7 +58,6 @@ public class TransitionScript : MonoBehaviour
         }
         else if (bEnd && v3PositionActuelle == v3PositionStart)
         {
-            //Debug.Log("fumé");
             bEnd = false;
         }
 

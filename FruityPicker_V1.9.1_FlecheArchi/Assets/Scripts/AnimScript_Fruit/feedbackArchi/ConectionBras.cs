@@ -43,7 +43,7 @@ public class ConectionBras : MonoBehaviour
     void Update()
     {
         funcRenduFleche(bActif);
-        Debug.Log("iSensFB :" + iSensFB);
+        //Debug.Log("iSensFB :" + iSensFB);
 
         if(iSensFBSauvgarde != iSensFB && iSensFB != 0)
         {

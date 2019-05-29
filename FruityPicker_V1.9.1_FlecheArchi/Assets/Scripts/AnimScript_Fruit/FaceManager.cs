@@ -63,13 +63,9 @@ public class FaceManager : MonoBehaviour
 
         if(hJonction != null)
         {
-
             scriptJonction = hJonction.GetComponent<Jonction>();
-
         }
-
-        audioMaster = scriptJonction.GetComponent<AI_AudioMaster>();
-        
+         audioMaster = scriptJonction.GetComponent<AI_AudioMaster>();
     }
 
     // Update is called once per frame
