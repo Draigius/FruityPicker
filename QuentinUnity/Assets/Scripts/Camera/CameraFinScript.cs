@@ -12,6 +12,7 @@ public class CameraFinScript : MonoBehaviour
     [Header("Nombres Fruits")]
     public int iFruitsPositif;
     public int iFruitsNegatif;
+    public int iFruitsPositifsMaxScorePossible;
 
     [Header("Tableau Prefabs Fruits")]
     public GameObject[] hTablePrefabeFruitPourris;
@@ -50,17 +51,25 @@ public class CameraFinScript : MonoBehaviour
     private Vector3 v3FluxOrigine;
     private float fVitesseScaleFlux = 0.7f;
 
-    public GameObject hJusUn;
-    private float fVitesseScaleJusUn = 0.8f;
+    public GameObject hJusPositif;
+    private float fVitesseScaleJusPositif = 0.8f;
+    private float fScaleJusPositif;
 
-    public GameObject hJusDeux;
-    private float fVitesseScaleJusDeux = 0.8f;
+    public GameObject hJusNegatif;
+    private float fVitesseScaleJusNegatif = 0.8f;
+    private float fScaleJusNegatif;
 
     private float fVitesseScaleDecompte = 0.4f;
+    float fPourcentage;
 
     [Header("Debug")]
     [Header("_____________________________________________")]
     public float fEtape = 0;
+
+
+
+    private static float fTimerOrigine1 = 1;
+    private float fTimerDeconte = fTimerOrigine1;
 
     // Start is called before the first frame update
     void Start()
@@ -76,17 +85,29 @@ public class CameraFinScript : MonoBehaviour
 
         v3FluxOrigine = hFluxRobinet.transform.position;
 
+        //Calcul scale max des jus
+
+        //Calcul Ratio Bons/Mauvais fruits
+        fScaleJusPositif = (float)iFruitsPositif * 100f / iFruitsPositifsMaxScorePossible;
+        fScaleJusNegatif = (float)iFruitsPositif * 100f / iFruitsPositifsMaxScorePossible;
+        fScaleJusPositif = fScaleJusPositif / 100;
+        fScaleJusNegatif = fScaleJusNegatif / 100;
+
+       Debug.Log("fScale Jus = " + fScaleJusPositif);
+
+        fPourcentage = iFruitsNegatif * 100 / iFruitsPositif;
+        fPourcentage = (100 - fPourcentage) / 100;
+
+        Debug.Log("Pourcentage = " + fPourcentage);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Etape : " + fEtape);
-
+        //Debug.Log("Etape : " + fEtape);
 
         if (fEtape == 0)
         {
-
             ///////////////////////////////////////////////////  Choix Fruits
             //spawn des fruits
             int iCompteur= iFruitsNegatif;
@@ -210,30 +231,30 @@ public class CameraFinScript : MonoBehaviour
             fSensRotation = -1f;
 
             //ActiverMeshRenderer
-            if (hJusUn.GetComponent<MeshRenderer>().enabled== false || hJusDeux.GetComponent<MeshRenderer>().enabled == false)
+            if (hJusPositif.GetComponent<MeshRenderer>().enabled== false || hJusNegatif.GetComponent<MeshRenderer>().enabled == false)
             {
-                hJusUn.GetComponent<MeshRenderer>().enabled = true;
-                hJusDeux.GetComponent<MeshRenderer>().enabled = true;
+                hJusPositif.GetComponent<MeshRenderer>().enabled = true;
+                hJusNegatif.GetComponent<MeshRenderer>().enabled = true;
             }
 
             //Faire monter les Deux cylindres de jus
-            if (hJusUn.transform.localScale.y < 0.8f && hJusDeux.transform.localScale.y < 0.8f)
+            if (hJusPositif.transform.localScale.y < 0.8f*fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.8*fScaleJusNegatif)
             {
-                if (hJusUn.transform.localScale.y < 0.5 && hJusDeux.transform.localScale.y < 0.5f)
+                if (hJusPositif.transform.localScale.y < 0.5 * fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.5f * fScaleJusNegatif)
                 {
-                    hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y + fVitesseScaleJusUn * Time.deltaTime, 1);
-                    hJusDeux.transform.localScale = new Vector3(1, hJusDeux.transform.localScale.y + fVitesseScaleJusDeux * Time.deltaTime, 1);
+                    hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
+                    hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
                 }
                 else
                 {
-                    hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y + fVitesseScaleJusUn * Time.deltaTime, 1);
-                    hJusDeux.transform.localScale = new Vector3(1, hJusDeux.transform.localScale.y + fVitesseScaleJusDeux * Time.deltaTime, 1);
+                    hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
+                    hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
                     hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
 
                     hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
                 }
             }
-            else if (hJusUn.transform.localScale.y >= 0.5 && hJusDeux.transform.localScale.y >= 0.5)
+            else if (hJusPositif.transform.localScale.y >= 0.5 * fScaleJusPositif && hJusNegatif.transform.localScale.y >= 0.5 * fScaleJusNegatif)
             {
                 fEtape = 6;
             }
@@ -245,24 +266,24 @@ public class CameraFinScript : MonoBehaviour
             if ( v3FluxOrigine == hFluxRobinet.transform.position)
             {
                 hFluxRobinet.transform.Rotate(new Vector3(180, 0, 0), Space.Self);
-                hFluxRobinet.transform.position = new Vector3(hFluxRobinet.transform.position.x, hJusUn.transform.position.y, hFluxRobinet.transform.position.z);
+                hFluxRobinet.transform.position = new Vector3(hFluxRobinet.transform.position.x, hJusPositif.transform.position.y, hFluxRobinet.transform.position.z);
             }
 
             //Faire monter les Deux cylindres de jus
-            if (hJusUn.transform.localScale.y < 1f && hJusDeux.transform.localScale.y < 1f)
+            if (hJusPositif.transform.localScale.y < 1f * fScaleJusPositif && hJusNegatif.transform.localScale.y < 1f * fScaleJusNegatif)
             {
                 //Faire baisser le flux
                
-                if (hJusUn.transform.localScale.y < 0.8f && hJusDeux.transform.localScale.y < 0.8f)
+                if (hJusPositif.transform.localScale.y < 0.8f*fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.8f*fScaleJusNegatif)
                 {
-                    hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y + fVitesseScaleJusUn * Time.deltaTime, 1);
-                    hJusDeux.transform.localScale = new Vector3(1, hJusDeux.transform.localScale.y + fVitesseScaleJusDeux * Time.deltaTime, 1);
+                    hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
+                    hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
                     hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
                 }
                 else
                 {
-                    hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y + fVitesseScaleJusUn * Time.deltaTime, 1);
-                    hJusDeux.transform.localScale = new Vector3(1, hJusDeux.transform.localScale.y + fVitesseScaleJusDeux * Time.deltaTime, 1);
+                    hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
+                    hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
 
                     if (hFluxRobinet.transform.localScale.y > 0.1f)
                     {
@@ -270,36 +291,56 @@ public class CameraFinScript : MonoBehaviour
                     }
                 }
             }
-            else if (hJusUn.transform.localScale.y >= 1 && hJusDeux.transform.localScale.y >= 1)
+            else if (hJusPositif.transform.localScale.y >= 1 * fScaleJusPositif && hJusNegatif.transform.localScale.y >= 1 * fScaleJusNegatif)
             {
-                hJusUn.transform.localScale = new Vector3(1, 1, 1);
-                hJusDeux.transform.localScale = new Vector3(1, 1, 1);
+                hJusPositif.transform.localScale = new Vector3(1, fScaleJusPositif, 1);
+                hJusNegatif.transform.localScale = new Vector3(1, fScaleJusNegatif, 1);
                 fEtape = 7;
             }
         }
 
-        if (fEtape == 7)//quand le scale bon atteint la taille demandée
+        if (fEtape == 7)
         {
-            //spawn du cylindre multy fruit mauvéééééé / puis scale vers le bas
-
-            //Calcul Ratio Bons/Mauvais fruits
-            int iTotalFruits = iFruitsPositif + iFruitsNegatif;
-            float fPourcentage = iFruitsNegatif * 100 / iTotalFruits;
-            fPourcentage = (100 - fPourcentage)/100;
-            Debug.Log(fPourcentage);
-
-            if (hJusUn.transform.localScale.y > fPourcentage)
+            if (hFluxRobinet.transform.localScale.y > 0.1f)
             {
-                hJusUn.transform.localScale = new Vector3(1, hJusUn.transform.localScale.y - fVitesseScaleDecompte * Time.deltaTime, 1);
+                hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
             }
-            else if (hJusUn.transform.localScale.y <= fPourcentage)
+
+            if (fTimerDeconte > 0)
+            {
+                fTimerDeconte = fTimerDeconte - Time.deltaTime;
+            }
+            else
             {
                 fEtape = 8;
             }
         }
 
-        if (fEtape == 8)//quand le scale mauvais atteint la taill demander
+        if (fEtape == 8)//quand le scale bon atteint la taille demandée
         {
+            //spawn du cylindre multy fruit mauvéééééé / puis scale vers le bas
+
+            if (hFluxRobinet.transform.localScale.y > 0.1f)
+            {
+                hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+            }
+
+            if (hJusPositif.transform.localScale.y > fPourcentage*fScaleJusPositif)
+            {
+                hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y - fVitesseScaleDecompte * Time.deltaTime, 1);
+            }
+            else if (hJusPositif.transform.localScale.y <= fPourcentage* fScaleJusPositif)
+            {
+                fEtape = 8;
+            }
+        }
+
+        if (fEtape == 9)//quand le scale mauvais atteint la taill demander
+        {
+            if (hFluxRobinet.transform.localScale.y > 0.1f)
+            {
+                hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+            }
             // affichage dinamique des score
             // réaction de l'étiquette
 

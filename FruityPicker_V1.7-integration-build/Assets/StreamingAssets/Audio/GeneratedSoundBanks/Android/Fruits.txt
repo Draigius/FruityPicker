@@ -1,0 +1,62 @@
+Event	ID	Name			Wwise Object Path	Notes
+	359744858	onChange			\Default Work Unit\onChange	
+	452547817	Stop_All			\Default Work Unit\Stop_All	
+	1790470844	cri_continu			\Default Work Unit\cri_continu	
+	1965390065	onProximite			\Default Work Unit\onProximite	
+	3479274555	onSaisi			\Default Work Unit\onSaisi	
+	3857968614	onArrache			\Default Work Unit\onArrache	
+
+Switch Group	ID	Name			Wwise Object Path	Notes
+	1158678531	arrache			\Default Work Unit\arrache	
+
+Switch	ID	Name	Switch Group			Notes
+	734443404	veryPositive	arrache			
+	1192865152	positive	arrache			
+	2170804580	veryNegative	arrache			
+	4219547688	negative	arrache			
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	1188090	rire_hysterie	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (24)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_veryPositive\rire_hysterie		389184
+	4305752	ohuhu	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (16)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_positive\ohuhu		106560
+	10103905	surprise_inspiration2	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (20)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_positive\surprise_inspiration2		90176
+	26522291	SCREAM_4_short2	C:\Users\game2\Desktop\main\.cache\Android\SFX\SCREAM_4_short2_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\scream_continu\SCREAM_4_short2		21126
+	40138745	SCREAM_4	C:\Users\game2\Desktop\main\.cache\Android\SFX\SCREAM_4_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\scream_continu\SCREAM_4		92288
+	62305428	degout7	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (42)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\stateChange\stateChange_negative\degout7		153664
+	74319870	hmhmhmhm	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (18)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_positive\hmhmhmhm		174144
+	79710319	degout3	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (38)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_veryNegative\degout3		225344
+	157636414	rire_chatouille	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (4)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_veryPositive\rire_chatouille		186432
+	182300008	gngngngngn	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (19)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_negative\gngngngngn		143424
+	202458902	SCREAM_4_short	C:\Users\game2\Desktop\main\.cache\Android\SFX\SCREAM_4_short_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\scream_continu\SCREAM_4_short		29986
+	206886040	rire_gras	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (31)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\stateChange\stateChange_positive\rire_gras		251968
+	207813973	satisfaction_ah	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (17)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_positive\satisfaction_ah		53312
+	220392111	degout4	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (39)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_negative\degout4		41024
+	257824526	surprise_ohum	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (15)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\proximite\surprise_ohum		63552
+	300951383	joie_ah	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (9)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_veryPositive\joie_ah		90176
+	335028056	surprise_cri	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (29)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_negative\surprise_cri		38976
+	452976995	degout5	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (40)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_negative\degout5		180288
+	474655185	rire_joie	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (23)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_positive\rire_joie		139328
+	495640513	surprise_inspiration	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (8)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\stateChange\stateChange_positive\surprise_inspiration		65600
+	547847235	degout6	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (41)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_negative\degout6		137280
+	553505140	rire_hihi	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (14)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_veryPositive\rire_hihi		231488
+	559212994	degout8	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (43)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\stateChange\stateChange_negative\degout8		104512
+	569876851	peur_leger	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (27)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_positive\peur_leger		143424
+	603659416	soulagement_ah2	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (30)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_positive\soulagement_ah2		84032
+	616696149	plaisir_inquiet	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (25)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_positive\plaisir_inquiet		55360
+	650817015	ohhh_satisfait	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (6)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_veryPositive\ohhh_satisfait		137280
+	674994704	surprise_ahh	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (26)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_positive\surprise_ahh		79936
+	682792051	ouiiii	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (1)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_veryPositive\ouiiii		127040
+	695206495	surprise_ohhh	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (3)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_veryPositive\surprise_ohhh		49216
+	743407357	rire_douleur	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (35)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_negative\rire_douleur		86080
+	775363661	ooooh_fascine	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (5)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_positive\ooooh_fascine		133184
+	779640360	peur_cri2	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (33)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_veryNegative\peur_cri2		75840
+	792563892	oh	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (2)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_positive\oh		45120
+	795388189	peur_cri	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (32)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_negative\peur_cri		71744
+	819381773	plaisir_ohahahu	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (22)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_veryPositive\plaisir_ohahahu		200768
+	867430005	soulagement_oh	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (10)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_veryPositive\soulagement_oh		73792
+	888574453	soulagement_ah	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (21)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\stateChange\stateChange_positive\soulagement_ah		71744
+	898631996	surprise_hoquet	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (28)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_positive\surprise_hoquet		24640
+	942197552	degout	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (36)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_veryNegative\degout		71744
+	945324721	degout2	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (37)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_veryNegative\degout2		104512
+	999710217	rire_ohoh	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (13)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\arrache\arrache_positive\rire_ohoh		84032
+	1016544939	nononononono	C:\Users\game2\Desktop\main\.cache\Android\SFX\SFX (11)_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\saisi\saisi_negative\nononononono		206912
+

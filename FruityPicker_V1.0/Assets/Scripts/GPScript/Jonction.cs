@@ -61,6 +61,7 @@ public class Jonction : MonoBehaviour
     [Header("ne pas remplire")]
 
     public GameObject hMesh;
+    public GameObject hSurMesh;
 
 
     //permet de voir si il y a un chamgement d'état 
@@ -75,7 +76,7 @@ public class Jonction : MonoBehaviour
         {
 
             hMesh = Instantiate(hTableMesh[0], transform.position, Quaternion.identity);
-
+            ////////////////////////////////////////////////////////////////////////
             hMesh.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
 
         }
@@ -93,6 +94,9 @@ public class Jonction : MonoBehaviour
 
                 hMesh = Instantiate(hTableMesh[1], transform.position, Quaternion.identity);
                 hMesh.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+
+
+
 
             }
             else
@@ -140,6 +144,23 @@ public class Jonction : MonoBehaviour
         }
 
     }
+
+
+    GameObject GetChildWithName(GameObject obj, string name)
+    {
+        Transform trans = obj.transform;
+        Transform childTrans = trans.Find(name);
+        if (childTrans != null)
+        {
+            return childTrans.gameObject;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+
 
 
     private void FixedUpdate()
@@ -238,6 +259,7 @@ public class Jonction : MonoBehaviour
 
         }
 
+        funcRenduEtat();
         //bEnclanchement = true;
 
         // si c'est un type générateur de zone
@@ -297,7 +319,7 @@ public class Jonction : MonoBehaviour
 
     }
 
-
+    
 
     // change le matériaux  
     public void funcMaterial()
@@ -309,7 +331,7 @@ public class Jonction : MonoBehaviour
         //choix de la couleur selon le etat puis fois du motif selon le type
         if (iEtat >= 0)
         {
-
+            
             rend.sharedMaterial = mTableMaterialPositive[iType];
             //funcChangemantMatérial(mTableMaterialPositive[iType]);
 
@@ -365,6 +387,7 @@ public class Jonction : MonoBehaviour
 
                     i = 1000;
                 }
+
             }
 
         }

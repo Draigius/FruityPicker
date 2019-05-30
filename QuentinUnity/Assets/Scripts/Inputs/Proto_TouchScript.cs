@@ -126,6 +126,8 @@ public class Proto_TouchScript : MonoBehaviour
             hTouchedObject = hit.transform.gameObject;
             Camera hMainCam = Camera.main;
 
+            Debug.Log("Objet Touché : " + hTouchedObject);
+
             //Check Si on a selectionné le sécateur
             if (hTouchedObject.GetComponent<SecateurScript>())
             {
@@ -137,6 +139,8 @@ public class Proto_TouchScript : MonoBehaviour
             //Check Si on a selectionné le pressoir
             if (hTouchedObject.GetComponent<PressoirScript>())
             {
+                Debug.Log("Objet Touché : " + hTouchedObject);
+
                 bPressoirActif = true;
                 hTouchedObject.GetComponent<PressoirScript>().funcActivePressoir();
                 return bFoundObject = false;
