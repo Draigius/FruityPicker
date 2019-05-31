@@ -54,8 +54,19 @@ public class MainGame : MonoBehaviour
 
 
     [Header("Score")]
-    public int iScore = 0;
-    
+    private int iScoreGrappeActuelle = 0;
+    private int iScoreNiveau = 0;
+
+    public int iScoreMaximalNiveau;
+    private int iNombreTotalFruits;
+    private int iNombreFruitsPos;
+    private int iNombreFruitsNeg;
+
+    [Range (0f,1f)]
+    public float fReussiteDeuxEtoiles;
+    [Range(0f, 1f)]
+    public float fReussiteUneEtoile;
+
     [Header("gestion des transition")]
     public GameObject hTransition;
     public bool bTimer = false;
@@ -79,11 +90,9 @@ public class MainGame : MonoBehaviour
     public Text textTimer;
     public Text textNgrappe;
     public Text textScore;
-
-
-
-    private bool bAwake = true;
-
+    
+    private bool bAwake = true; 
+    
     void Awake()
     {
         fTimerGameDéconte = fTimerGameOrigine;
@@ -92,51 +101,54 @@ public class MainGame : MonoBehaviour
         ///////////////////////////////////////////////////////////////////Cyrille-san
         GetComponent<AI_AudioMaster>().LoadBank();
 
+        if (gameObject.GetComponent<ScoreScript>().funcReset())
+        {
+            Debug.Log ("Score Reseted");
+        }
+
     }
 
 
 
     public void funcScore()
     {
-        {
-            iScore = 0;
+        iScoreGrappeActuelle = 0;
             
-            hLePanier.transform.position = new Vector3(0, -4, 0);
+        hLePanier.transform.position = new Vector3(0, -4, 0);
 
-            // Etats_fruits.GiveFinalValue();
+        // Etats_fruits.GiveFinalValue();
 
-            int iEtatVerif;
+        int iEtatVerif;
 
-            for (int i = 1; i < hTableJunction.Length; i++)
+        for (int i = 1; i < hTableJunction.Length; i++)
+        {
+        //hMainCamera.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().GiveFinalValue();
+        iEtatVerif = hTableJunction[i].GetComponent<Jonction>().iEtat;
+        //Debug.Log("hTableJunction[i] :"+ hTableJunction[i]);
+            if (hTableJunction[i].GetComponent<Jonction>().bInGame == true)
             {
-                //hMainCamera.GetComponent<MainGame>().hTableJunction[i].GetComponent<Jonction>().GiveFinalValue();
-                iEtatVerif = hTableJunction[i].GetComponent<Jonction>().iEtat;
-                //Debug.Log("hTableJunction[i] :"+ hTableJunction[i]);
-                if (hTableJunction[i].GetComponent<Jonction>().bInGame == true)
+                if(iEtatVerif >= 0)
                 {
-
-                    if(iEtatVerif >= 0)
-                    {
-
-                        iScore = iScore + 1;
-                        //Debug.Log("+1");
-
-                    }
-                    else
-                    {
-
-                        iScore = iScore - 1;
-                        //Debug.Log("-1");
-
-                    }
-                    
+                iScoreGrappeActuelle = iScoreGrappeActuelle + 1;
+                iNombreFruitsPos++;
+                iNombreTotalFruits++;
                 }
-               
-            }
+                else
+                {
+                iScoreGrappeActuelle = iScoreGrappeActuelle - 1;
+                iNombreFruitsNeg++;
+                iNombreTotalFruits++;
+                }
+             }
         }
+        
+        textScore.text = "SCORE :" + iScoreGrappeActuelle;
 
-        textScore.text = "SCORE :" + iScore;
+        iScoreNiveau += iScoreGrappeActuelle;
 
+
+        /*
+         
         if (iScore <= 5)
         {
             textScore.text = textScore.text + " \n \n  Ce jus est..... \n \n Dégueulasse !!!!!!";
@@ -152,6 +164,8 @@ public class MainGame : MonoBehaviour
             textScore.text = textScore.text + " \n \n Ce jus est..... \n \n Délicieux !!!!!!";
         }
         //Debug.Log(textScore.text);
+
+        */
     }
 
 
@@ -257,6 +271,9 @@ public class MainGame : MonoBehaviour
         if (iGrappeActuel > iGrappeTotal)
         {
             /// variable static 
+
+            //ENVOI FONCTION SCORE
+            gameObject.GetComponent<ScoreScript>().funcGetScore(iScoreNiveau, iNombreFruitsPos, iNombreFruitsNeg, iNombreTotalFruits, iScoreMaximalNiveau, fReussiteUneEtoile, fReussiteDeuxEtoiles);
 
             Application.LoadLevel("SceneScore");
             

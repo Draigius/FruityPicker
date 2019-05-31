@@ -71,20 +71,19 @@ public class CameraFinScript : MonoBehaviour
     [Header("_____________________________________________")]
     public float fEtape = 0;
 
-
-
     private static float fTimerOrigine1 = 1;
     private float fTimerDeconte = fTimerOrigine1;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake ()
     {
         /// RECUPERER DATA SCORE ///
 
-
-
-        /////////////////////////////
+        gameObject.GetComponent<ScoreScript>().funcSendScore();
         
+        
+        /////////////////////////////
+
         hTableFruitSpawn = new GameObject [iFruitsNegatif+iFruitsPositif];
 
         //Envoi Data au script de Trigger Barrique
@@ -371,8 +370,10 @@ public class CameraFinScript : MonoBehaviour
 
         if (fEtape == 10)//quand le scale mauvais atteint la taill demander
         {
-
-            Application.LoadLevel("Levels");
+            if ( Input.GetMouseButtonDown(0))
+            {
+                Application.LoadLevel("Levels");
+            }
 
         }
     }

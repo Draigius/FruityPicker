@@ -11,6 +11,8 @@ public class TransitionScript : MonoBehaviour
     private bool bStart = false;
     private bool bEnd = false;
 
+    private bool bActiveGyro = true;
+
     [SerializeField]
     private float fOffsetTransitionZ = 1.5f;
     [SerializeField]
@@ -56,7 +58,17 @@ public class TransitionScript : MonoBehaviour
             //Debug.Log("fumé");
             bEnd = false;
         }
-        
+
+        if (v3PositionActuelle != v3PositionTarget)
+        {
+            bActiveGyro = false;
+        }
+        else
+        {
+            bActiveGyro = true;
+        }
+
+        Debug.Log("Gyro Actif : "+bActiveGyro);
     }
 
     //Func Activation End

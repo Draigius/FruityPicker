@@ -221,26 +221,29 @@ public class Proto_TouchScript : MonoBehaviour
                 hTouchedObject.GetComponent<PressoirScript>().funcActivePressoir();
                 return bFoundObject = false;
             }
-            
-            //Comparer à tablea de jonctions
-            for (int i = 0; i < hMainCam.GetComponent<MainGame>().hTableJunction.Length; i++)
+
+            //Comparer à tablea de jonctions$
+            if (hTouchedObject.GetComponent<Jonction>())
             {
-                GameObject hJonctionCompare = hMainCam.GetComponent<MainGame>().hTableJunction[i];
-
-                if (hTouchedObject == hJonctionCompare)
+                for (int i = 0; i < hMainCam.GetComponent<MainGame>().hTableJunction.Length; i++)
                 {
-                    //Si a la fin du scan, il y a eu aucun match, return false
-                    jTouched = hTouchedObject.GetComponent<HingeJoint>();
-                    rbTouched = hTouchedObject.GetComponent<Rigidbody>();
+                    GameObject hJonctionCompare = hMainCam.GetComponent<MainGame>().hTableJunction[i];
 
-                    //ActualPosition = Camera.main.ScreenToWorldPoint(new Vector3(V2ScreenPos.x, V2ScreenPos.y, 9));
-                    v3TouchedObjectPosition = rbTouched.position;
-                    //Debug.Log(hit.transform.gameObject);
+                    if (hTouchedObject == hJonctionCompare)
+                    {
+                        //Si a la fin du scan, il y a eu aucun match, return false
+                        jTouched = hTouchedObject.GetComponent<HingeJoint>();
+                        rbTouched = hTouchedObject.GetComponent<Rigidbody>();
 
-                    return bFoundObject = true;
+                        //ActualPosition = Camera.main.ScreenToWorldPoint(new Vector3(V2ScreenPos.x, V2ScreenPos.y, 9));
+                        v3TouchedObjectPosition = rbTouched.position;
+                        //Debug.Log(hit.transform.gameObject);
+
+                        return bFoundObject = true;
+                    }
                 }
             }
-            
+               
             return bFoundObject = false;
         }
         else

@@ -29,7 +29,7 @@ public class DummyFleche : MonoBehaviour
 
             other.gameObject.transform.position = hDummy.transform.position;
             other.gameObject.transform.Translate(new Vector3(0, 0.4f * (hFleche.GetComponent<Fleche>().iSens), 0), Space.Self);
-            Debug.Log("collide");
+            //Debug.Log("collide");
         }
 
 
