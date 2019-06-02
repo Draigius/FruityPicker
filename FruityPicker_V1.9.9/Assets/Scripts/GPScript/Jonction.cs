@@ -402,12 +402,10 @@ public class Jonction : MonoBehaviour
             for (int j = 0; j < hMainCam.GetComponent<MainGame>().hTableJunction.Length; j++)
             {
 
-                int iIdEnVerification = hMainCam.GetComponent<MainGame>().hTableJunction[]
-
+                int iIdEnVerification = hMainCam.GetComponent<MainGame>().hTableJunction[j].GetComponent<Jonction>().iIdActuel;
 
             }
                 
-
         }
 
     }
