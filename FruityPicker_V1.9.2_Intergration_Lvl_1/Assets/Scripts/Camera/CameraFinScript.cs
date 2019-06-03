@@ -38,6 +38,9 @@ public class CameraFinScript : MonoBehaviour
 
     [Header("Pressoir Couvercle Scene")]
     public GameObject PressoirCouvercle;
+    
+    [Header("Transition")]
+    public GameObject hTransition;
 
     [Header("MOUVEMENT CAMERA")]
     [Header("_____________________________________________")]
@@ -78,6 +81,7 @@ public class CameraFinScript : MonoBehaviour
     public GameObject hMeshTextScoreTotal;
     public GameObject hMeshTextScoreMax;
     public GameObject hMeshTextScoreMaxBarre;
+    public GameObject hMeshTextScoreAucunFruit;
 
     [Header("Debug")]
     [Header("_____________________________________________")]
@@ -86,24 +90,40 @@ public class CameraFinScript : MonoBehaviour
     private static float fTimerOrigine1 = 1;
     private float fTimerDeconte = fTimerOrigine1;
 
+    private bool bNoFruit = false;
+    private bool bScoreNegative = false;
+
     // Start is called before the first frame update
     void Awake ()
     {
         /// RECUPERER DATA SCORE ///
 
         gameObject.GetComponent<ScoreScript>().funcSendScore();
-        
-        /*if (iFruitsNegatif == iFruitsPositif  && iFruitsPositif == 0)
+
+        // DESAFFICHER TEXTES 3D
+        hMeshTextFruitPos.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextFruitNeg.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextMinus.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextBar.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextScoreTotal.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextScoreMax.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextScoreMaxBarre.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextScoreAucunFruit.GetComponent<MeshRenderer>().enabled = false;
+
+        // Fonctions spéciales
+        if (iFruitsNegatif+iFruitsPositif == 0)
         {
-            iFruitsNegatif = 15;
-            iFruitsPositif = 1;
-
-            iFruitsPositifsMaxScorePossible = 16;
-            iScoreNiveau = iFruitsPositif - iFruitsNegatif;
-
-            fReussitePetite = 0.5f;
-            fReussiteMedium = 
-        }*/
+            // afficher message "Pas de fruits !"
+            bNoFruit = true;
+            fEtape = 10;
+        }
+        else if (iFruitsNegatif + iFruitsPositif > 0 && iScoreNiveau < 0)
+        {
+            // Activer jus qui coule MAIS jus movééééééé
+            bScoreNegative = true;
+            hFluxRobinet.GetComponent<Renderer>().sharedMaterial = hJusNegatif.GetComponent<Renderer>().sharedMaterial;
+            hJusPositif.GetComponent<Renderer>().sharedMaterial = hJusNegatif.GetComponent<Renderer>().sharedMaterial;
+        }
 
         /////////////////////////////
 
@@ -127,27 +147,18 @@ public class CameraFinScript : MonoBehaviour
         fScaleJusNegatif = fScaleJusNegatif / 100;
 
         //Debug.Log("fScale Jus = " + fScaleJusPositif);
-
-        fPourcentage = iFruitsNegatif * 100 / iFruitsPositif;
-        fPourcentage = (100 - fPourcentage) / 100;
-
+        if (iFruitsPositif != 0)
+        {
+            fPourcentage = iFruitsNegatif * 100 / iFruitsPositif;
+            fPourcentage = (100 - fPourcentage) / 100;
+        }
         //Debug.Log("Pourcentage = " + fPourcentage);
-
-        // DESAFFICHER TEXTES 3D
-        hMeshTextFruitPos.GetComponent<MeshRenderer>().enabled = false;
-        hMeshTextFruitNeg.GetComponent<MeshRenderer>().enabled = false;
-        hMeshTextMinus.GetComponent<MeshRenderer>().enabled = false;
-        hMeshTextBar.GetComponent<MeshRenderer>().enabled = false;
-        hMeshTextScoreTotal.GetComponent<MeshRenderer>().enabled = false;
-        hMeshTextScoreMax.GetComponent<MeshRenderer>().enabled = false;
-        hMeshTextScoreMaxBarre.GetComponent<MeshRenderer>().enabled = false;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Etape : " + fEtape);
+        Debug.Log("Etape : " + fEtape);
 
         if (fEtape == 0)
         {
@@ -286,7 +297,8 @@ public class CameraFinScript : MonoBehaviour
                 hJusPositif.GetComponent<MeshRenderer>().enabled = true;
                 hJusNegatif.GetComponent<MeshRenderer>().enabled = true;
             }
-
+            
+            /////////////////////////////////////////////////////////////////////////////////////////////////
             //Faire monter les Deux cylindres de jus
             if (hJusPositif.transform.localScale.y < 0.8f*fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.8*fScaleJusNegatif)
             {
@@ -310,6 +322,7 @@ public class CameraFinScript : MonoBehaviour
             {
                 fEtape = 6;
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////
         }
 
         if (fEtape == 6)//quand Jus finit de monter, le flux s'inverse et le roubinet finit de tourner
@@ -325,6 +338,7 @@ public class CameraFinScript : MonoBehaviour
                 hFluxRobinet.transform.position = new Vector3(hFluxRobinet.transform.position.x, hJusPositif.transform.position.y, hFluxRobinet.transform.position.z);
             }
 
+            ////////////////////////////////////////////////////////////////////////////////////////
             //Faire monter les Deux cylindres de jus
             if (hJusPositif.transform.localScale.y < 1f * fScaleJusPositif && hJusNegatif.transform.localScale.y < 1f * fScaleJusNegatif)
             {
@@ -353,6 +367,7 @@ public class CameraFinScript : MonoBehaviour
                 hJusNegatif.transform.localScale = new Vector3(1, fScaleJusNegatif, 1);
                 fEtape = 7;
             }
+            /////////////////////////////////////////////////////////////////////////////////////////
         }
 
         if (fEtape == 7)
@@ -419,6 +434,11 @@ public class CameraFinScript : MonoBehaviour
 
         if (fEtape == 10)//quand le scale mauvais atteint la taill demander
         {
+            if (bNoFruit && hTransition.GetComponent<TransitionScript>().transform.position == hTransition.GetComponent<TransitionScript>().v3PositionTarget)
+            {
+                hMeshTextScoreAucunFruit.GetComponent<MeshRenderer>().enabled = true;
+            }
+
             if ( Input.GetMouseButtonDown(0))
             {
                 Application.LoadLevel("Levels");

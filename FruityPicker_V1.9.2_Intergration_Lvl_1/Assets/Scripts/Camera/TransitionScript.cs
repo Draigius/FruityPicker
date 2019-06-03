@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TransitionScript : MonoBehaviour
 {
-    private Vector3 v3PositionActuelle;
-    private Vector3 v3PositionTarget;
-    private Vector3 v3PositionStart;
+    public Vector3 v3PositionActuelle;
+    public Vector3 v3PositionTarget;
+    public Vector3 v3PositionStart;
 
     private bool bStart = false;
     private bool bEnd = false;
