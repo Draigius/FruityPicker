@@ -10,6 +10,7 @@ public class ScoreScript : MonoBehaviour
     public static int iNbFruitsPositifs;
     public static int iNbFruitsTotal;
 
+    public static float fReussiteEchelonTrois = 1;
     public static float fReussiteEchelonDeux;
     public static float fReussiteEchelonUn;
 
@@ -64,6 +65,7 @@ public class ScoreScript : MonoBehaviour
 
         fReussiteEchelonUn = 0;
         fReussiteEchelonDeux = 0;
+        fReussiteEchelonTrois = 1;
 
         return true;
     }
@@ -81,6 +83,7 @@ public class ScoreScript : MonoBehaviour
 
         DummyMesureObject.GetComponent<DummyMesureScript>().fReussiteSilver = fReussiteEchelonDeux;
         DummyMesureObject.GetComponent<DummyMesureScript>().fReussiteBronze = fReussiteEchelonUn;
+        DummyMesureObject.GetComponent<DummyMesureScript>().fReussiteGold = fReussiteEchelonTrois;
     }
 
 }

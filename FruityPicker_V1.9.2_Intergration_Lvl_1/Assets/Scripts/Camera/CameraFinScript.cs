@@ -81,7 +81,18 @@ public class CameraFinScript : MonoBehaviour
 
         gameObject.GetComponent<ScoreScript>().funcSendScore();
         
-        
+        /*if (iFruitsNegatif == iFruitsPositif  && iFruitsPositif == 0)
+        {
+            iFruitsNegatif = 15;
+            iFruitsPositif = 1;
+
+            iFruitsPositifsMaxScorePossible = 16;
+            iScoreNiveau = iFruitsPositif - iFruitsNegatif;
+
+            fReussitePetite = 0.5f;
+            fReussiteMedium = 
+        }*/
+
         /////////////////////////////
 
         hTableFruitSpawn = new GameObject [iFruitsNegatif+iFruitsPositif];
@@ -270,6 +281,8 @@ public class CameraFinScript : MonoBehaviour
 
                     hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
                 }
+
+
             }
             else if (hJusPositif.transform.localScale.y >= 0.5 * fScaleJusPositif && hJusNegatif.transform.localScale.y >= 0.5 * fScaleJusNegatif)
             {
