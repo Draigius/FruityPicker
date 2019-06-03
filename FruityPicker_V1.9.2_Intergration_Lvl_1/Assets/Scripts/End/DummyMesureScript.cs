@@ -18,17 +18,39 @@ public class DummyMesureScript : MonoBehaviour
     public GameObject hEchelonUn;
     public GameObject hEchelonDeux;
     public GameObject hEchelonTrois;
-    public GameObject hMedaille;
+    public GameObject hMedailleMesh;
 
     // Modificateur Scale
     private int iModScale;
+
+    private bool bScalingBronze = false;
+    private bool bScalingSilver = false;
+    private bool bScalingGold = false;
+    private bool bScalingMedal = false;
+
+    private bool bScalingBronzeImpulse = false;
+    private bool bScalingSilverImpulse = false;
+    private bool bScalingGoldImpulse = false;
+    private bool bScalingMedalDown = false;
+
+    private float fScaleExtremeUp = 0.5f;
+    private float fScaleFollowThrough = 0.1f;
+    
+    private float fScaleSpeed = 1.5f;
+
+    //MATERIAUX
+
+    [Header("MATERIAUX")]
+    public Material[] mTableMedaille;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(fReussiteBronze);
-        Debug.Log(fReussiteSilver);
+        //Debug.Log(fReussiteBronze);
+        //Debug.Log(fReussiteSilver);
+        //Debug.Log(fReussiteGold);
+
         // Echelon Un
         hJusParent.transform.localScale = new Vector3(1f, fReussiteBronze, 1f);
         hEchelonUn.transform.position = gameObject.transform.position;
@@ -44,27 +66,36 @@ public class DummyMesureScript : MonoBehaviour
 
     private void Update()
     {
-        if (Camera.main.GetComponent<CameraFinScript>().fEtape == 5)
+        if (Camera.main.GetComponent<CameraFinScript>().fEtape == 5 || Camera.main.GetComponent<CameraFinScript>().fEtape == 6)
         {
             //SCALE UP
             iModScale = 1;
             // Si scale jus >= Reussite Or
-            if (hJusParent.transform.localScale.y == fReussiteGold)
+
+            if (hJusParent.transform.localScale.y >= fReussiteGold)
             {
-                funcScale(hEchelonTrois, iModScale);
-                funcScale(hMedaille, iModScale);
+                bScalingGold = true;
+                bScalingMedal = true;
+
+                hMedailleMesh.GetComponent<Renderer>().sharedMaterial = mTableMedaille[3];
             }
             // Sinon scale jus >= Reussite Argent
             else if (hJusParent.transform.localScale.y >= fReussiteSilver)
             {
-                funcScale(hEchelonDeux, iModScale);
-                funcScale(hMedaille, iModScale);
+                bScalingSilver = true;
+                bScalingMedal = true;
+
+
+                hMedailleMesh.GetComponent<Renderer>().sharedMaterial = mTableMedaille[2];
             }
             // Sinon scale jus >= Reussite Bronze
             else if (hJusParent.transform.localScale.y >= fReussiteBronze)
             {
-                funcScale(hEchelonUn, iModScale);
-                funcScale(hMedaille, iModScale);
+                bScalingBronze = true;
+                bScalingMedal = true;
+
+
+                hMedailleMesh.GetComponent<Renderer>().sharedMaterial = mTableMedaille[1];
             }
         }
         else if (Camera.main.GetComponent<CameraFinScript>().fEtape == 8)
@@ -72,58 +103,130 @@ public class DummyMesureScript : MonoBehaviour
             //SCALE DOWN
             iModScale = -1;
 
+            // Sinon scale jus < Reussite Or
+            if (hJusParent.transform.localScale.y < fReussiteGold)
+            {
+                hEchelonTrois.GetComponent<BoxCollider>().enabled = true;
+                hEchelonTrois.GetComponent<Rigidbody>().useGravity = true;
+
+                if (bScalingGoldImpulse)
+                {
+                    hEchelonTrois.GetComponent<Rigidbody>().AddForce(0, 25, 0, ForceMode.Impulse);
+                    bScalingGoldImpulse = false;
+                }
+
+                if (hEchelonTrois.transform.localScale.x > 1)
+                {
+                    hEchelonTrois.transform.localScale = new Vector3(hEchelonTrois.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime, hEchelonTrois.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime, hEchelonTrois.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime);
+                }
+
+                bScalingMedalDown = true;
+                hMedailleMesh.GetComponent<Renderer>().sharedMaterial = mTableMedaille[2];
+            }
+            // Sinon scale jus < Reussite Argent
+            if (hJusParent.transform.localScale.y < fReussiteSilver)
+            {
+                hEchelonDeux.GetComponent<BoxCollider>().enabled = true;
+                hEchelonDeux.GetComponent<Rigidbody>().useGravity = true;
+
+                if (bScalingSilverImpulse)
+                {
+                    hEchelonDeux.GetComponent<Rigidbody>().AddForce(0, 25, 0, ForceMode.Impulse);
+                    bScalingSilverImpulse = false;
+                }
+
+                if (hEchelonDeux.transform.localScale.x > 1)
+                {
+                    hEchelonDeux.transform.localScale = new Vector3(hEchelonDeux.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime, hEchelonDeux.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime, hEchelonDeux.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime);
+                }
+
+                bScalingMedalDown = true;
+                hMedailleMesh.GetComponent<Renderer>().sharedMaterial = mTableMedaille[1];
+            }
             // Si scale jus < Reussite Bronze
             if (hJusParent.transform.localScale.y < fReussiteBronze)
             {
-                funcScale(hEchelonUn, iModScale);
-                funcScale(hMedaille, iModScale);
-            }
-            // Sinon scale jus < Reussite Argent
-            else if (hJusParent.transform.localScale.y < fReussiteSilver)
-            {
-                funcScale(hEchelonDeux, iModScale);
-                funcScale(hMedaille, iModScale);
-            }
-            // Sinon scale jus < Reussite Or
-            else if(hJusParent.transform.localScale.y < fReussiteGold)
-            {
-                funcScale(hEchelonTrois, iModScale);
-                funcScale(hMedaille, iModScale);
+
+                hEchelonUn.GetComponent<BoxCollider>().enabled = true;
+                hEchelonUn.GetComponent<Rigidbody>().useGravity = true;
+
+                if (bScalingBronzeImpulse)
+                {
+                    hEchelonUn.GetComponent<Rigidbody>().AddForce(0, 25, 0, ForceMode.Impulse);
+                    bScalingBronzeImpulse = false;
+                }
+
+
+                if (hEchelonUn.transform.localScale.x > 1)
+                {
+                    hEchelonUn.transform.localScale = new Vector3(hEchelonUn.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime, hEchelonUn.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime, hEchelonUn.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime);
+                }
+
+                bScalingMedalDown = true;
+                hMedailleMesh.GetComponent<Renderer>().sharedMaterial = mTableMedaille[0];
             }
         }
-    }
+        //////////////////////////
+        #region scaleUp
+        ///////////////SCALE INTERPOLATION UP
 
-    private void funcScale (GameObject hObjectToScale, int iModScale)
-    {
-
-        float fScale = 0.5f * iModScale;
-
-        if (hObjectToScale == hMedaille)
+        if (bScalingBronze && hEchelonUn.transform.localScale.x <= 1 + fScaleExtremeUp)
         {
-            if ( hObjectToScale.transform.localScale.x > 0.5f && hObjectToScale.transform.localScale.x < 1.5f)
+            if (hEchelonUn.transform.localScale.x + fScaleSpeed* iModScale *Time.deltaTime > 1 + fScaleExtremeUp)
             {
-                hObjectToScale.transform.localScale = new Vector3(hObjectToScale.transform.localScale.x + fScale, hObjectToScale.transform.localScale.y + fScale, hObjectToScale.transform.localScale.z + fScale);
+                bScalingBronze = false;
+            }
+            else
+            {
+                hEchelonUn.transform.localScale = new Vector3(hEchelonUn.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime, hEchelonUn.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime, hEchelonUn.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime);
             }
         }
-        else
+
+        if (!bScalingBronze && hEchelonUn.transform.localScale.x > 1 + fScaleFollowThrough)
         {
-            /*float fScale = 0.3f * iModScale;
-
-            if (hObjectToScale.transform.localScale.x == hObjectToScale.transform.localScale.y == hObjectToScale.transform.localScale.z < fScale)
-            {
-                hObjectToScale.transform.localScale = new Vector3(hObjectToScale.transform.localScale.x + fScale * Time.deltaTime, hObjectToScale.transform.localScale.y + fScale * Time.deltaTime, hObjectToScale.transform.localScale.z + fScale * Time.deltaTime);
-            }
-            else if (hObjectToScale.transform.localScale.x == hObjectToScale.transform.localScale.y == hObjectToScale.transform.localScale.z >= fScale)
-            {
-                hObjectToScale.transform.localScale = new Vector3(hObjectToScale.transform.localScale.x + fScale * Time.deltaTime, hObjectToScale.transform.localScale.y + fScale * Time.deltaTime, hObjectToScale.transform.localScale.z + fScale * Time.deltaTime);
-            }*/
-
-            if (hObjectToScale.transform.localScale.x > 0.5f && hObjectToScale.transform.localScale.x < 1.5f)
-            {
-                hObjectToScale.transform.localScale = new Vector3(hObjectToScale.transform.localScale.x + fScale, hObjectToScale.transform.localScale.y + fScale, hObjectToScale.transform.localScale.z + fScale);
-            }
-
+            Debug.Log("Mettre Bonne taile ScUp");
+            hEchelonUn.transform.localScale = new Vector3(hEchelonUn.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime * -1, hEchelonUn.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime * -1, hEchelonUn.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime * -1);
         }
+
+        /////////////////////////
+
+        if (bScalingSilver && hEchelonDeux.transform.localScale.x <= 1 + fScaleExtremeUp)
+        {
+            if (hEchelonDeux.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime > 1 + fScaleExtremeUp)
+            {
+                bScalingSilver = false;
+            }
+            else
+            {
+                hEchelonDeux.transform.localScale = new Vector3(hEchelonDeux.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime, hEchelonDeux.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime, hEchelonDeux.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime);
+            }
+        }
+
+        if (!bScalingSilver && hEchelonDeux.transform.localScale.x > 1 + fScaleFollowThrough)
+        {
+            hEchelonDeux.transform.localScale = new Vector3(hEchelonDeux.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime * -1, hEchelonDeux.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime * -1, hEchelonDeux.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime * -1);
+        }
+
+        /////////////////////////
+
+        if (bScalingGold && hEchelonTrois.transform.localScale.x <= 1 + fScaleExtremeUp)
+        {
+            if (hEchelonTrois.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime > 1 + fScaleExtremeUp)
+            {
+                bScalingGold = false;
+            }
+            else
+            {
+                hEchelonTrois.transform.localScale = new Vector3(hEchelonTrois.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime, hEchelonTrois.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime, hEchelonTrois.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime);
+            }
+        }
+
+        if (!bScalingGold && hEchelonTrois.transform.localScale.x > 1 + fScaleFollowThrough)
+        {
+            hEchelonTrois.transform.localScale = new Vector3(hEchelonTrois.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime * -1, hEchelonTrois.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime * -1, hEchelonTrois.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime * -1);
+        }
+
+        #endregion
+        //////////////////////////
     }
-    
 }

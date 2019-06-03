@@ -28,7 +28,7 @@ public class ScoreScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (fTime>fTimeStep)
+        if (fTime>fTimeStep)
         {
             Debug.Log("Score Parfait : " + iScoreParfait);
             Debug.Log("Score Total : " + iScoreTotal);
@@ -40,7 +40,7 @@ public class ScoreScript : MonoBehaviour
         }
 
         fTime += Time.deltaTime; 
-        */
+        
     }
 
     public void funcGetScore(int iScore, int iNombreFruitsPos, int iNombreFruitsNeg, int iNombreTotalFruits, int iScoreP, float fReussiteUn,float fReussiteDeux)

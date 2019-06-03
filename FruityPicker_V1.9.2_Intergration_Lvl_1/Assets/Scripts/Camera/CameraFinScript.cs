@@ -67,6 +67,18 @@ public class CameraFinScript : MonoBehaviour
     private float fVitesseScaleDecompte = 0.4f;
     float fPourcentage;
 
+
+    [Header("TEXTES")]
+    [Header("_____________________________________________")]
+
+    public GameObject hMeshTextFruitPos;
+    public GameObject hMeshTextFruitNeg;
+    public GameObject hMeshTextMinus;
+    public GameObject hMeshTextBar;
+    public GameObject hMeshTextScoreTotal;
+    public GameObject hMeshTextScoreMax;
+    public GameObject hMeshTextScoreMaxBarre;
+
     [Header("Debug")]
     [Header("_____________________________________________")]
     public float fEtape = 0;
@@ -120,6 +132,16 @@ public class CameraFinScript : MonoBehaviour
         fPourcentage = (100 - fPourcentage) / 100;
 
         //Debug.Log("Pourcentage = " + fPourcentage);
+
+        // DESAFFICHER TEXTES 3D
+        hMeshTextFruitPos.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextFruitNeg.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextMinus.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextBar.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextScoreTotal.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextScoreMax.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextScoreMaxBarre.GetComponent<MeshRenderer>().enabled = false;
+
     }
 
     // Update is called once per frame
@@ -292,6 +314,10 @@ public class CameraFinScript : MonoBehaviour
 
         if (fEtape == 6)//quand Jus finit de monter, le flux s'inverse et le roubinet finit de tourner
         {
+            // AFFICHER SCORE EN VERT
+            hMeshTextFruitPos.GetComponent<TextMesh>().text = iFruitsPositif.ToString();
+            hMeshTextFruitPos.GetComponent<MeshRenderer>().enabled = true;
+
             //Inverser le flux
             if ( v3FluxOrigine == hFluxRobinet.transform.position)
             {
@@ -349,6 +375,9 @@ public class CameraFinScript : MonoBehaviour
         if (fEtape == 8)//quand le scale bon atteint la taille demandée
         {
             //spawn du cylindre multy fruit mauvéééééé / puis scale vers le bas
+            hMeshTextFruitNeg.GetComponent<TextMesh>().text = iFruitsNegatif.ToString();
+            hMeshTextFruitNeg.GetComponent<MeshRenderer>().enabled = true;
+            hMeshTextMinus.GetComponent<MeshRenderer>().enabled = true;
 
             if (hFluxRobinet.transform.localScale.y > 0.1f)
             {
@@ -375,6 +404,13 @@ public class CameraFinScript : MonoBehaviour
             }
             // affichage dinamique des score
             // réaction de l'étiquette
+            hMeshTextScoreTotal.GetComponent<TextMesh>().text = (iFruitsPositif-iFruitsNegatif).ToString();
+            hMeshTextScoreMax.GetComponent<TextMesh>().text = iFruitsPositifsMaxScorePossible.ToString();
+            hMeshTextScoreTotal.GetComponent<MeshRenderer>().enabled = true;
+            hMeshTextBar.GetComponent<MeshRenderer>().enabled = true;
+            hMeshTextScoreMax.GetComponent<MeshRenderer>().enabled = true;
+            hMeshTextScoreMaxBarre.GetComponent<MeshRenderer>().enabled = true;
+
 
             //lol on l'a pas encore décidé de comment on faisait
             fEtape = 10;

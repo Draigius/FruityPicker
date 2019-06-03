@@ -34,7 +34,7 @@ public class TriggerBarriqueScript : MonoBehaviour
 
             if (iCompteur == 0)
             {
-                Debug.Log("All Fruit Are Dead");
+                //Debug.Log("All Fruit Are Dead");
                 Camera.main.GetComponent<CameraFinScript>().fEtape = 1;
             }
         }
@@ -44,7 +44,7 @@ public class TriggerBarriqueScript : MonoBehaviour
     {
         //Debug.Log("Fruit Restants : " + iCompteur);
 
-        Debug.Log("Object Touched : " + other.gameObject);
+        //Debug.Log("Object Touched : " + other.gameObject);
         
     }
 
