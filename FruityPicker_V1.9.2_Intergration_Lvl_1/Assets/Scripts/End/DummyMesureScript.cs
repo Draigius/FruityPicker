@@ -184,7 +184,6 @@ public class DummyMesureScript : MonoBehaviour
 
         if (!bScalingBronze && hEchelonUn.transform.localScale.x > 1 + fScaleFollowThrough)
         {
-            Debug.Log("Mettre Bonne taile ScUp");
             hEchelonUn.transform.localScale = new Vector3(hEchelonUn.transform.localScale.x + fScaleSpeed * iModScale * Time.deltaTime * -1, hEchelonUn.transform.localScale.y + fScaleSpeed * iModScale * Time.deltaTime * -1, hEchelonUn.transform.localScale.z + fScaleSpeed * iModScale * Time.deltaTime * -1);
         }
 
@@ -228,5 +227,17 @@ public class DummyMesureScript : MonoBehaviour
 
         #endregion
         //////////////////////////
+        
+        /// LAST FONCTIONS
+        
+        if (Camera.main.GetComponent<CameraFinScript>().fEtape == 10 && Camera.main.GetComponent<CameraFinScript>().bScoreNegative == true)
+        {
+            hEchelonUn.GetComponent<BoxCollider>().enabled = true;
+            hEchelonUn.GetComponent<Rigidbody>().useGravity = true;
+            hEchelonDeux.GetComponent<BoxCollider>().enabled = true;
+            hEchelonDeux.GetComponent<Rigidbody>().useGravity = true;
+            hEchelonTrois.GetComponent<BoxCollider>().enabled = true;
+            hEchelonTrois.GetComponent<Rigidbody>().useGravity = true;
+        }
     }
 }

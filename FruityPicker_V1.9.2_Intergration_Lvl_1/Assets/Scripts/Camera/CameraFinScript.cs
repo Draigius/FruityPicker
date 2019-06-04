@@ -82,16 +82,22 @@ public class CameraFinScript : MonoBehaviour
     public GameObject hMeshTextScoreMax;
     public GameObject hMeshTextScoreMaxBarre;
     public GameObject hMeshTextScoreAucunFruit;
+    public GameObject hMeshTextScoreImmonde;
+    
 
     [Header("Debug")]
     [Header("_____________________________________________")]
     public float fEtape = 0;
+    public float fEtapeAlternative = 0;
 
     private static float fTimerOrigine1 = 1;
     private float fTimerDeconte = fTimerOrigine1;
 
-    private bool bNoFruit = false;
-    private bool bScoreNegative = false;
+    public bool bNoFruit = false;
+    public bool bScoreNegative = false;
+
+    private float fTimerCommentaire = 0;
+    public float fTimeAttenteComm = 0.5f;
 
     // Start is called before the first frame update
     void Awake ()
@@ -109,6 +115,7 @@ public class CameraFinScript : MonoBehaviour
         hMeshTextScoreMax.GetComponent<MeshRenderer>().enabled = false;
         hMeshTextScoreMaxBarre.GetComponent<MeshRenderer>().enabled = false;
         hMeshTextScoreAucunFruit.GetComponent<MeshRenderer>().enabled = false;
+        hMeshTextScoreImmonde.GetComponent<MeshRenderer>().enabled = false;
 
         // Fonctions spéciales
         if (iFruitsNegatif+iFruitsPositif == 0)
@@ -158,292 +165,627 @@ public class CameraFinScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Etape : " + fEtape);
-
-        if (fEtape == 0)
-        {
-            ///////////////////////////////////////////////////  Choix Fruits
-            //spawn des fruits
-            int iCompteur= iFruitsNegatif;
-            GameObject hStockObjectTemporaire;
-
-            for(int i=0;i< iFruitsPositif + iFruitsNegatif; i++)
-            {
-                //Si i est impair
-                if (i % 2 == 1 && iCompteur>0)
-                {
-                    //Quel type de fruit spawn
-                    hStockObjectTemporaire = Instantiate(hTablePrefabeFruitPourris[0], new Vector3(0,100,0), Quaternion.identity);
-                    //Mathf.FloorToInt(Random.RandomRange(0, 3.99f))
-                    //Debug.Log("hStockObjectTemporaire :"+ hStockObjectTemporaire);
-
-                    hStockObjectTemporaire.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-                    //GameObject hFaceManager = GetChildWithName(hStockObjectTemporaire, "kiwi_SurMesh");
-
-                    hTableFruitSpawn[i] = hStockObjectTemporaire;
-
-                    iCompteur = iCompteur - 1;
-                }
-                else
-                //Si i est pair
-                {
-                    //Quel type de fruit spawn
-                    hStockObjectTemporaire = Instantiate(hTablePrefabeFruitSains[0], new Vector3(0, 100, 0), Quaternion.identity);
-
-                    hTableFruitSpawn[i] = hStockObjectTemporaire;
-                }
-
-            ///////////////////////////////////////////////////  Positionnement Fruits
-            
-            //Positionnement Fruit sur Dummy Orbital
-
-            hStockObjectTemporaire.transform.position = hDummyCibleOrbitale.transform.position;
-
-                
-                // Ajout Collider
-                hStockObjectTemporaire.AddComponent<SphereCollider>();
-
-                // Ahout Rigidbody
-                hStockObjectTemporaire.AddComponent<Rigidbody>();
-                // Add Torque
-                Vector3 v3Torque;
-
-                v3Torque.x = Random.Range(-200, 200);
-                v3Torque.y = Random.Range(-200, 200);
-                v3Torque.z = Random.Range(-200, 200);
-
-                hStockObjectTemporaire.GetComponent<Rigidbody>().AddTorque(v3Torque);
-
-                //Réglage Distance Optionnel
-                // ??????
-
-                // Rotation Du parent Dummy Centre
-                hDummyCentreBarrique.transform.Rotate ( new Vector3 (0, iAngleSpawn, 0), Space.Self);
-
-            //Déplacement Up du Dummy Spawn
-            hDummyCibleOrbitale.transform.position = new Vector3 (hDummyCibleOrbitale.transform.position.x, hDummyCibleOrbitale.transform.position.y + fDummySpawnOffsetY, hDummyCibleOrbitale.transform.position.z);
-
-            }
-
-            fEtape = 0.5f;
-        }
-
-        if (fEtape == 1)//quand tous les fruis sont tombé
-        {
-            // spawn du capuchon pressoir rotatif
-            PressoirCouvercle.GetComponent<PressoirScript>().fSetupState = fEtape;
-        }
-
-        if (fEtape == 2)//quand capuchont rotatif est en position
-        {
-            //autorisé le joueur a faire le slide
-        }
-
-        if (fEtape == 3)//quand le slide et fini
-        {
-            //faire le mouvement de caméra + ouvrir roubinet
-
-            //setup Vitesse
-            fSpeed = 8f;
-            fSensRotation = 1;
-
-            //Setup vitesse dt
-            float fStep = fSpeed * Time.deltaTime;
-
-            //Move Camera
-            transform.position = Vector3.MoveTowards(transform.position, hCamera2.transform.position, fStep);
-
-            hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
-
-            if (hTourneRobinet.transform.rotation.y < 180 && transform.position == hCamera2.transform.position)
-            {
-                fEtape = 4;
-            }
-        }
-
-        if (fEtape == 4)//quand la caméra est en position final ou pas loin de sa position final
-        {
-            //faire tourner de 3/4 le roubinet tout en faisant grossir le flux : ^)
-            fSensRotation = 1f;
-
-            if (hFluxRobinet.transform.localScale.y<1)
-            {
-                if (hFluxRobinet.transform.localScale.y < 0.5f)
-                {
-                    hFluxRobinet.transform.localScale = new Vector3(hFluxRobinet.transform.localScale.x, hFluxRobinet.transform.localScale.y + fVitesseScaleFlux * Time.deltaTime, hFluxRobinet.transform.localScale.z);
-                    hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
-                }
-                else
-                {
-                    hFluxRobinet.transform.localScale = new Vector3(hFluxRobinet.transform.localScale.x, hFluxRobinet.transform.localScale.y + fVitesseScaleFlux * Time.deltaTime, hFluxRobinet.transform.localScale.z);
-                }
-            }
-            else if (hFluxRobinet.transform.localScale.y >= 1)
-            {
-                fEtape = 5;
-            }
-        }
+        //Debug.Log("Etape : " + fEtape);
         
-        if (fEtape == 5)//quand robinet a fini de tourner
+        if (!bScoreNegative)
         {
-            //Monter le juuuus
-
-            //Sens de rotation Roubinet inversé
-            fSensRotation = -1f;
-
-            //ActiverMeshRenderer
-            if (hJusPositif.GetComponent<MeshRenderer>().enabled== false || hJusNegatif.GetComponent<MeshRenderer>().enabled == false)
+            if (fEtape == 0)
             {
-                hJusPositif.GetComponent<MeshRenderer>().enabled = true;
-                hJusNegatif.GetComponent<MeshRenderer>().enabled = true;
-            }
-            
-            /////////////////////////////////////////////////////////////////////////////////////////////////
-            //Faire monter les Deux cylindres de jus
-            if (hJusPositif.transform.localScale.y < 0.8f*fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.8*fScaleJusNegatif)
-            {
-                if (hJusPositif.transform.localScale.y < 0.5 * fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.5f * fScaleJusNegatif)
+                ///////////////////////////////////////////////////  Choix Fruits
+                //spawn des fruits
+                int iCompteur = iFruitsNegatif;
+                GameObject hStockObjectTemporaire;
+
+                for (int i = 0; i < iFruitsPositif + iFruitsNegatif; i++)
                 {
-                    hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
-                    hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
+                    //Si i est impair
+                    if (i % 2 == 1 && iCompteur > 0)
+                    {
+                        //Quel type de fruit spawn
+                        hStockObjectTemporaire = Instantiate(hTablePrefabeFruitPourris[0], new Vector3(0, 100, 0), Quaternion.identity);
+                        //Mathf.FloorToInt(Random.RandomRange(0, 3.99f))
+                        //Debug.Log("hStockObjectTemporaire :"+ hStockObjectTemporaire);
+
+                        hStockObjectTemporaire.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                        //GameObject hFaceManager = GetChildWithName(hStockObjectTemporaire, "kiwi_SurMesh");
+
+                        hTableFruitSpawn[i] = hStockObjectTemporaire;
+
+                        iCompteur = iCompteur - 1;
+                    }
+                    else
+                    //Si i est pair
+                    {
+                        //Quel type de fruit spawn
+                        hStockObjectTemporaire = Instantiate(hTablePrefabeFruitSains[0], new Vector3(0, 100, 0), Quaternion.identity);
+
+                        hTableFruitSpawn[i] = hStockObjectTemporaire;
+                    }
+
+                    ///////////////////////////////////////////////////  Positionnement Fruits
+
+                    //Positionnement Fruit sur Dummy Orbital
+
+                    hStockObjectTemporaire.transform.position = hDummyCibleOrbitale.transform.position;
+
+
+                    // Ajout Collider
+                    hStockObjectTemporaire.AddComponent<SphereCollider>();
+
+                    // Ahout Rigidbody
+                    hStockObjectTemporaire.AddComponent<Rigidbody>();
+                    // Add Torque
+                    Vector3 v3Torque;
+
+                    v3Torque.x = Random.Range(-200, 200);
+                    v3Torque.y = Random.Range(-200, 200);
+                    v3Torque.z = Random.Range(-200, 200);
+
+                    hStockObjectTemporaire.GetComponent<Rigidbody>().AddTorque(v3Torque);
+
+                    //Réglage Distance Optionnel
+                    // ??????
+
+                    // Rotation Du parent Dummy Centre
+                    hDummyCentreBarrique.transform.Rotate(new Vector3(0, iAngleSpawn, 0), Space.Self);
+
+                    //Déplacement Up du Dummy Spawn
+                    hDummyCibleOrbitale.transform.position = new Vector3(hDummyCibleOrbitale.transform.position.x, hDummyCibleOrbitale.transform.position.y + fDummySpawnOffsetY, hDummyCibleOrbitale.transform.position.z);
+
                 }
-                else
-                {
-                    hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
-                    hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
-                    hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
 
+                fEtape = 0.5f;
+            }
+
+            if (fEtape == 1)//quand tous les fruis sont tombé
+            {
+                // spawn du capuchon pressoir rotatif
+                PressoirCouvercle.GetComponent<PressoirScript>().fSetupState = fEtape;
+            }
+
+            if (fEtape == 2)//quand capuchont rotatif est en position
+            {
+                //autorisé le joueur a faire le slide
+            }
+
+            if (fEtape == 3)//quand le slide et fini
+            {
+                //faire le mouvement de caméra + ouvrir roubinet
+
+                //setup Vitesse
+                fSpeed = 8f;
+                fSensRotation = 1;
+
+                //Setup vitesse dt
+                float fStep = fSpeed * Time.deltaTime;
+
+                //Move Camera
+                transform.position = Vector3.MoveTowards(transform.position, hCamera2.transform.position, fStep);
+
+                hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+
+                if (hTourneRobinet.transform.rotation.y < 180 && transform.position == hCamera2.transform.position)
+                {
+                    fEtape = 4;
+                }
+            }
+
+            if (fEtape == 4)//quand la caméra est en position final ou pas loin de sa position final
+            {
+                //faire tourner de 3/4 le roubinet tout en faisant grossir le flux : ^)
+                fSensRotation = 1f;
+
+                if (hFluxRobinet.transform.localScale.y < 1)
+                {
+                    if (hFluxRobinet.transform.localScale.y < 0.5f)
+                    {
+                        hFluxRobinet.transform.localScale = new Vector3(hFluxRobinet.transform.localScale.x, hFluxRobinet.transform.localScale.y + fVitesseScaleFlux * Time.deltaTime, hFluxRobinet.transform.localScale.z);
+                        hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+                    }
+                    else
+                    {
+                        hFluxRobinet.transform.localScale = new Vector3(hFluxRobinet.transform.localScale.x, hFluxRobinet.transform.localScale.y + fVitesseScaleFlux * Time.deltaTime, hFluxRobinet.transform.localScale.z);
+                    }
+                }
+                else if (hFluxRobinet.transform.localScale.y >= 1)
+                {
+                    fEtape = 5;
+                }
+            }
+
+            if (fEtape == 5)//quand robinet a fini de tourner
+            {
+                //Monter le juuuus
+
+                //Sens de rotation Roubinet inversé
+                fSensRotation = -1f;
+
+                //ActiverMeshRenderer
+                if (hJusPositif.GetComponent<MeshRenderer>().enabled == false || hJusNegatif.GetComponent<MeshRenderer>().enabled == false)
+                {
+                    hJusPositif.GetComponent<MeshRenderer>().enabled = true;
+                    hJusNegatif.GetComponent<MeshRenderer>().enabled = true;
+                }
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+                //Faire monter les Deux cylindres de jus
+                if (hJusPositif.transform.localScale.y < 0.8f * fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.8 * fScaleJusNegatif)
+                {
+                    if (hJusPositif.transform.localScale.y < 0.5 * fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.5f * fScaleJusNegatif)
+                    {
+                        hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
+                        hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
+                    }
+                    else
+                    {
+                        hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
+                        hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
+                        hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+
+                        hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                    }
+
+
+                }
+                else if (hJusPositif.transform.localScale.y >= 0.5 * fScaleJusPositif && hJusNegatif.transform.localScale.y >= 0.5 * fScaleJusNegatif)
+                {
+                    fEtape = 6;
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+            }
+
+            if (fEtape == 6)//quand Jus finit de monter, le flux s'inverse et le roubinet finit de tourner
+            {
+                // AFFICHER SCORE EN VERT
+                hMeshTextFruitPos.GetComponent<TextMesh>().text = iFruitsPositif.ToString();
+                hMeshTextFruitPos.GetComponent<MeshRenderer>().enabled = true;
+
+                //Inverser le flux
+                if (v3FluxOrigine == hFluxRobinet.transform.position)
+                {
+                    hFluxRobinet.transform.Rotate(new Vector3(180, 0, 0), Space.Self);
+                    hFluxRobinet.transform.position = new Vector3(hFluxRobinet.transform.position.x, hJusPositif.transform.position.y, hFluxRobinet.transform.position.z);
+                }
+
+                ////////////////////////////////////////////////////////////////////////////////////////
+                //Faire monter les Deux cylindres de jus
+                if (hJusPositif.transform.localScale.y < 1f * fScaleJusPositif && hJusNegatif.transform.localScale.y < 1f * fScaleJusNegatif)
+                {
+                    //Faire baisser le flux
+
+                    if (hJusPositif.transform.localScale.y < 0.8f * fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.8f * fScaleJusNegatif)
+                    {
+                        hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
+                        hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
+                        hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+                    }
+                    else
+                    {
+                        hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
+                        hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
+
+                        if (hFluxRobinet.transform.localScale.y > 0.1f)
+                        {
+                            hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                        }
+                    }
+                }
+                else if (hJusPositif.transform.localScale.y >= 1 * fScaleJusPositif && hJusNegatif.transform.localScale.y >= 1 * fScaleJusNegatif)
+                {
+                    hJusPositif.transform.localScale = new Vector3(1, fScaleJusPositif, 1);
+                    hJusNegatif.transform.localScale = new Vector3(1, fScaleJusNegatif, 1);
+                    fEtape = 7;
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////
+            }
+
+            if (fEtape == 7)
+            {
+                if (hFluxRobinet.transform.localScale.y > 0.1f)
+                {
                     hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
                 }
 
-
-            }
-            else if (hJusPositif.transform.localScale.y >= 0.5 * fScaleJusPositif && hJusNegatif.transform.localScale.y >= 0.5 * fScaleJusNegatif)
-            {
-                fEtape = 6;
-            }
-            /////////////////////////////////////////////////////////////////////////////////////////////////
-        }
-
-        if (fEtape == 6)//quand Jus finit de monter, le flux s'inverse et le roubinet finit de tourner
-        {
-            // AFFICHER SCORE EN VERT
-            hMeshTextFruitPos.GetComponent<TextMesh>().text = iFruitsPositif.ToString();
-            hMeshTextFruitPos.GetComponent<MeshRenderer>().enabled = true;
-
-            //Inverser le flux
-            if ( v3FluxOrigine == hFluxRobinet.transform.position)
-            {
-                hFluxRobinet.transform.Rotate(new Vector3(180, 0, 0), Space.Self);
-                hFluxRobinet.transform.position = new Vector3(hFluxRobinet.transform.position.x, hJusPositif.transform.position.y, hFluxRobinet.transform.position.z);
-            }
-
-            ////////////////////////////////////////////////////////////////////////////////////////
-            //Faire monter les Deux cylindres de jus
-            if (hJusPositif.transform.localScale.y < 1f * fScaleJusPositif && hJusNegatif.transform.localScale.y < 1f * fScaleJusNegatif)
-            {
-                //Faire baisser le flux
-               
-                if (hJusPositif.transform.localScale.y < 0.8f*fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.8f*fScaleJusNegatif)
+                if (fTimerDeconte > 0)
                 {
-                    hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
-                    hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
-                    hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+                    fTimerDeconte = fTimerDeconte - Time.deltaTime;
                 }
                 else
                 {
-                    hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y + fVitesseScaleJusPositif * Time.deltaTime, 1);
-                    hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
-
-                    if (hFluxRobinet.transform.localScale.y > 0.1f)
-                    {
-                        hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
-                    }
+                    fEtape = 8;
                 }
             }
-            else if (hJusPositif.transform.localScale.y >= 1 * fScaleJusPositif && hJusNegatif.transform.localScale.y >= 1 * fScaleJusNegatif)
-            {
-                hJusPositif.transform.localScale = new Vector3(1, fScaleJusPositif, 1);
-                hJusNegatif.transform.localScale = new Vector3(1, fScaleJusNegatif, 1);
-                fEtape = 7;
-            }
-            /////////////////////////////////////////////////////////////////////////////////////////
-        }
 
-        if (fEtape == 7)
+            if (fEtape == 8)//quand le scale bon atteint la taille demandée
+            {
+                //spawn du cylindre multy fruit mauvéééééé / puis scale vers le bas
+                hMeshTextFruitNeg.GetComponent<TextMesh>().text = iFruitsNegatif.ToString();
+                hMeshTextFruitNeg.GetComponent<MeshRenderer>().enabled = true;
+                hMeshTextMinus.GetComponent<MeshRenderer>().enabled = true;
+
+                if (hFluxRobinet.transform.localScale.y > 0.1f)
+                {
+                    hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                }
+
+                if (hJusPositif.transform.localScale.y > fPourcentage * fScaleJusPositif)
+                {
+                    hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y - fVitesseScaleDecompte * Time.deltaTime, 1);
+                }
+                else if (hJusPositif.transform.localScale.y <= fPourcentage * fScaleJusPositif)
+                {
+                    fEtape = 9;
+                }
+            }
+
+            if (fEtape == 9)//quand le scale mauvais atteint la taill demander
+            {
+                if (hFluxRobinet.transform.localScale.y > 0f)
+                {
+                    hFluxRobinet.transform.localScale = new Vector3(1, 0, 1);
+                }
+                // affichage dinamique des score
+                // réaction de l'étiquette
+                hMeshTextScoreTotal.GetComponent<TextMesh>().text = (iFruitsPositif - iFruitsNegatif).ToString();
+                hMeshTextScoreMax.GetComponent<TextMesh>().text = iFruitsPositifsMaxScorePossible.ToString();
+                hMeshTextScoreTotal.GetComponent<MeshRenderer>().enabled = true;
+                hMeshTextBar.GetComponent<MeshRenderer>().enabled = true;
+                hMeshTextScoreMax.GetComponent<MeshRenderer>().enabled = true;
+                hMeshTextScoreMaxBarre.GetComponent<MeshRenderer>().enabled = true;
+
+
+                //lol on l'a pas encore décidé de comment on faisait
+                fEtape = 10;
+
+            }
+
+            if (fEtape == 10)//quand le scale mauvais atteint la taill demander
+            {
+                if (bNoFruit && hTransition.GetComponent<TransitionScript>().transform.position == hTransition.GetComponent<TransitionScript>().v3PositionTarget)
+                {
+                    hMeshTextScoreAucunFruit.GetComponent<MeshRenderer>().enabled = true;
+                }
+
+                string sStringReward = "";
+
+                //Gold
+                if (fScaleJusPositif >= 1)
+                {
+                    sStringReward = "Superbe !";
+                }
+                //Silver
+                else if (fScaleJusPositif >= fReussiteMedium)
+                {
+                    sStringReward = "Bien !";
+                }
+                //Bronze
+                else if (fScaleJusPositif >= fReussitePetite)
+                {
+                    sStringReward = "Pas Mal !";
+                }
+                //Nothing
+                else
+                {
+                    sStringReward = "Dommage !";
+                }
+
+                if (fTimerCommentaire >= fTimeAttenteComm)
+                {
+                    fTimerCommentaire = 0;
+                    hMeshTextScoreImmonde.GetComponent<TextMesh>().text = sStringReward;
+                    hMeshTextScoreImmonde.GetComponent<MeshRenderer>().enabled = true;
+                }
+                else
+                {
+                    fTimerCommentaire += Time.deltaTime;
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Application.LoadLevel("Levels");
+                }
+
+            }
+        }
+        else if (bScoreNegative)
         {
-            if (hFluxRobinet.transform.localScale.y > 0.1f)
+            if (fEtape == 0)
             {
-                hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                ///////////////////////////////////////////////////  Choix Fruits
+                //spawn des fruits
+                int iCompteur = iFruitsNegatif;
+                GameObject hStockObjectTemporaire;
+
+                Debug.Log(iScoreNiveau);
+                Debug.Log(Mathf.Abs(iScoreNiveau));
+
+                //RECALCULER SCALE CIBLE
+                if (Mathf.Abs(iScoreNiveau) >= iFruitsPositifsMaxScorePossible)
+                {
+                    fScaleJusNegatif = 1f;
+                } else if (Mathf.Abs(iScoreNiveau) < iFruitsPositifsMaxScorePossible)
+                {
+                    fScaleJusNegatif = iFruitsNegatif*100 / iFruitsPositifsMaxScorePossible;
+                    fScaleJusNegatif = fScaleJusNegatif/100;
+                    Debug.Log(fScaleJusNegatif);
+                }
+
+                for (int i = 0; i < iFruitsPositif + iFruitsNegatif; i++)
+                {
+                    //Si i est impair
+                    if (i % 2 == 1 && iCompteur > 0)
+                    {
+                        //Quel type de fruit spawn
+                        hStockObjectTemporaire = Instantiate(hTablePrefabeFruitPourris[0], new Vector3(0, 100, 0), Quaternion.identity);
+                        //Mathf.FloorToInt(Random.RandomRange(0, 3.99f))
+                        //Debug.Log("hStockObjectTemporaire :"+ hStockObjectTemporaire);
+
+                        hStockObjectTemporaire.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                        //GameObject hFaceManager = GetChildWithName(hStockObjectTemporaire, "kiwi_SurMesh");
+
+                        hTableFruitSpawn[i] = hStockObjectTemporaire;
+
+                        iCompteur = iCompteur - 1;
+                    }
+                    else
+                    //Si i est pair
+                    {
+                        //Quel type de fruit spawn
+                        hStockObjectTemporaire = Instantiate(hTablePrefabeFruitSains[0], new Vector3(0, 100, 0), Quaternion.identity);
+
+                        hTableFruitSpawn[i] = hStockObjectTemporaire;
+                    }
+
+                    ///////////////////////////////////////////////////  Positionnement Fruits
+
+                    //Positionnement Fruit sur Dummy Orbital
+
+                    hStockObjectTemporaire.transform.position = hDummyCibleOrbitale.transform.position;
+
+
+                    // Ajout Collider
+                    hStockObjectTemporaire.AddComponent<SphereCollider>();
+
+                    // Ahout Rigidbody
+                    hStockObjectTemporaire.AddComponent<Rigidbody>();
+                    // Add Torque
+                    Vector3 v3Torque;
+
+                    v3Torque.x = Random.Range(-200, 200);
+                    v3Torque.y = Random.Range(-200, 200);
+                    v3Torque.z = Random.Range(-200, 200);
+
+                    hStockObjectTemporaire.GetComponent<Rigidbody>().AddTorque(v3Torque);
+
+                    //Réglage Distance Optionnel
+                    // ??????
+
+                    // Rotation Du parent Dummy Centre
+                    hDummyCentreBarrique.transform.Rotate(new Vector3(0, iAngleSpawn, 0), Space.Self);
+
+                    //Déplacement Up du Dummy Spawn
+                    hDummyCibleOrbitale.transform.position = new Vector3(hDummyCibleOrbitale.transform.position.x, hDummyCibleOrbitale.transform.position.y + fDummySpawnOffsetY, hDummyCibleOrbitale.transform.position.z);
+
+                }
+
+                fEtape = 0.5f;
             }
 
-            if (fTimerDeconte > 0)
+            if (fEtape == 1)//quand tous les fruis sont tombé
             {
-                fTimerDeconte = fTimerDeconte - Time.deltaTime;
+                // spawn du capuchon pressoir rotatif
+                PressoirCouvercle.GetComponent<PressoirScript>().fSetupState = fEtape;
             }
-            else
+
+            if (fEtape == 2)//quand capuchont rotatif est en position
             {
-                fEtape = 8;
+                //autorisé le joueur a faire le slide
+            }
+
+            if (fEtape == 3)//quand le slide et fini
+            {
+                //faire le mouvement de caméra + ouvrir roubinet
+
+                //setup Vitesse
+                fSpeed = 8f;
+                fSensRotation = 1;
+
+                //Setup vitesse dt
+                float fStep = fSpeed * Time.deltaTime;
+
+                //Move Camera
+                transform.position = Vector3.MoveTowards(transform.position, hCamera2.transform.position, fStep);
+
+                hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+
+                if (hTourneRobinet.transform.rotation.y < 180 && transform.position == hCamera2.transform.position)
+                {
+                    fEtape = 4;
+                }
+            }
+
+            if (fEtape == 4)//quand la caméra est en position final ou pas loin de sa position final
+            {
+                //faire tourner de 3/4 le roubinet tout en faisant grossir le flux : ^)
+                fSensRotation = 1f;
+
+                if (hFluxRobinet.transform.localScale.y < 1)
+                {
+                    if (hFluxRobinet.transform.localScale.y < 0.5f)
+                    {
+                        hFluxRobinet.transform.localScale = new Vector3(hFluxRobinet.transform.localScale.x, hFluxRobinet.transform.localScale.y + fVitesseScaleFlux * Time.deltaTime, hFluxRobinet.transform.localScale.z);
+                        hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+                    }
+                    else
+                    {
+                        hFluxRobinet.transform.localScale = new Vector3(hFluxRobinet.transform.localScale.x, hFluxRobinet.transform.localScale.y + fVitesseScaleFlux * Time.deltaTime, hFluxRobinet.transform.localScale.z);
+                    }
+                }
+                else if (hFluxRobinet.transform.localScale.y >= 1)
+                {
+                    fEtape = 5;
+                }
+            }
+
+            if (fEtape == 5)//quand robinet a fini de tourner
+            {
+                //Monter le juuuus
+
+                //Sens de rotation Roubinet inversé
+                fSensRotation = -1f;
+
+                //ActiverMeshRenderer
+                if (hJusPositif.GetComponent<MeshRenderer>().enabled == false || hJusNegatif.GetComponent<MeshRenderer>().enabled == false)
+                {
+                    hJusPositif.GetComponent<MeshRenderer>().enabled = false;
+                    hJusNegatif.GetComponent<MeshRenderer>().enabled = true;
+                }
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+                //Faire monter les Deux cylindres de jus
+                if (hJusNegatif.transform.localScale.y < 0.8 * fScaleJusNegatif)
+                {
+                    if (hJusPositif.transform.localScale.y < 0.5 * fScaleJusPositif && hJusNegatif.transform.localScale.y < 0.5f * fScaleJusNegatif)
+                    {
+                        hJusPositif.transform.localScale = new Vector3(1, 0, 1);
+                        hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
+                    }
+                    else
+                    {
+                        hJusPositif.transform.localScale = new Vector3(1, 0, 1);
+                        hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
+                        hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+
+                        hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                    }
+
+
+                }
+                else if (hJusNegatif.transform.localScale.y >= 0.5 * fScaleJusNegatif)
+                {
+                    fEtape = 6;
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+            }
+
+            if (fEtape == 6)//quand Jus finit de monter, le flux s'inverse et le roubinet finit de tourner
+            {
+                // AFFICHER SCORE EN VERT
+                hMeshTextFruitPos.GetComponent<TextMesh>().text = iFruitsPositif.ToString();
+                hMeshTextFruitPos.GetComponent<MeshRenderer>().enabled = true;
+
+                //Inverser le flux
+                if (v3FluxOrigine == hFluxRobinet.transform.position)
+                {
+                    hFluxRobinet.transform.Rotate(new Vector3(180, 0, 0), Space.Self);
+                    hFluxRobinet.transform.position = new Vector3(hFluxRobinet.transform.position.x, hJusPositif.transform.position.y, hFluxRobinet.transform.position.z);
+                }
+
+                ////////////////////////////////////////////////////////////////////////////////////////
+                //Faire monter les Deux cylindres de jus
+                if (hJusNegatif.transform.localScale.y < 1f * fScaleJusNegatif)
+                {
+                    //Faire baisser le flux
+
+                    if (hJusNegatif.transform.localScale.y < 0.8f * fScaleJusNegatif)
+                    {
+                        hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
+                        hTourneRobinet.transform.Rotate(new Vector3(0, fVitesseRotate * Time.deltaTime * fSensRotation, 0), Space.Self);
+                    }
+                    else
+                    {
+                        hJusNegatif.transform.localScale = new Vector3(1, hJusNegatif.transform.localScale.y + fVitesseScaleJusNegatif * Time.deltaTime, 1);
+
+                        if (hFluxRobinet.transform.localScale.y > 0.1f)
+                        {
+                            hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                        }
+                    }
+                }
+                else if (hJusNegatif.transform.localScale.y >= 1 * fScaleJusNegatif)
+                {
+                    hJusNegatif.transform.localScale = new Vector3(1, fScaleJusNegatif, 1);
+                    fEtape = 7;
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////
+            }
+
+            if (fEtape == 7)
+            {
+                if (hFluxRobinet.transform.localScale.y > 0.1f)
+                {
+                    hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                }
+
+                if (fTimerDeconte > 0)
+                {
+                    fTimerDeconte = fTimerDeconte - Time.deltaTime;
+                }
+                else
+                {
+                    fEtape = 8;
+                }
+            }
+
+            if (fEtape == 8)//quand le scale bon atteint la taille demandée
+            {
+                //spawn du cylindre multy fruit mauvéééééé / puis scale vers le bas
+                hMeshTextFruitNeg.GetComponent<TextMesh>().text = iFruitsNegatif.ToString();
+                hMeshTextFruitNeg.GetComponent<MeshRenderer>().enabled = true;
+                hMeshTextMinus.GetComponent<MeshRenderer>().enabled = true;
+
+                if (hFluxRobinet.transform.localScale.y > 0.1f)
+                {
+                    hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                }
+
+                if (hJusNegatif.transform.localScale.y >= fScaleJusNegatif)
+                {
+                    fEtape = 9;
+                }
+            }
+
+            if (fEtape == 9)//quand le scale mauvais atteint la taill demander
+            {
+                if (hFluxRobinet.transform.localScale.y > 0.1f)
+                {
+                    hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
+                }
+                // affichage dinamique des score
+                // réaction de l'étiquette
+                hMeshTextScoreTotal.GetComponent<TextMesh>().text = (iFruitsPositif - iFruitsNegatif).ToString();
+                hMeshTextScoreMax.GetComponent<TextMesh>().text = iFruitsPositifsMaxScorePossible.ToString();
+                hMeshTextScoreTotal.GetComponent<MeshRenderer>().enabled = true;
+                hMeshTextBar.GetComponent<MeshRenderer>().enabled = true;
+                hMeshTextScoreMax.GetComponent<MeshRenderer>().enabled = true;
+                hMeshTextScoreMaxBarre.GetComponent<MeshRenderer>().enabled = true;
+
+
+                //lol on l'a pas encore décidé de comment on faisait
+                fEtape = 10;
+
+            }
+
+            if (fEtape == 10)//quand le scale mauvais atteint la taille demander
+            {
+                if (fTimerCommentaire >= fTimeAttenteComm)
+                {
+                    fTimerCommentaire = 0;
+                    hMeshTextScoreImmonde.GetComponent<MeshRenderer>().enabled = true;
+                }
+                else
+                {
+                    fTimerCommentaire += Time.deltaTime;
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Application.LoadLevel("Levels");
+                }
+
             }
         }
-
-        if (fEtape == 8)//quand le scale bon atteint la taille demandée
-        {
-            //spawn du cylindre multy fruit mauvéééééé / puis scale vers le bas
-            hMeshTextFruitNeg.GetComponent<TextMesh>().text = iFruitsNegatif.ToString();
-            hMeshTextFruitNeg.GetComponent<MeshRenderer>().enabled = true;
-            hMeshTextMinus.GetComponent<MeshRenderer>().enabled = true;
-
-            if (hFluxRobinet.transform.localScale.y > 0.1f)
-            {
-                hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
-            }
-
-            if (hJusPositif.transform.localScale.y > fPourcentage*fScaleJusPositif)
-            {
-                hJusPositif.transform.localScale = new Vector3(1, hJusPositif.transform.localScale.y - fVitesseScaleDecompte * Time.deltaTime, 1);
-            }
-            else if (hJusPositif.transform.localScale.y <= fPourcentage* fScaleJusPositif)
-            {
-                fEtape = 9;
-            }
-        }
-
-        //Debug.Log("fEtape" + fEtape);
-
-        if (fEtape == 9)//quand le scale mauvais atteint la taill demander
-        {
-            if (hFluxRobinet.transform.localScale.y > 0.1f)
-            {
-                hFluxRobinet.transform.localScale = new Vector3(1, hFluxRobinet.transform.localScale.y - fVitesseScaleFlux * Time.deltaTime, 1);
-            }
-            // affichage dinamique des score
-            // réaction de l'étiquette
-            hMeshTextScoreTotal.GetComponent<TextMesh>().text = (iFruitsPositif-iFruitsNegatif).ToString();
-            hMeshTextScoreMax.GetComponent<TextMesh>().text = iFruitsPositifsMaxScorePossible.ToString();
-            hMeshTextScoreTotal.GetComponent<MeshRenderer>().enabled = true;
-            hMeshTextBar.GetComponent<MeshRenderer>().enabled = true;
-            hMeshTextScoreMax.GetComponent<MeshRenderer>().enabled = true;
-            hMeshTextScoreMaxBarre.GetComponent<MeshRenderer>().enabled = true;
-
-
-            //lol on l'a pas encore décidé de comment on faisait
-            fEtape = 10;
-
-        }
-
-        if (fEtape == 10)//quand le scale mauvais atteint la taill demander
-        {
-            if (bNoFruit && hTransition.GetComponent<TransitionScript>().transform.position == hTransition.GetComponent<TransitionScript>().v3PositionTarget)
-            {
-                hMeshTextScoreAucunFruit.GetComponent<MeshRenderer>().enabled = true;
-            }
-
-            if ( Input.GetMouseButtonDown(0))
-            {
-                Application.LoadLevel("Levels");
-            }
-
-        }
+        
+        ////////////////////////////////
     }
 }
