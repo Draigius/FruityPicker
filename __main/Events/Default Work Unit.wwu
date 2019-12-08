@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{902BCDC0-0C5B-4C57-ACF2-5777F31645F5}" SchemaVersion="94">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{902BCDC0-0C5B-4C57-ACF2-5777F31645F5}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="onArrache" ID="{28236A8D-57DD-45BB-A614-A84F9B397B1C}">
+					<ChildrenList>
+						<Action Name="" ID="{A8E5F0C9-161E-4195-AE06-CFF03AC7131D}" ShortID="1071469314">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="arrache" ID="{AA85FDF5-6282-45CE-9F53-F4A4E9CFFB2F}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="cri_continu" ID="{F4BB7C3C-12C8-40B4-A97D-4637979B1C2F}">
+					<ChildrenList>
+						<Action Name="" ID="{596AC8EF-B2BF-420A-8E0D-37044C12C686}" ShortID="772314755">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="scream_continu" ID="{2382E895-6409-47EE-8F25-0C6AB977F47A}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_All" ID="{6BBF223C-CCDC-48C0-A428-AC779DAB6212}">
+					<ChildrenList>
+						<Action Name="" ID="{C422EFBF-87A1-460A-AA09-24E7D6F27399}" ShortID="89976515">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="3"/>
+							</PropertyList>
+							<ReferenceList/>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onSaisi" ID="{78D399F9-72C7-4CFA-9032-B9CC44F3AA04}">
+					<ChildrenList>
+						<Action Name="" ID="{03BFE913-CCB1-4D71-B931-418116A8C474}" ShortID="473300340">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="saisi" ID="{3313C940-6729-4BDA-A6E1-EB91E0ABED3D}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onChange" ID="{51946D78-3F23-40A2-B2FB-3B916D2A5BE5}">
+					<ChildrenList>
+						<Action Name="" ID="{B6526871-7E1A-474A-A6A4-062E85234B78}" ShortID="563749081">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="stateChange" ID="{9E3BD7EE-D680-4A23-8A41-F3173DE65CF5}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onProximite" ID="{2FAD6A5A-9662-4AD9-BE61-DB5F06C52CB8}">
+					<ChildrenList>
+						<Action Name="" ID="{9C6FC907-22C1-4488-B396-C612B847F7F3}" ShortID="1030883128">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="proximite" ID="{90FE0E12-DCAC-4DB0-912D-EDA4AEA9B524}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onCut" ID="{218DDA27-305F-4143-93D7-E66D6B21F308}">
+					<ChildrenList>
+						<Action Name="" ID="{E1AA7A77-2553-4916-80A6-5A44B9BCE9AA}" ShortID="971741885">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="cut" ID="{F477A09E-88AE-49D9-8E28-0C84EF00B88D}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onAmbiant" ID="{F6792394-BDF0-4FA3-81D8-3D4C0FAF5C4E}">
+					<ChildrenList>
+						<Action Name="" ID="{12EE0F0E-C46A-4851-BFCA-BD26865D10FF}" ShortID="371108646">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ambiant" ID="{DB024EBF-8F33-48D5-815E-474C067B55C6}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onTheme" ID="{88B4524E-5152-4AFB-952A-70ADD3AA7C90}">
+					<ChildrenList>
+						<Action Name="" ID="{79583E8D-4496-42B5-AEA9-1782327B232F}" ShortID="246845375">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="FruityPicker_Theme" ID="{816303CC-CEAD-4AF4-8156-69131900E705}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onValidate" ID="{458E2B36-A3A4-4BD5-BA2E-FC0183732AFD}">
+					<ChildrenList>
+						<Action Name="" ID="{E07E450A-52EF-4B2F-ADDE-05A810D880A7}" ShortID="212788280">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="knock wood" ID="{F8DED1FF-AD05-4533-A64B-52708A72EEC0}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onDing" ID="{D8E93C24-3C24-44E5-8903-B4EF44A0C881}">
+					<ChildrenList>
+						<Action Name="" ID="{24157442-7D1B-4072-A458-49669DFD372A}" ShortID="526268121">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ding" ID="{26E11E71-61EF-4060-9D7C-CE3E5B9F030A}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onSlap" ID="{F0704CA9-4973-4036-96CB-A6A2AEF0FF56}">
+					<ChildrenList>
+						<Action Name="" ID="{88A47A92-C429-48F7-9525-A36DEF8381FE}" ShortID="512206655">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="slap" ID="{0E85FAFE-96DC-4822-9B3A-1BCA0A66CE2E}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onServiette" ID="{D50C4DF6-6957-4CA1-88E7-01783D9DFE85}"/>
+				<Event Name="onCoule" ID="{041A0E55-FD72-4948-8163-110BB6838E6F}">
+					<ChildrenList>
+						<Action Name="" ID="{EF7EA7BA-E9E0-41FD-9FA9-138E801CE724}" ShortID="443136981">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="eau_coule" ID="{AC67FE32-158C-41A5-86AC-B8153D59A2FE}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="onPressage" ID="{937EECFD-FA95-41AB-BF81-412CC95E51B8}">
+					<ChildrenList>
+						<Action Name="" ID="{9111A1F6-9E7E-4F34-8A49-4B4F85127F8B}" ShortID="846684927">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="pressage" ID="{B0E0AD1A-2900-42C2-9CB7-485DB534E472}" WorkUnitID="{F9EC2BA9-DDF6-4378-802D-BE7E0E53D463}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

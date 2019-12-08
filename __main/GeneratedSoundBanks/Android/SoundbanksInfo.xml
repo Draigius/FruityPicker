@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Android" BasePlatform="Android" SchemaVersion="11" SoundbankVersion="134">
+	<RootPaths>
+		<ProjectRoot>J:\Cours\0_PROJET_FIN\main\</ProjectRoot>
+		<SourceFilesRoot>J:\Cours\0_PROJET_FIN\main\.cache\Android\</SourceFilesRoot>
+		<SoundBanksRoot>J:\Cours\0_PROJET_FIN\main\GeneratedSoundBanks\Android\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>J:\Cours\0_PROJET_FIN\main\GeneratedSoundBanks\Android</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="2475207892" Language="SFX">
+			<ObjectPath>\SoundBanks\Default Work Unit\Fruits</ObjectPath>
+			<ShortName>Fruits</ShortName>
+			<Path>Fruits.bnk</Path>
+			<IncludedEvents>
+				<Event Id="1790470844" Name="cri_continu" ObjectPath="\Events\Default Work Unit\cri_continu" MaxAttenuation="50.000000" DurationType="OneShot" DurationMin="2.926839" DurationMax="8.048972"/>
+				<Event Id="2715870206" Name="onAmbiant" ObjectPath="\Events\Default Work Unit\onAmbiant" DurationType="Infinite"/>
+				<Event Id="3857968614" Name="onArrache" ObjectPath="\Events\Default Work Unit\onArrache" MaxAttenuation="50.000000" DurationType="OneShot" DurationMin="0.167176" DurationMax="3.130438"/>
+				<Event Id="359744858" Name="onChange" ObjectPath="\Events\Default Work Unit\onChange" MaxAttenuation="50.000000" DurationType="OneShot" DurationMin="0.233183" DurationMax="1.803363"/>
+				<Event Id="3572348383" Name="onClac" ObjectPath="\Events\Default Work Unit\onClac" DurationType="OneShot" DurationMin="0.170491" DurationMax="0.186029"/>
+				<Event Id="2685884704" Name="onCoule" ObjectPath="\Events\Default Work Unit\onCoule" DurationType="OneShot" DurationMin="4.947891" DurationMax="4.947891"/>
+				<Event Id="2982341374" Name="onCut" ObjectPath="\Events\Default Work Unit\onCut" DurationType="OneShot" DurationMin="0.221759" DurationMax="0.333610"/>
+				<Event Id="3708156546" Name="onDing" ObjectPath="\Events\Default Work Unit\onDing" DurationType="OneShot" DurationMin="1.632544" DurationMax="1.632544"/>
+				<Event Id="539603432" Name="onPressage" ObjectPath="\Events\Default Work Unit\onPressage" DurationType="OneShot" DurationMin="1.256803" DurationMax="1.256803"/>
+				<Event Id="1965390065" Name="onProximite" ObjectPath="\Events\Default Work Unit\onProximite" DurationType="OneShot" DurationMin="0.359909" DurationMax="0.359909"/>
+				<Event Id="2178025840" Name="onRing" ObjectPath="\Events\Default Work Unit\onRing" DurationType="OneShot" DurationMin="0.278361" DurationMax="0.278361"/>
+				<Event Id="3479274555" Name="onSaisi" ObjectPath="\Events\Default Work Unit\onSaisi" MaxAttenuation="50.000000" DurationType="OneShot" DurationMin="0.110323" DurationMax="1.632996"/>
+				<Event Id="2900150601" Name="onServiette" ObjectPath="\Events\Default Work Unit\onServiette" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="3877654972" Name="onSlap" ObjectPath="\Events\Default Work Unit\onSlap" DurationType="OneShot" DurationMin="0.247987" DurationMax="0.373067"/>
+				<Event Id="3251321561" Name="onTheme" ObjectPath="\Events\Default Work Unit\onTheme" DurationType="OneShot" DurationMin="85.971199" DurationMax="85.971199"/>
+				<Event Id="3923542108" Name="onValidate" ObjectPath="\Events\Default Work Unit\onValidate" DurationType="OneShot" DurationMin="0.111101" DurationMax="0.146598"/>
+				<Event Id="452547817" Name="Stop_All" ObjectPath="\Events\Default Work Unit\Stop_All" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="1188090" Language="SFX">
+					<ShortName>SFX (24).wav</ShortName>
+					<Path>SFX\SFX (24)_10C4C929.wem</Path>
+				</File>
+				<File Id="4305752" Language="SFX">
+					<ShortName>SFX (16).wav</ShortName>
+					<Path>SFX\SFX (16)_10C4C929.wem</Path>
+				</File>
+				<File Id="10103905" Language="SFX">
+					<ShortName>SFX (20).wav</ShortName>
+					<Path>SFX\SFX (20)_10C4C929.wem</Path>
+				</File>
+				<File Id="10628188" Language="SFX">
+					<ShortName>change_neg1.wav</ShortName>
+					<Path>SFX\change_neg1_10C4C929.wem</Path>
+				</File>
+				<File Id="62305428" Language="SFX">
+					<ShortName>SFX (42).wav</ShortName>
+					<Path>SFX\SFX (42)_10C4C929.wem</Path>
+				</File>
+				<File Id="74319870" Language="SFX">
+					<ShortName>SFX (18).wav</ShortName>
+					<Path>SFX\SFX (18)_10C4C929.wem</Path>
+				</File>
+				<File Id="79710319" Language="SFX">
+					<ShortName>SFX (38).wav</ShortName>
+					<Path>SFX\SFX (38)_10C4C929.wem</Path>
+				</File>
+				<File Id="157636414" Language="SFX">
+					<ShortName>SFX (4).wav</ShortName>
+					<Path>SFX\SFX (4)_10C4C929.wem</Path>
+				</File>
+				<File Id="182300008" Language="SFX">
+					<ShortName>SFX (19).wav</ShortName>
+					<Path>SFX\SFX (19)_10C4C929.wem</Path>
+				</File>
+				<File Id="206886040" Language="SFX">
+					<ShortName>SFX (31).wav</ShortName>
+					<Path>SFX\SFX (31)_10C4C929.wem</Path>
+				</File>
+				<File Id="207813973" Language="SFX">
+					<ShortName>SFX (17).wav</ShortName>
+					<Path>SFX\SFX (17)_10C4C929.wem</Path>
+				</File>
+				<File Id="220392111" Language="SFX">
+					<ShortName>SFX (39).wav</ShortName>
+					<Path>SFX\SFX (39)_10C4C929.wem</Path>
+				</File>
+				<File Id="239857679" Language="SFX">
+					<ShortName>change_neg4.wav</ShortName>
+					<Path>SFX\change_neg4_10C4C929.wem</Path>
+				</File>
+				<File Id="257824526" Language="SFX">
+					<ShortName>SFX (15).wav</ShortName>
+					<Path>SFX\SFX (15)_10C4C929.wem</Path>
+				</File>
+				<File Id="293465468" Language="SFX">
+					<ShortName>GrdCri1.wav</ShortName>
+					<Path>SFX\GrdCri1_10C4C929.wem</Path>
+				</File>
+				<File Id="300951383" Language="SFX">
+					<ShortName>SFX (9).wav</ShortName>
+					<Path>SFX\SFX (9)_10C4C929.wem</Path>
+				</File>
+				<File Id="335028056" Language="SFX">
+					<ShortName>SFX (29).wav</ShortName>
+					<Path>SFX\SFX (29)_10C4C929.wem</Path>
+				</File>
+				<File Id="379122348" Language="SFX">
+					<ShortName>GrdCri5.wav</ShortName>
+					<Path>SFX\GrdCri5_10C4C929.wem</Path>
+				</File>
+				<File Id="444041492" Language="SFX">
+					<ShortName>change_pos2.wav</ShortName>
+					<Path>SFX\change_pos2_10C4C929.wem</Path>
+				</File>
+				<File Id="452976995" Language="SFX">
+					<ShortName>SFX (40).wav</ShortName>
+					<Path>SFX\SFX (40)_10C4C929.wem</Path>
+				</File>
+				<File Id="468246372" Language="SFX">
+					<ShortName>saisiNeg3.wav</ShortName>
+					<Path>SFX\saisiNeg3_10C4C929.wem</Path>
+				</File>
+				<File Id="474655185" Language="SFX">
+					<ShortName>SFX (23).wav</ShortName>
+					<Path>SFX\SFX (23)_10C4C929.wem</Path>
+				</File>
+				<File Id="481591673" Language="SFX">
+					<ShortName>knock wood.wav</ShortName>
+					<Path>SFX\knock wood_10C4C929.wem</Path>
+				</File>
+				<File Id="495640513" Language="SFX">
+					<ShortName>SFX (8).wav</ShortName>
+					<Path>SFX\SFX (8)_10C4C929.wem</Path>
+				</File>
+				<File Id="547847235" Language="SFX">
+					<ShortName>SFX (41).wav</ShortName>
+					<Path>SFX\SFX (41)_10C4C929.wem</Path>
+				</File>
+				<File Id="553505140" Language="SFX">
+					<ShortName>SFX (14).wav</ShortName>
+					<Path>SFX\SFX (14)_10C4C929.wem</Path>
+				</File>
+				<File Id="559212994" Language="SFX">
+					<ShortName>SFX (43).wav</ShortName>
+					<Path>SFX\SFX (43)_10C4C929.wem</Path>
+				</File>
+				<File Id="569876851" Language="SFX">
+					<ShortName>SFX (27).wav</ShortName>
+					<Path>SFX\SFX (27)_10C4C929.wem</Path>
+				</File>
+				<File Id="603659416" Language="SFX">
+					<ShortName>SFX (30).wav</ShortName>
+					<Path>SFX\SFX (30)_10C4C929.wem</Path>
+				</File>
+				<File Id="616696149" Language="SFX">
+					<ShortName>SFX (25).wav</ShortName>
+					<Path>SFX\SFX (25)_10C4C929.wem</Path>
+				</File>
+				<File Id="650817015" Language="SFX">
+					<ShortName>SFX (6).wav</ShortName>
+					<Path>SFX\SFX (6)_10C4C929.wem</Path>
+				</File>
+				<File Id="663869494" Language="SFX">
+					<ShortName>pressage.wav</ShortName>
+					<Path>SFX\pressage_10C4C929.wem</Path>
+				</File>
+				<File Id="674994704" Language="SFX">
+					<ShortName>SFX (26).wav</ShortName>
+					<Path>SFX\SFX (26)_10C4C929.wem</Path>
+				</File>
+				<File Id="679307488" Language="SFX">
+					<ShortName>slap.wav</ShortName>
+					<Path>SFX\slap_10C4C929.wem</Path>
+				</File>
+				<File Id="679468012" Language="SFX">
+					<ShortName>GrdCri2.wav</ShortName>
+					<Path>SFX\GrdCri2_10C4C929.wem</Path>
+				</File>
+				<File Id="679534220" Language="SFX">
+					<ShortName>clac.wav</ShortName>
+					<Path>SFX\clac_10C4C929.wem</Path>
+				</File>
+				<File Id="682792051" Language="SFX">
+					<ShortName>SFX (1).wav</ShortName>
+					<Path>SFX\SFX (1)_10C4C929.wem</Path>
+				</File>
+				<File Id="695206495" Language="SFX">
+					<ShortName>SFX (3).wav</ShortName>
+					<Path>SFX\SFX (3)_10C4C929.wem</Path>
+				</File>
+				<File Id="724878582" Language="SFX">
+					<ShortName>saisiNeg2.wav</ShortName>
+					<Path>SFX\saisiNeg2_10C4C929.wem</Path>
+				</File>
+				<File Id="743407357" Language="SFX">
+					<ShortName>SFX (35).wav</ShortName>
+					<Path>SFX\SFX (35)_10C4C929.wem</Path>
+				</File>
+				<File Id="753940464" Language="SFX">
+					<ShortName>GrdCri3.wav</ShortName>
+					<Path>SFX\GrdCri3_10C4C929.wem</Path>
+				</File>
+				<File Id="775363661" Language="SFX">
+					<ShortName>SFX (5).wav</ShortName>
+					<Path>SFX\SFX (5)_10C4C929.wem</Path>
+				</File>
+				<File Id="779640360" Language="SFX">
+					<ShortName>SFX (33).wav</ShortName>
+					<Path>SFX\SFX (33)_10C4C929.wem</Path>
+				</File>
+				<File Id="792563892" Language="SFX">
+					<ShortName>SFX (2).wav</ShortName>
+					<Path>SFX\SFX (2)_10C4C929.wem</Path>
+				</File>
+				<File Id="795388189" Language="SFX">
+					<ShortName>SFX (32).wav</ShortName>
+					<Path>SFX\SFX (32)_10C4C929.wem</Path>
+				</File>
+				<File Id="804502015" Language="SFX">
+					<ShortName>ring.wav</ShortName>
+					<Path>SFX\ring_10C4C929.wem</Path>
+				</File>
+				<File Id="804852530" Language="SFX">
+					<ShortName>change_pos1.wav</ShortName>
+					<Path>SFX\change_pos1_10C4C929.wem</Path>
+				</File>
+				<File Id="817281588" Language="SFX">
+					<ShortName>ding.wav</ShortName>
+					<Path>SFX\ding_10C4C929.wem</Path>
+				</File>
+				<File Id="819381773" Language="SFX">
+					<ShortName>SFX (22).wav</ShortName>
+					<Path>SFX\SFX (22)_10C4C929.wem</Path>
+				</File>
+				<File Id="863104758" Language="SFX">
+					<ShortName>cut.wav</ShortName>
+					<Path>SFX\cut_10C4C929.wem</Path>
+				</File>
+				<File Id="867430005" Language="SFX">
+					<ShortName>SFX (10).wav</ShortName>
+					<Path>SFX\SFX (10)_10C4C929.wem</Path>
+				</File>
+				<File Id="888574453" Language="SFX">
+					<ShortName>SFX (21).wav</ShortName>
+					<Path>SFX\SFX (21)_10C4C929.wem</Path>
+				</File>
+				<File Id="898631996" Language="SFX">
+					<ShortName>SFX (28).wav</ShortName>
+					<Path>SFX\SFX (28)_10C4C929.wem</Path>
+				</File>
+				<File Id="911778540" Language="SFX">
+					<ShortName>saisiNeg.wav</ShortName>
+					<Path>SFX\saisiNeg_10C4C929.wem</Path>
+				</File>
+				<File Id="930446261" Language="SFX">
+					<ShortName>ambiant.wav</ShortName>
+					<Path>SFX\ambiant_D79FB2B7.wem</Path>
+				</File>
+				<File Id="942197552" Language="SFX">
+					<ShortName>SFX (36).wav</ShortName>
+					<Path>SFX\SFX (36)_10C4C929.wem</Path>
+				</File>
+				<File Id="945324721" Language="SFX">
+					<ShortName>SFX (37).wav</ShortName>
+					<Path>SFX\SFX (37)_10C4C929.wem</Path>
+				</File>
+				<File Id="955030475" Language="SFX">
+					<ShortName>FruityPicker_Theme.wav</ShortName>
+					<Path>SFX\FruityPicker_Theme_10C4C929.wem</Path>
+				</File>
+				<File Id="960662288" Language="SFX">
+					<ShortName>change_neg3.wav</ShortName>
+					<Path>SFX\change_neg3_10C4C929.wem</Path>
+				</File>
+				<File Id="999710217" Language="SFX">
+					<ShortName>SFX (13).wav</ShortName>
+					<Path>SFX\SFX (13)_10C4C929.wem</Path>
+				</File>
+				<File Id="1016544939" Language="SFX">
+					<ShortName>SFX (11).wav</ShortName>
+					<Path>SFX\SFX (11)_10C4C929.wem</Path>
+				</File>
+				<File Id="1024944922" Language="SFX">
+					<ShortName>eau_coule.wav</ShortName>
+					<Path>SFX\eau_coule_10C4C929.wem</Path>
+				</File>
+				<File Id="1033486115" Language="SFX">
+					<ShortName>saisiNeg4.wav</ShortName>
+					<Path>SFX\saisiNeg4_10C4C929.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

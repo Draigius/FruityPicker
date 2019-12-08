@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{06422FE4-07E6-4868-B2AD-BEF663A16461}" SchemaVersion="94">
+	<Switches>
+		<WorkUnit Name="Default Work Unit" ID="{06422FE4-07E6-4868-B2AD-BEF663A16461}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="arrache" ID="{939461DC-49A2-413A-AD33-F3E7B96439D8}">
+					<ChildrenList>
+						<Switch Name="veryPositive" ID="{54776468-75F8-419E-AFC4-F31C42965D22}"/>
+						<Switch Name="positive" ID="{8876099B-990C-4561-80C8-35FF97D88A0E}"/>
+						<Switch Name="negative" ID="{8310C856-6DC1-4665-9AA0-C8AB14419E88}"/>
+						<Switch Name="veryNegative" ID="{DC06B9E2-3781-49FE-AFD7-0AD2EBACB8F7}"/>
+					</ChildrenList>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</Switches>
+</WwiseDocument>

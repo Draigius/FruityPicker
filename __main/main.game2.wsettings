@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="UserProjectSettings" SchemaVersion="94">
+	<UserProjectSettingsInfo>
+		<UserProjectSettings Name="" ID="{7C3B65CF-6931-406F-A563-04C3103F5E1B}">
+			<PropertyList>
+				<Property Name="Event Action List\{28236A8D-57DD-45BB-A614-A84F9B397B1C}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{2FAD6A5A-9662-4AD9-BE61-DB5F06C52CB8}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{458E2B36-A3A4-4BD5-BA2E-FC0183732AFD}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{51946D78-3F23-40A2-B2FB-3B916D2A5BE5}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{6BBF223C-CCDC-48C0-A428-AC779DAB6212}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{78D399F9-72C7-4CFA-9032-B9CC44F3AA04}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{88B4524E-5152-4AFB-952A-70ADD3AA7C90}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{C7D5BA93-B7F9-4B22-B2F2-4C1AB735A28A}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{D50C4DF6-6957-4CA1-88E7-01783D9DFE85}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{D8E93C24-3C24-44E5-8903-B4EF44A0C881}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{F0704CA9-4973-4036-96CB-A6A2AEF0FF56}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{F4BB7C3C-12C8-40B4-A97D-4637979B1C2F}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{F6792394-BDF0-4FA3-81D8-3D4C0FAF5C4E}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="EventView\FilterMode1" Type="int32" Value="2"/>
+				<Property Name="ExternalSourcesInputPath" Type="string">
+					<ValueList>
+						<Value Platform="Android"></Value>
+						<Value Platform="Windows"></Value>
+					</ValueList>
+				</Property>
+				<Property Name="ExternalSourcesOutputPath" Type="string">
+					<ValueList>
+						<Value Platform="Android">GeneratedSoundBanks\Android\</Value>
+						<Value Platform="Windows">GeneratedSoundBanks\Windows\</Value>
+					</ValueList>
+				</Property>
+				<Property Name="Game Profiler\Voice Monitor\LastBus" Type="string" Value="{00000000-0000-0000-0000-000000000000}"/>
+				<Property Name="General\LatestLanguage" Type="int32" Value="684519430"/>
+				<Property Name="General\LatestPlatform" Type="string" Value="Windows"/>
+				<Property Name="General\SourceControlPluginID" Type="string" Value="{C403A906-0C19-4ED5-808E-748707065301}"/>
+				<Property Name="GenerateSoundBanks\x64_SelectedLanguages" Type="string" Value=""/>
+				<Property Name="GenerateSoundBanks\x64_SelectedPlatforms" Type="string" Value="OHiPD4hDm0CsEv2lDlz40VqyDO4x4RpJi34mbcEmX78="/>
+				<Property Name="GenerateSoundBanks\x64_SelectedSoundBanks" Type="string" Value="IAtNbSiO8EeHXk1M+kUDRw=="/>
+				<Property Name="HardwareController\CurrentSession" Type="string" Value="{00000000-0000-0000-0000-000000000000}"/>
+				<Property Name="MeterView\LastObject1" Type="string" Value="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"/>
+				<Property Name="MeterView\MeterMode1" Type="int32" Value="1"/>
+				<Property Name="MeterView\MeterMode1Viewpoint0" Type="int32" Value="1"/>
+				<Property Name="MeterView\MeterMode1Viewpoint1" Type="int32" Value="2"/>
+				<Property Name="MeterView\MeterMode1Viewpoint2" Type="int32" Value="3"/>
+				<Property Name="MeterView\MeterMode1Viewpoint3" Type="int32" Value="0"/>
+				<Property Name="Mixing Desk\LastSession" Type="string" Value="{00000000-0000-0000-0000-000000000000}"/>
+				<Property Name="MonitoringManager\WatchMgr\WatchesVersion" Type="int32" Value="7"/>
+				<Property Name="MonitoringManager\WatchMgr\x64_GameSyncWatches" Type="string" Value=""/>
+				<Property Name="MonitoringManager\WatchMgr\x64_Watches" Type="string" Value=""/>
+				<Property Name="OverrideCacheFolder\Active" Type="bool" Value="False"/>
+				<Property Name="OverrideCacheFolder\Path" Type="string" Value=".cache"/>
+				<Property Name="OverrideOriginalFolder\Active" Type="bool" Value="False"/>
+				<Property Name="OverrideOriginalFolder\Path" Type="string" Value="Originals"/>
+				<Property Name="ProjectExplorer\FirstVisible_10_1" Type="string" Value="{4C96B38B-3DB4-40C7-91C9-665510E38993}"/>
+				<Property Name="ProjectExplorer\FirstVisible_11_1" Type="string" Value="{23EC2DE3-3ED8-4B82-AC99-92E25F2E4C6B}"/>
+				<Property Name="ProjectExplorer\FirstVisible_1_1" Type="string" Value="{40364E6D-8AF7-4E1C-BEBE-A0E3790C41BB}"/>
+				<Property Name="ProjectExplorer\FirstVisible_3_1" Type="string" Value="{A69BF0FC-D84A-487C-ABDD-56F71CB2A126}"/>
+				<Property Name="ProjectExplorer\FirstVisible_4_1" Type="string" Value="{CB6175F1-6080-4A23-92EF-0807E304D0C1}"/>
+				<Property Name="ProjectExplorer\FirstVisible_6_1" Type="string" Value="{C98E673F-A24C-48A8-960F-10565FFE70A0}"/>
+				<Property Name="ProjectExplorer\FirstVisible_8_1" Type="string" Value="{41093F77-829F-4D88-8601-E8B25F3D4781}"/>
+				<Property Name="ProjectExplorer\x64_Expanded_10_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_11_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_12_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_13_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_14_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_15_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_16_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_17_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_18_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_19_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_1_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_20_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_21_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_2_1" Type="string" Value="JyDSEQHbd0Gq+PS61awkzybmqlyR9gdDsFt0oeRorrqpK+z59t14Q4Atvn4OU9RjpRjpj6RxfUO8jg/I++kIx3ROc3ycmeJEh5uZ2c0UPE31/YWqgmLORZ9T9KTpz/sv0/sN4tdZ3kWNjPD1PJlbwRJN2OpS23NGkDEjZBrilw+V6IIjCWTuR48lDGq5d/R6T2XtTfwvwUiv0EUa4fBMe+7XO56A1iNKikHzFz3mXPV5k/iO1m+4Soh2NBu1lGVKfuaQHaIwa0uzDjrS92e6t0DJEzMpZ9pLpuHrkeCr7T0SDv6QrNywTZEt7aSuqbUk"/>
+				<Property Name="ProjectExplorer\x64_Expanded_3_1" Type="string" Value="wM0rkFsMV0ys8ld38xZF9Q=="/>
+				<Property Name="ProjectExplorer\x64_Expanded_4_1" Type="string" Value="3GGUk6JJOkGtM/PnuWQ52OQvQgbmB2hIsq2+9mOhZGE="/>
+				<Property Name="ProjectExplorer\x64_Expanded_5_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_6_1" Type="string" Value="ArqW09LBm0K9dw1gKqLkwA=="/>
+				<Property Name="ProjectExplorer\x64_Expanded_7_1" Type="string" Value=""/>
+				<Property Name="ProjectExplorer\x64_Expanded_8_1" Type="string" Value=""/>
+				<Property Name="SoundBank Manager\x64_Expand States" Type="string" Value="ArqW09LBm0K9dw1gKqLkwA=="/>
+				<Property Name="SoundBankHeaderFilePath" Type="string" Value="GeneratedSoundBanks\"/>
+				<Property Name="SoundBankPaths" Type="string">
+					<ValueList>
+						<Value Platform="Android">GeneratedSoundBanks\Android\</Value>
+						<Value Platform="Windows">GeneratedSoundBanks\Windows\</Value>
+					</ValueList>
+				</Property>
+				<Property Name="SoundBankPostGenerateCustomCmdDescription" Type="string">
+					<ValueList>
+						<Value Platform="Android">Copy Streamed Files</Value>
+						<Value Platform="Windows">Copy Streamed Files</Value>
+					</ValueList>
+				</Property>
+				<Property Name="SoundBankPostGenerateCustomCmdLines" Type="string">
+					<ValueList>
+						<Value Platform="Android">"$(WwiseExePath)\CopyStreamedFiles.exe" -info "$(InfoFilePath)" -outputpath "$(SoundBankPath)" -banks "$(SoundBankListAsTextFile)" -languages "$(LanguageList)"</Value>
+						<Value Platform="Windows">"$(WwiseExePath)\CopyStreamedFiles.exe" -info "$(InfoFilePath)" -outputpath "$(SoundBankPath)" -banks "$(SoundBankListAsTextFile)" -languages "$(LanguageList)"</Value>
+					</ValueList>
+				</Property>
+				<Property Name="SoundBankPreGenerateCustomCmdDescription" Type="string">
+					<ValueList>
+						<Value Platform="Android"></Value>
+						<Value Platform="Windows"></Value>
+					</ValueList>
+				</Property>
+				<Property Name="SoundBankPreGenerateCustomCmdLines" Type="string">
+					<ValueList>
+						<Value Platform="Android"></Value>
+						<Value Platform="Windows"></Value>
+					</ValueList>
+				</Property>
+			</PropertyList>
+		</UserProjectSettings>
+	</UserProjectSettingsInfo>
+</WwiseDocument>
